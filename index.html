@@ -99,10 +99,24 @@ a:not(.btn) {
   min-height: 48px;
 }
 
-.wrap {
+/* 帯（全幅の背景）と、その中の読みやすい幅の欄 */
+.band {
+  padding-block: clamp(44px, 9vw, 76px);
+}
+
+.band.tint {
+  background: var(--blue-soft);
+}
+
+.band > .inner {
   width: min(100%, 680px);
-  margin: 0 auto;
-  padding: 0 var(--wrap-pad) 72px;
+  margin-inline: auto;
+  padding-inline: var(--wrap-pad);
+}
+
+/* 同じ色の帯が続いたときに境目が消えないよう、細い線を入れる */
+.band.tint + .band.tint {
+  border-top: 1px solid var(--blue-line);
 }
 
 .label {
@@ -130,8 +144,9 @@ h1 {
   letter-spacing: 0.01em;
 }
 
+/* 見出しの上の余白は帯（.band の padding-block）が持つので、ここでは付けない */
 h2 {
-  margin: 72px 0 22px;
+  margin: 0 0 22px;
   color: var(--ink);
   font-size: clamp(1.2rem, 4.8vw, 1.4rem);
   font-weight: 600;
@@ -229,37 +244,14 @@ small {
   text-align: center;
 }
 
-/* 装飾の円と線は、見出しに重なって読みにくくなるため表示しない。
-   余白と文字の階層だけで見せる。 */
+/* 冒頭は余白を大きくとる。装飾は置かず、文字の階層だけで見せる。 */
 .hero {
-  position: relative;
-  padding: clamp(40px, 9vw, 64px) 0 8px;
+  padding-block: clamp(52px, 12vw, 104px) clamp(40px, 9vw, 72px);
 }
 
-.hero svg {
-  display: none;
-}
-
-.hero > * {
-  position: relative;
-}
-
-/* カウントダウンはページで一番大きな「青の面」。
-   スマホでは画面の端まで広げ、フチのない一枚の面として見せる。 */
+/* カウントダウンは帯そのものが青の面になるため、ここでは箱を持たない */
 .focal {
-  margin: 32px 0 40px;
-  padding: clamp(26px, 7vw, 36px);
-  border: 0;
-  border-radius: var(--radius);
-  background: var(--blue-soft);
-}
-
-@media (max-width: 720px) {
-  .focal {
-    margin-inline: calc(-1 * var(--wrap-pad));
-    padding-inline: var(--wrap-pad);
-    border-radius: 0;
-  }
+  margin: 0;
 }
 
 .focal label {
@@ -403,34 +395,34 @@ table.eff tr td.v3 {
   color: var(--low);
 }
 
-/* カードは3枚とも同じ白で統一し、01（産婦人科）だけ左の線で強調する。
-   背景色を変えて区別すると、色数が増えて散らかって見えるため。 */
-.route {
-  position: relative;
-  min-width: 0;
-  margin: 0 0 14px;
-  padding: clamp(22px, 6vw, 30px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
+/* 3つの経路は「囲み枠のカード」をやめ、細い罫線で区切った誌面風の並びにする。
+   枠を外すと、余白そのものが構造を示すようになり、詰まった印象が消える。 */
+.routes {
+  margin-top: 30px;
+  border-top: 1px solid var(--line-strong);
 }
 
-/* 01（産婦人科）は青の面にして、白い02・03と交互に見せる。
-   線ではなく面で区別すると、参考サイトの落ち着いた見え方に近づく。 */
-.route.pick {
-  border-color: var(--blue-soft);
-  background: var(--blue-soft);
+.route {
+  min-width: 0;
+  padding: clamp(28px, 7vw, 38px) 0;
+  border-bottom: 1px solid var(--line-strong);
 }
 
 .route .no {
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   color: var(--ink-3);
-  font-size: 11px;
-  font-weight: 750;
+  font-size: 13px;
+  font-weight: 700;
   line-height: 1.5;
   letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 01（産婦人科）は、性暴力の被害にあった方と16歳未満の方が最初に見る必要がある。
+   面や枠ではなく、番号の色と下のタグで示す。 */
+.route.pick .no {
+  color: var(--accent);
 }
 
 .route .hd {
@@ -527,12 +519,11 @@ table.eff tr td.v3 {
 }
 
 .know {
-  margin-top: 4px;
   border-top: 1px solid var(--line-strong);
 }
 
 .know .item {
-  padding: 23px 4px;
+  padding: 26px 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -543,12 +534,17 @@ table.eff tr td.v3 {
   line-height: 1.85;
 }
 
+/* 帯の中の囲み。相談窓口は白地の箱、72時間超のお知らせは線で強調する。 */
 .callout {
-  margin-top: 6px;
-  padding: clamp(23px, 6vw, 31px);
+  padding: clamp(24px, 6vw, 32px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface-soft);
+  background: var(--surface);
+}
+
+.callout.alert {
+  border-color: var(--accent);
+  border-left-width: 3px;
 }
 
 .callout p {
@@ -570,9 +566,7 @@ table.eff tr td.v3 {
 }
 
 footer {
-  margin-top: 64px;
-  padding-top: 28px;
-  border-top: 1px solid var(--line-strong);
+  padding-top: 4px;
 }
 
 footer h3 {
@@ -768,111 +762,140 @@ footer p {
 
 <p class="tophint" id="tophint"></p>
 
-<div class="wrap">
-  <header class="hero">
-    <!-- 幾何コラージュ（外部画像を使わず、その場で描いています） -->
-    <svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">
-      <polygon points="30,150 95,18 150,132" fill="#F7DFDB" fill-opacity=".55"/>
-      <rect x="60" y="60" width="105" height="82" fill="#D6E7EF" fill-opacity=".6"/>
-      <ellipse cx="128" cy="72" rx="34" ry="13" fill="none" stroke="#1C1C1A" stroke-width="1"/>
-      <ellipse cx="128" cy="72" rx="15" ry="5.5" fill="#F7DFDB"/>
-      <line x1="8" y1="120" x2="192" y2="96" stroke="#1C1C1A" stroke-width=".8"/>
-      <circle cx="44" cy="46" r="14" fill="none" stroke="#E0A9A0" stroke-width="1"/>
-    </svg>
+<!-- ページは「帯（band）」を縦に積んで構成します。
+     .band が画面いっぱいの背景色を持ち、中身は .inner で読みやすい幅に絞ります。
+     .band.tint が淡い青の帯です。白と交互に並べてリズムを作っています。 -->
+
+<header class="band hero">
+  <div class="inner">
     <p class="label" id="t-eyebrow"></p>
     <h1 id="t-title"></h1>
     <p class="lead" id="t-subtitle"></p>
-  </header>
+  </div>
+</header>
 
-  <!-- ===== カウントダウン ===== -->
-  <section class="focal" aria-labelledby="t-cdlabel">
+<!-- ===== カウントダウン ===== -->
+<section class="band tint" aria-labelledby="t-cdlabel">
+  <div class="inner focal">
     <label for="when" id="t-cdlabel"></label>
     <input type="datetime-local" id="when">
     <p class="cdnum" id="cdnum"></p>
     <div class="bar" aria-hidden="true"><i id="cdbar"></i></div>
     <p class="cdnote" id="cdnote"></p>
-  </section>
-
-  <div id="overbox" class="callout" hidden style="background:var(--blue)">
-    <h3 id="t-overtitle"></h3>
-    <p id="t-overtext" style="margin-top:8px"></p>
-    <a class="btn" id="t-overbtn" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
   </div>
+</section>
 
-  <!-- ===== 効果 ===== -->
-  <h2 id="t-efftitle"></h2>
-  <table class="eff">
-    <thead><tr><th id="t-effh1"></th><th id="t-effh2"></th></tr></thead>
-    <tbody>
-      <tr id="row1"><td id="t-eff1"></td><td class="v1">95%</td></tr>
-      <tr id="row2"><td id="t-eff2"></td><td class="v2">85%</td></tr>
-      <tr id="row3"><td id="t-eff3"></td><td class="v3">58%</td></tr>
-    </tbody>
-  </table>
-  <small id="t-effsrc"></small>
-
-  <!-- ===== 3つの経路 =====
-       表示順: 1 産婦人科 → 2 薬局 → 3 オンライン診療
-       翻訳キーは r1=薬局 / r2=オンライン診療 / r3=産婦人科 のままです。
-       順番を変えたいときは、下の3つの <div class="route"> ブロックごと入れ替えてください。 -->
-  <h2 id="t-routestitle"></h2>
-  <p class="lead" id="t-routeshint" style="margin-bottom:22px"></p>
-
-  <div class="route pick">
-    <span class="no">01</span>
-    <span class="tag" id="t-r3tag"></span>
-    <div class="hd"><h3 id="t-r3n"></h3><span class="price" id="t-r3p"></span></div>
-    <p id="t-r3d"></p>
-    <a class="btn" id="t-r3b" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
+<!-- 72時間を過ぎたときだけ JavaScript が表示します（hidden を外します）。
+     id は帯そのものに付けます。中の箱に付けると、非表示時に空の帯が残ります。 -->
+<section class="band" id="overbox" hidden>
+  <div class="inner">
+    <div class="callout alert">
+      <h3 id="t-overtitle"></h3>
+      <p id="t-overtext" style="margin-top:8px"></p>
+      <a class="btn" id="t-overbtn" rel="noopener noreferrer" target="_blank"
+         href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
+    </div>
   </div>
+</section>
 
-  <div class="route">
-    <span class="no">02</span>
-    <div class="hd"><h3 id="t-r1n"></h3><span class="price" id="t-r1p"></span></div>
-    <p id="t-r1d"></p>
-    <a class="btn sub" id="t-r1b" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00005.html"></a>
+<!-- ===== 効果 ===== -->
+<section class="band">
+  <div class="inner">
+    <h2 id="t-efftitle"></h2>
+    <table class="eff">
+      <thead><tr><th id="t-effh1"></th><th id="t-effh2"></th></tr></thead>
+      <tbody>
+        <!-- この3つの <tr> にクラスを足さないでください。
+             JavaScript が className を丸ごと書き換えて該当行を示すため、消えます。 -->
+        <tr id="row1"><td id="t-eff1"></td><td class="v1">95%</td></tr>
+        <tr id="row2"><td id="t-eff2"></td><td class="v2">85%</td></tr>
+        <tr id="row3"><td id="t-eff3"></td><td class="v3">58%</td></tr>
+      </tbody>
+    </table>
+    <small id="t-effsrc"></small>
   </div>
+</section>
 
-  <div class="route">
-    <span class="no">03</span>
-    <div class="hd"><h3 id="t-r2n"></h3><span class="price" id="t-r2p"></span></div>
-    <p id="t-r2d"></p>
-    <a class="btn sub" id="t-r2b" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00004.html"></a>
+<!-- ===== 3つの経路 =====
+     表示順: 1 産婦人科 → 2 薬局 → 3 オンライン診療
+     翻訳キーは r1=薬局 / r2=オンライン診療 / r3=産婦人科 のままです。
+     順番を変えたいときは、下の3つの <div class="route"> ブロックごと入れ替えてください。 -->
+<section class="band tint">
+  <div class="inner">
+    <h2 id="t-routestitle"></h2>
+    <p class="lead" id="t-routeshint"></p>
+
+    <div class="routes">
+      <div class="route pick">
+        <span class="no">01</span>
+        <span class="tag" id="t-r3tag"></span>
+        <div class="hd"><h3 id="t-r3n"></h3><span class="price" id="t-r3p"></span></div>
+        <p id="t-r3d"></p>
+        <a class="btn" id="t-r3b" rel="noopener noreferrer" target="_blank"
+           href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
+      </div>
+
+      <div class="route">
+        <span class="no">02</span>
+        <div class="hd"><h3 id="t-r1n"></h3><span class="price" id="t-r1p"></span></div>
+        <p id="t-r1d"></p>
+        <a class="btn sub" id="t-r1b" rel="noopener noreferrer" target="_blank"
+           href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00005.html"></a>
+      </div>
+
+      <div class="route">
+        <span class="no">03</span>
+        <div class="hd"><h3 id="t-r2n"></h3><span class="price" id="t-r2p"></span></div>
+        <p id="t-r2d"></p>
+        <a class="btn sub" id="t-r2b" rel="noopener noreferrer" target="_blank"
+           href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00004.html"></a>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- ===== 知っておくこと ===== -->
-  <h2 id="t-knowtitle"></h2>
-  <div class="know" id="knowlist"></div>
-
-  <!-- ===== 相談 ===== -->
-  <h2 id="t-consulttitle"></h2>
-  <div class="callout">
-    <p id="t-consulttext"></p>
-    <a class="btn" id="t-cb1" rel="noopener noreferrer" target="_blank"
-       href="https://www.gender.go.jp/policy/no_violence/seibouryoku/consult.html"></a>
-    <a class="btn sub" id="t-cb2" href="tel:%238103"></a>
-    <a class="btn sub" id="t-cb3" rel="noopener noreferrer" target="_blank"
-       href="https://precon.cfa.go.jp/soudan/nayami/"></a>
+<!-- ===== 知っておくこと ===== -->
+<section class="band">
+  <div class="inner">
+    <h2 id="t-knowtitle"></h2>
+    <!-- 中身は JavaScript が <div class="item"><h3>…<p>… の形で作ります。
+         見た目を変えるときは CSS 側（.know .item）で調整してください。 -->
+    <div class="know" id="knowlist"></div>
   </div>
+</section>
 
-  <!-- ===== このサイトについて ===== -->
-  <footer>
-    <h3 id="t-abouttitle"></h3>
-    <p id="t-aboutbody"></p>
-    <a class="btn sub" id="t-ab1" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku.html"></a>
-    <a class="btn sub" id="t-ab2" rel="noopener noreferrer" target="_blank"
-       href="https://www.daiichisankyo-hc.co.jp/products/details/norlevo/"></a>
-    <p style="margin-top:24px"><small id="t-trnote"></small></p>
-    <p><small id="t-sources"></small></p>
-    <p><small id="t-tm"></small></p>
-    <p><small id="t-updated"></small></p>
-  </footer>
-</div>
+<!-- ===== 相談 ===== -->
+<section class="band tint">
+  <div class="inner">
+    <h2 id="t-consulttitle"></h2>
+    <div class="callout">
+      <p id="t-consulttext"></p>
+      <a class="btn" id="t-cb1" rel="noopener noreferrer" target="_blank"
+         href="https://www.gender.go.jp/policy/no_violence/seibouryoku/consult.html"></a>
+      <a class="btn sub" id="t-cb2" href="tel:%238103"></a>
+      <a class="btn sub" id="t-cb3" rel="noopener noreferrer" target="_blank"
+         href="https://precon.cfa.go.jp/soudan/nayami/"></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== このサイトについて ===== -->
+<section class="band">
+  <div class="inner">
+    <footer>
+      <h3 id="t-abouttitle"></h3>
+      <p id="t-aboutbody"></p>
+      <a class="btn sub" id="t-ab1" rel="noopener noreferrer" target="_blank"
+         href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku.html"></a>
+      <a class="btn sub" id="t-ab2" rel="noopener noreferrer" target="_blank"
+         href="https://www.daiichisankyo-hc.co.jp/products/details/norlevo/"></a>
+      <p style="margin-top:24px"><small id="t-trnote"></small></p>
+      <p><small id="t-sources"></small></p>
+      <p><small id="t-tm"></small></p>
+      <p><small id="t-updated"></small></p>
+    </footer>
+  </div>
+</section>
 
 <div class="exitbar">
   <button class="exitbtn" id="exitbtn"></button>
