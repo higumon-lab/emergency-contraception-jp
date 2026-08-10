@@ -18,49 +18,50 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23FBF8F5'/><circle cx='16' cy='16' r='8' fill='none' stroke='%231C1C1A' stroke-width='1.4'/><ellipse cx='16' cy='16' rx='8' ry='3.4' fill='none' stroke='%23E0A9A0' stroke-width='1.4'/></svg>">
 
 <style>
-/* 配色は前身サイト（Manus版）の値をそのまま使っています。
-   oklch(58% .18 42) = #cd4900 が主色、背景のクリームが #fff7ed。
+/* ── 配色 ──────────────────────────────────────────────
+   マカロンのような淡い色を「面」に使い、文字は濃いすみれ墨で置きます。
+   淡い色は文字色には使いません（コントラストが取れないため）。
 
-   1点だけ変えています: #cd4900 をクリーム地の「文字色」に使うと 4.35:1 で
-   基準割れするため、文字用に少し濃い --brand-text (#bc4200) を用意しました。
-   塗り（ボタン等）の白抜きは #cd4900 のままで 4.62:1 を満たします。 */
+   透明感は、色のついた背景の上に、半透明の白＋ぼかし（backdrop-filter）
+   を重ねて出しています。
+   ────────────────────────────────────────────────── */
 :root {
   color-scheme: light;
   --wrap-pad: 22px;
-  --paper: #fff7ed;
-  --surface: #ffffff;
-  --surface-soft: #fff3e6;
-  --card: #fcfcfa;
 
-  /* オレンジは3段階で使い分けます。
-     --brand-vivid  鮮やかな見せ色。大きい文字と、文字を載せない塗りだけに使う
-                    （白文字15pxを載せると 3.56:1 で基準割れするため）
-     --brand        ボタンなど、白文字を載せる塗り（4.62:1）
-     --brand-text   クリーム地に置く文字色（5.05:1） */
-  --brand-vivid: #ea580c;
-  --brand: #cd4900;
-  --brand-text: #bc4200;
-  --brand-dark: #a63900;
-  --brand-tint: #ffe4cc;
-  --ink: #0b0b0d;
-  --ink-2: #2d2d33;
-  --ink-3: #626369;
-  --line: #dfdeda;
-  --line-strong: #c9c7c1;
-  --accent: #bc4200;
-  --accent-hover: #a63900;
-  --focus: #a63900;
+  /* マカロンの6色。背景と小さな面にだけ使う */
+  --mint: #d9f2e6;
+  --lavender: #e7e1f7;
+  --peach: #ffe3d9;
+  --rose: #fbe1ea;
+  --butter: #fdf1cf;
+  --sky: #dcecfb;
+
+  --paper: #fbfaff;
+  --surface: rgba(255, 255, 255, 0.74);
+  --surface-solid: #ffffff;
+  --surface-soft: rgba(255, 255, 255, 0.5);
+  --card: rgba(255, 255, 255, 0.74);
+
+  --ink: #3a3440;
+  --ink-2: #514b5c;
+  --ink-3: #635d70;
+
+  --line: rgba(255, 255, 255, 0.9);
+  --line-soft: rgba(120, 108, 140, 0.16);
+  --line-strong: rgba(120, 108, 140, 0.28);
+
+  --accent: #6f57a6;
+  --accent-hover: #5b458c;
+  --focus: #5b458c;
+
   --ok: #14663f;
   --mid: #8a3f31;
   --low: #8a4a1c;
-  --radius: 8px;
-  --radius-small: 8px;
-  --shadow: 0 1px 3px rgba(11, 11, 13, 0.06);
 
-  /* 帯や淡い面に使う色。名前は従来のまま残し、中身をオレンジ系に差し替えています */
-  --blue: var(--brand);
-  --blue-soft: var(--surface-soft);
-  --blue-line: var(--line);
+  --radius: 20px;
+  --radius-small: 14px;
+  --shadow: 0 10px 30px rgba(120, 108, 140, 0.12);
 }
 
 * {
@@ -78,7 +79,16 @@ body {
 }
 
 body {
-  background: var(--paper);
+  /* 淡い色のにじみを画面に固定して敷き、その上に半透明の白を重ねます。
+     これが「透明感」の土台です。 */
+  background:
+    radial-gradient(60rem 40rem at 12% -8%, var(--mint) 0, transparent 60%),
+    radial-gradient(52rem 38rem at 92% 4%, var(--lavender) 0, transparent 62%),
+    radial-gradient(48rem 36rem at 78% 42%, var(--peach) 0, transparent 58%),
+    radial-gradient(44rem 34rem at 6% 68%, var(--sky) 0, transparent 60%),
+    radial-gradient(46rem 34rem at 88% 92%, var(--rose) 0, transparent 60%),
+    var(--paper);
+  background-attachment: fixed;
   color: var(--ink);
   font-family:
     system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -114,15 +124,17 @@ a:not(.btn) {
   min-height: 48px;
 }
 
-/* 帯（全幅の背景）と、その中の読みやすい幅の欄。
-   白と、うっすらしたベージュ #f3f2ee を交互に置きます（前身サイトと同じ組み方）。 */
+/* 帯（全幅）。背景のにじみを透かしつつ、白いすりガラスを重ねます。 */
 .band {
-  padding-block: clamp(44px, 9vw, 72px);
-  background: var(--surface);
+  padding-block: clamp(48px, 10vw, 80px);
+  background: transparent;
 }
 
 .band.tint {
-  background: var(--surface-soft);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-block: 1px solid rgba(255, 255, 255, 0.75);
 }
 
 .band > .inner {
@@ -131,29 +143,20 @@ a:not(.btn) {
   padding-inline: var(--wrap-pad);
 }
 
-/* 冒頭は鮮やかなオレンジのベタ塗りに白抜き。
-   明るい側 #ea580c は白文字との比が 3.56:1 なので、
-   ここに置く文字は「大きい文字」の条件（24px以上、または18.66px以上の太字）を
-   満たすものだけにしています。小さい文字は白いバッジの上に載せます。 */
-.hero {
-  background: linear-gradient(135deg, #ea580c 0%, var(--brand) 100%);
-}
-
+/* 冒頭は背景のにじみをそのまま見せます（塗りつぶさない）。 */
 .hero h1 {
-  color: #ffffff;
+  color: var(--ink);
 }
 
 .hero .lead {
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 700;
+  color: var(--ink-2);
+  font-size: 18px;
+  font-weight: 400;
 }
 
-/* ヒーローのバッジは、ライトでもダークでも白地のままなので、
-   文字色を変数にせず固定する（変数にするとダークで淡い色になり読めなくなる）。 */
 .hero .label {
-  background: #ffffff;
-  color: #a63900;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--accent);
 }
 
 /* 見出しの左に太いオレンジの縦棒（前身サイトと同じ形） */
@@ -172,7 +175,7 @@ h2::before {
   width: 5px;
   margin: 0;
   border-radius: 999px;
-  background: var(--brand-vivid);
+  background: var(--accent);
 }
 
 /* 見出しの上に置く小さなラベル。ピル形のバッジで見せます */
@@ -182,8 +185,8 @@ h2::before {
   margin: 0 0 18px;
   padding: 7px 14px;
   border-radius: 999px;
-  background: var(--brand-tint);
-  color: var(--brand-dark);
+  background: var(--lavender);
+  color: var(--accent);
   font-size: 13px;
   font-weight: 700;
   line-height: 1.5;
@@ -247,9 +250,9 @@ small {
   z-index: 20;
   padding: 8px 12px;
   border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .langbar ul {
@@ -283,21 +286,21 @@ small {
 }
 
 .langbar button:hover {
-  background: var(--brand-tint);
-  color: var(--brand-dark);
+  background: var(--lavender);
+  color: var(--accent);
 }
 
 .langbar button[aria-current="true"] {
-  border-color: var(--brand);
-  background: var(--brand);
+  border-color: var(--accent);
+  background: var(--accent);
   color: #ffffff;
 }
 
 .tophint {
   margin: 0;
-  padding: 10px 18px;
-  border-bottom: 1px solid var(--line);
-  background: var(--surface-soft);
+  padding: 11px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.5);
   color: var(--ink-3);
   font-size: 12px;
   font-weight: 600;
@@ -343,7 +346,7 @@ small {
 
 .cdnum {
   margin: 24px 0 0;
-  color: var(--brand-vivid);
+  color: var(--accent);
   font-size: clamp(2.5rem, 12vw, 4rem);
   font-variant-numeric: tabular-nums;
   font-weight: 650;
@@ -367,7 +370,7 @@ small {
   margin: 22px 0 14px;
   overflow: hidden;
   border-radius: 999px;
-  background: #f3ddc8;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .bar i {
@@ -377,7 +380,7 @@ small {
   width: 0;
   height: 100%;
   border-radius: inherit;
-  background: var(--brand-vivid);
+  background: var(--accent);
   transition: width 0.4s ease;
 }
 
@@ -413,9 +416,9 @@ table.eff th:last-child {
 }
 
 table.eff td {
-  padding: 14px 10px;
+  padding: 15px 12px;
   border-block: 1px solid var(--line);
-  background: var(--surface);
+  background: var(--card);
   color: var(--ink-2);
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -437,8 +440,8 @@ table.eff td:last-child {
 }
 
 table.eff tr.hit td {
-  border-color: #e9b48f;
-  background: var(--brand-tint);
+  border-color: rgba(111, 87, 166, 0.35);
+  background: var(--lavender);
   color: var(--ink);
 }
 
@@ -465,11 +468,13 @@ table.eff tr td.v3 {
 
 .route {
   min-width: 0;
-  padding: clamp(20px, 5.5vw, 28px);
+  padding: clamp(22px, 6vw, 30px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--card);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .route .no {
@@ -521,8 +526,8 @@ table.eff tr td.v3 {
   padding: 7px 12px;
   border: 0;
   border-radius: 999px;
-  background: var(--brand-tint);
-  color: var(--brand-dark);
+  background: var(--lavender);
+  color: var(--accent);
   font-size: 13px;
   font-weight: 700;
   line-height: 1.5;
@@ -536,9 +541,9 @@ table.eff tr td.v3 {
   gap: 14px;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid var(--brand);
+  border: 1px solid var(--accent);
   border-radius: var(--radius-small);
-  background: var(--brand);
+  background: var(--accent);
   color: #ffffff;
   font-size: 15px;
   font-weight: 700;
@@ -594,17 +599,19 @@ table.eff tr td.v3 {
 
 /* 帯の中の囲み。相談窓口は白地の箱、72時間超のお知らせは線で強調する。 */
 .callout {
-  padding: clamp(22px, 5.5vw, 30px);
+  padding: clamp(24px, 6vw, 32px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--card);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .callout.alert {
-  border-color: var(--brand);
+  border-color: var(--accent);
   border-left-width: 4px;
-  background: var(--brand-tint);
+  background: var(--lavender);
 }
 
 .callout p {
@@ -633,9 +640,17 @@ table.eff tr td.v3 {
 }
 
 .way {
-  padding: 16px 18px;
-  border-radius: var(--radius);
-  background: var(--surface-soft);
+  padding: 18px 20px;
+  border-radius: var(--radius-small);
+  background: var(--mint);
+}
+
+.ways .way:nth-child(2) {
+  background: var(--sky);
+}
+
+.ways .way:nth-child(3) {
+  background: var(--butter);
 }
 
 .waytitle {
@@ -672,15 +687,15 @@ table.eff tr td.v3 {
 
 .notebox {
   margin: 0 0 18px;
-  padding: 16px 18px;
-  border-left: 4px solid var(--brand);
-  border-radius: var(--radius);
-  background: var(--brand-tint);
+  padding: 18px 20px;
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-small);
+  background: var(--rose);
 }
 
 .noteboxtitle {
   margin: 0 0 8px;
-  color: var(--brand-dark);
+  color: var(--accent);
   font-size: 15px;
   font-weight: 700;
   line-height: 1.7;
@@ -696,11 +711,13 @@ table.eff tr td.v3 {
 }
 
 .stepgroup {
-  padding: clamp(20px, 5.5vw, 28px);
+  padding: clamp(22px, 6vw, 30px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--card);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .stepgroup h3 {
@@ -735,8 +752,8 @@ table.eff tr td.v3 {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: var(--brand-tint);
-  color: var(--brand-dark);
+  background: var(--lavender);
+  color: var(--accent);
   font-size: 13px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -802,7 +819,7 @@ table.eff tr td.v3 {
 
 .checklist.no li::before {
   content: "\00d7";
-  color: var(--brand-text);
+  color: var(--accent);
 }
 
 .checklist.ask li::before {
@@ -821,8 +838,8 @@ table.eff tr td.v3 {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: var(--brand-tint);
-  color: var(--brand-dark);
+  background: var(--lavender);
+  color: var(--accent);
   font-size: 12px;
   line-height: 1;
 }
@@ -859,7 +876,7 @@ table.eff tr td.v3 {
   content: "+";
   position: absolute;
   right: 0;
-  color: var(--brand-text);
+  color: var(--accent);
   font-size: 20px;
   font-weight: 700;
 }
@@ -932,8 +949,8 @@ footer p {
   bottom: 0;
   z-index: 20;
   padding: 9px 18px;
-  border-top: 1px solid var(--line);
-  background: rgba(252, 252, 250, 0.94);
+  border-top: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.72);
   text-align: right;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -954,7 +971,7 @@ footer p {
 
 .exitbtn:hover {
   border-color: var(--accent);
-  background: var(--blue-soft);
+  background: var(--lavender);
 }
 
 :focus-visible {
@@ -991,71 +1008,95 @@ footer p {
 }
 
 @media (prefers-color-scheme: dark) {
-  /* ダークモードもオレンジ系に。塗り用のオレンジは暗い地でも見えるよう明るめにし、
-     文字用は白に近づけています。 */
+  /* ダークでも、淡い色のにじみは残します。面を暗くして文字を明るくします。 */
   :root {
     color-scheme: dark;
-    --paper: #1a1614;
-    --surface: #1c1a18;
-    --surface-soft: #24211e;
-    --card: #221f1c;
-    --brand: #e2622a;
-    --brand-text: #f0a06e;
-    --brand-dark: #f7c9ac;
-    --brand-tint: #3a241a;
-    --ink: #f6f3f0;
-    --ink-2: #d5d0ca;
-    --ink-3: #a9a49d;
-    --line: #35312d;
-    --line-strong: #5d5852;
-    --accent: #f0a06e;
-    --accent-hover: #f7c9ac;
-    --focus: #f0a06e;
+    --mint: #1d3b31;
+    --lavender: #2b2440;
+    --peach: #3d2b26;
+    --rose: #3a2430;
+    --butter: #3a3320;
+    --sky: #1f3242;
+
+    --paper: #141119;
+    --surface: rgba(40, 35, 50, 0.66);
+    --surface-solid: #241f2e;
+    --surface-soft: rgba(40, 35, 50, 0.45);
+    --card: rgba(42, 37, 53, 0.7);
+
+    --ink: #f2eff7;
+    --ink-2: #cec8da;
+    --ink-3: #ada6bc;
+
+    --line: rgba(255, 255, 255, 0.12);
+    --line-soft: rgba(255, 255, 255, 0.14);
+    --line-strong: rgba(255, 255, 255, 0.24);
+
+    --accent: #c4b1ee;
+    --accent-hover: #d8cbf5;
+    --focus: #c4b1ee;
+
     --ok: #7fd0a6;
     --mid: #f0a396;
     --low: #eeae79;
-    --shadow: none;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   }
 
-  body {
-    background: var(--paper);
+  .band.tint {
+    background: rgba(255, 255, 255, 0.05);
+    border-block-color: rgba(255, 255, 255, 0.09);
+  }
+
+  .tophint {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom-color: rgba(255, 255, 255, 0.09);
+  }
+
+  .hero .label {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent);
+  }
+
+  .bar {
+    background: rgba(255, 255, 255, 0.14);
   }
 
   .langbar,
   .exitbar {
-    background: rgba(26, 22, 20, 0.94);
+    background: rgba(20, 17, 25, 0.72);
+    border-color: rgba(255, 255, 255, 0.09);
   }
 
   .langbar button[aria-current="true"] {
-    border-color: var(--brand);
-    background: var(--brand);
-    color: #1a0f08;
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #241a3a;
   }
 
 
   table.eff tr.hit td {
     border-color: #7a4a2c;
-    background: var(--brand-tint);
+    background: var(--lavender);
   }
 
   .label,
   .route .tag,
   .stepgroup li::before {
-    background: var(--brand-tint);
-    color: var(--brand-dark);
+    background: var(--lavender);
+    color: var(--accent);
   }
 
   .callout.alert {
-    border-color: var(--brand);
-    background: var(--brand-tint);
+    border-color: var(--accent);
+    background: var(--lavender);
   }
 
   .checklist.no li::before {
-    color: var(--brand-text);
+    color: var(--accent);
   }
 
   .faq summary::after {
-    color: var(--brand-text);
+    color: var(--accent);
   }
 
   /* ここで table.eff tr.hit td の color を指定すると、詳細度 (0,2,3) が同じで
@@ -1066,22 +1107,22 @@ footer p {
   }
 
   .route .tag {
-    border-color: var(--blue-line);
+    border-color: var(--line-soft);
     background: var(--surface);
     color: var(--accent);
   }
 
   .btn {
-    border-color: var(--brand);
-    background: var(--brand);
-    color: #1a0f08;
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #241a3a;
   }
 
   .btn:hover,
   .btn:focus {
-    border-color: var(--brand-text);
-    background: var(--brand-text);
-    color: #1a0f08;
+    border-color: var(--accent-hover);
+    background: var(--accent-hover);
+    color: #241a3a;
   }
 
   .btn.sub {
@@ -1092,7 +1133,7 @@ footer p {
   .btn.sub:hover,
   .btn.sub:focus {
     background: var(--accent);
-    color: #1a0f08;
+    color: #241a3a;
   }
 
   .callout p {
