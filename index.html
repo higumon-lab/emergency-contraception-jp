@@ -29,12 +29,19 @@
   --wrap-pad: 22px;
   --paper: #fff7ed;
   --surface: #ffffff;
-  --surface-soft: #f3f2ee;
+  --surface-soft: #fff3e6;
   --card: #fcfcfa;
+
+  /* オレンジは3段階で使い分けます。
+     --brand-vivid  鮮やかな見せ色。大きい文字と、文字を載せない塗りだけに使う
+                    （白文字15pxを載せると 3.56:1 で基準割れするため）
+     --brand        ボタンなど、白文字を載せる塗り（4.62:1）
+     --brand-text   クリーム地に置く文字色（5.05:1） */
+  --brand-vivid: #ea580c;
   --brand: #cd4900;
   --brand-text: #bc4200;
   --brand-dark: #a63900;
-  --brand-tint: #ffedd5;
+  --brand-tint: #ffe4cc;
   --ink: #0b0b0d;
   --ink-2: #2d2d33;
   --ink-3: #626369;
@@ -124,9 +131,32 @@ a:not(.btn) {
   padding-inline: var(--wrap-pad);
 }
 
-/* 冒頭だけ、前身サイトと同じくクリーム(orange-50)から白へのグラデーション */
+/* 冒頭は温かいクリームから白へ。上端に鮮やかなオレンジの帯を入れて、
+   ページを開いた瞬間に色が目に入るようにしています。 */
 .hero {
-  background: linear-gradient(180deg, var(--paper) 0, var(--surface) 100%);
+  position: relative;
+  background: linear-gradient(180deg, #ffe8d6 0, var(--surface) 100%);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 5px;
+  background: var(--brand-vivid);
+}
+
+/* 見出しの上に鮮やかなオレンジの短い線を置く */
+h2::before {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 4px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background: var(--brand-vivid);
 }
 
 /* 見出しの上に置く小さなラベル。ピル形のバッジで見せます */
@@ -297,7 +327,7 @@ small {
 
 .cdnum {
   margin: 24px 0 0;
-  color: var(--ink);
+  color: var(--brand-vivid);
   font-size: clamp(2.5rem, 12vw, 4rem);
   font-variant-numeric: tabular-nums;
   font-weight: 650;
@@ -321,7 +351,7 @@ small {
   margin: 22px 0 14px;
   overflow: hidden;
   border-radius: 999px;
-  background: #b7cbd2;
+  background: #f3ddc8;
 }
 
 .bar i {
@@ -331,7 +361,7 @@ small {
   width: 0;
   height: 100%;
   border-radius: inherit;
-  background: var(--accent);
+  background: var(--brand-vivid);
   transition: width 0.4s ease;
 }
 
@@ -435,16 +465,6 @@ table.eff tr td.v3 {
   line-height: 1.5;
   letter-spacing: 0.14em;
   font-variant-numeric: tabular-nums;
-}
-
-/* 01（産婦人科）は、性暴力の被害にあった方と16歳未満の方が最初に見る必要がある。
-   オレンジの枠と番号で1枚だけ際立たせる。 */
-.route.pick {
-  border-color: var(--brand);
-}
-
-.route.pick .no {
-  color: var(--brand-text);
 }
 
 .route .hd {
@@ -711,6 +731,23 @@ table.eff tr td.v3 {
 .checklist.ask li::before {
   content: "!";
   color: var(--ink-3);
+}
+
+/* 授乳中は「飲めない」ではなく「気をつけてほしい」ことなので、
+   × ではなく落ち着いた印にしています。 */
+.checklist.note li::before {
+  content: "!";
+  top: 15px;
+  display: flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--brand-tint);
+  color: var(--brand-dark);
+  font-size: 12px;
+  line-height: 1;
 }
 
 /* よくある質問 */
@@ -1087,9 +1124,10 @@ footer p {
     <p class="lead" id="t-routeshint"></p>
 
     <div class="routes">
-      <div class="route pick">
+      <!-- 3つとも同じ見た目にしています。01を目立たせると、産婦人科が
+           「特別な事情がある人だけが行くところ」に見えてしまうためです。 -->
+      <div class="route">
         <span class="no">01</span>
-        <span class="tag" id="t-r3tag"></span>
         <div class="hd"><h3 id="t-r3n"></h3><span class="price" id="t-r3p"></span></div>
         <p id="t-r3d"></p>
         <a class="btn" id="t-r3b" rel="noopener noreferrer" target="_blank"
@@ -1137,6 +1175,7 @@ footer p {
       <h3 id="t-checknotitle"></h3>
       <p id="t-checknonote"></p>
       <ul class="checklist no" id="checkno"></ul>
+      <ul class="checklist note" id="checknote"></ul>
     </div>
 
     <div class="checkgroup">
@@ -1238,103 +1277,104 @@ ja:{
  tophint:"このサイトは公式サイトではありません（個人が運営しています）",
  eyebrow:"まだ、間に合う",
  title:"緊急避妊薬を手に入れる方法",
- subtitle:"日本では、産婦人科・薬局・オンライン診療の3つの方法で手に入れられます。深夜でも方法があります。",
- cdlabel:"避妊せずに性交をした日時を入れてください",
+ subtitle:"日本では、産婦人科・薬局・オンライン診療の3つの方法で手に入れられます。夜おそくでも、方法はあります。ひとつずつ見ていきましょう。",
+ cdlabel:"避妊せずに性交をした日時を入れてみてください",
  cdempty:"日時を入れると、残り時間が出ます",
  cdprefix:"",
  cdh:"時間", cdm:"分",
- cdnote:"早く飲むほど効果が高くなります。待たないでください。",
+ cdnote:"早く飲むほど効果が高くなります。あとまわしにせず、いま動いてみてください。",
  cdnow:"いま飲めば、約{p}の効果が期待できます",
  cdover:"72時間を過ぎています",
  overtitle:"72時間を過ぎていても、方法があります",
- overtext:"薬局では買えませんが、産婦人科では72時間から120時間の間に使える方法を相談できる場合があります。日本で承認されていない薬を使う場合があり、効果も下がりますが、相談する価値はあります。あきらめないでください。",
+ overtext:"薬局では買えませんが、産婦人科では72時間から120時間の間に使える方法を相談できることがあります。日本で承認されていない薬を使うことがあり、効果も下がりますが、相談してみる価値はあります。どうかあきらめないでください。",
  overbtn:"産婦人科をさがす",
  efftitle:"妊娠を防げる割合の目安",
  effh1:"性交から飲むまでの時間", effh2:"割合",
  eff1:"24時間以内", eff2:"24〜48時間", eff3:"49〜72時間",
  effsrc:"出典: WHO Task Force on Postovulatory Methods of Fertility Regulation. Lancet 1998;352:428-433. これは目安で、体の状態によって変わります。",
  routestitle:"手に入れる方法は3つ",
- routeshint:"どれを選んでもかまいません。あなたの状況で選んでください。",
+ routeshint:"どれを選んでもかまいません。あなたが行きやすいところで大丈夫です。",
  r1n:"薬局で買う", r1p:"約6,930〜7,480円",
- r1d:"処方箋はいりません。一番安く、一番早い方法です。ただし、すべての薬局では扱っていません。行く前に必ず電話してください。電話は本人からかけます（かけるのを手伝ってもらうのはかまいません）。",
+ r1d:"処方箋はいりません。いちばん手軽で、早く手に入る方法です。ただ、すべての薬局に置いてあるわけではないので、行く前に電話で確かめると安心です。電話は薬を飲む本人からかけてください（かけるのを誰かに手伝ってもらうのはかまいません）。",
  r1b:"薬局をさがす（厚生労働省）",
  r2n:"オンライン診療", r2p:"約5,000〜15,000円",
- r2d:"スマホやパソコンで医師の診察を受け、薬局で受け取ります。夜中・早朝・祝日でも受診できます。近くに薬局がない方、外出が難しい方にも。これは「ネット通販」ではなく「診察」で、国が認めた方法です。",
+ r2d:"スマホやパソコンで医師の診察を受けて、薬は薬局で受け取ります。夜中や早朝、祝日でも受けられます。近くに薬局がない方、外に出るのがむずかしい方にも向いています。これは通販ではなく「診察」で、国が認めている方法です。",
  r2b:"対応する薬局・医師をさがす（厚生労働省）",
- r3tag:"16歳未満・72時間超・性暴力の被害にあった方はこちら",
  r3n:"産婦人科を受診", r3p:"約6,000〜15,000円",
- r3d:"16歳未満の方は薬局で受診をすすめられることが多いので、最初からこちらのほうが早いです。性暴力の被害にあった場合は、費用の支援や性感染症の検査も相談できます。72時間を過ぎた場合もこちらへ。",
+ r3d:"どなたでも受診できます。医師に直接聞けるので、不安なことをその場で相談できます。希望すれば性感染症の検査や、これからの避妊についての相談も一緒にできます。「こんなことで行っていいのかな」と迷わなくて大丈夫です。なお、16歳未満の方、72時間を過ぎてしまった方、性暴力の被害にあった方は、こちらのほうが早く進むことがあります。",
  r3b:"産婦人科をさがす（厚生労働省）",
- stepstitle:"購入までの流れ",
- stepshint:"経路ごとに、実際にすることを順番に並べました。",
+ stepstitle:"手に入れるまでの流れ",
+ stepshint:"それぞれの方法で、実際にすることを順番に並べました。",
  steps:[
   ["産婦人科を受診する",[
-   "行ける産婦人科を探します。夜間や休日は、地域の救急相談窓口でも案内してもらえます。",
-   "電話で「緊急避妊を希望している」と伝え、受診できるか確認します。",
-   "受診します。最終月経の日を聞かれることが多いので、思い出しておくと早く進みます。",
-   "診察のうえで薬が処方されます。その場で飲みます。",
-   "費用を支払います。健康保険は使えません。性暴力の被害では公費で負担される場合があるので、必ず相談してください。"
+   "行けそうな産婦人科をさがします。夜間や休日は、地域の救急相談窓口でも案内してもらえます。",
+   "電話で「緊急避妊のことで受診したい」と伝えて、診てもらえるか聞いてみてください。",
+   "受診します。最後の生理の日を聞かれることが多いので、思い出しておくとスムーズです。",
+   "診察を受けて、お薬が処方されます。その場で飲みます。",
+   "費用を支払います。健康保険は使えません。性暴力の被害にあった場合は公費で負担されることがあるので、そのことも遠慮なく相談してください。"
   ]],
   ["薬局・ドラッグストアで買う",[
-   "厚生労働省の一覧で、緊急避妊薬を扱っている薬局を探します。すべての薬局にあるわけではありません。",
-   "行く前に電話し、在庫があるか、薬剤師がいる時間かを確かめます。電話は本人がかけます（かけるのを手伝ってもらうのはかまいません）。",
-   "薬を飲む本人が行きます。代わりの人は買えません。",
-   "薬剤師と個室などで話し、質問に答えます。",
-   "薬剤師の前で1錠を飲みます。持ち帰りはできません。",
-   "支払います。全額自己負担です。カードが使えない薬局もあるので、現金があると確実です。"
+   "厚生労働省の一覧で、緊急避妊薬を扱っている薬局をさがします。すべての薬局にあるわけではありません。",
+   "行く前に電話して、お薬があるか、薬剤師さんがいる時間かを確かめると安心です。電話は薬を飲む本人からかけてください（かけるのを手伝ってもらうのはかまいません）。",
+   "薬を飲む本人が行きます。かわりの人が受け取ることはできません。",
+   "薬剤師さんと、まわりに聞こえない場所でお話しします。聞かれたことに答えるだけで大丈夫です。",
+   "薬剤師さんの前で1錠飲みます。持ち帰ることはできません。",
+   "お支払いをします。全額自己負担です。カードが使えない薬局もあるので、現金があると安心です。"
   ]],
   ["オンライン診療を受ける",[
-   "対応している医療機関を探して予約します。初診でも受けられます。",
-   "スマートフォンやパソコンで医師の診察を受けます。",
-   "処方された薬を受け取る薬局を決めます。",
-   "薬局へ行き、薬剤師の前で飲みます。ここは対面でなければできません。",
-   "診察代と薬代を支払います。"
+   "対応している医療機関をさがして予約します。はじめての受診でも大丈夫です。",
+   "スマホやパソコンで、医師の診察を受けます。",
+   "お薬を受け取る薬局を決めます。",
+   "薬局へ行って、薬剤師さんの前で飲みます。ここだけは直接会う必要があります。",
+   "診察代とお薬代を支払います。"
   ]]
  ],
 
- checktitle:"飲む前の確認",
- checkhint:"薬剤師や医師が確認する内容です。あてはまるものがあっても、まず相談してください。自分で判断して諦めないでください。",
- checknotitle:"飲めない場合",
- checknonote:"次にあてはまる方は服用できません。産婦人科で相談してください。",
+ checktitle:"飲む前に確かめたいこと",
+ checkhint:"薬剤師さんや医師が確かめる内容です。あてはまるものがあっても、まずは相談してみてください。ご自分で判断してあきらめないでくださいね。",
+ checknotitle:"この薬が使えない場合",
+ checknonote:"次にあてはまる方は、この薬は飲めません。産婦人科で相談してみてください。",
  checkno:[
-  "この薬の成分でアレルギー症状を起こしたことがある",
+  "この薬の成分で、アレルギー症状が出たことがある",
   "肝臓の病気がある",
-  "すでに妊娠している",
-  "授乳中（飲む場合は、飲んでから24時間は授乳を避けます）"
+  "すでに妊娠している"
+ ],
+ checknote:[
+  "授乳中の方 — 飲む場合は、飲んだあと24時間は授乳を控えてください"
  ],
  checkasktitle:"先に伝えてほしいこと",
- checkasknote:"次にあてはまる方は、薬剤師や医師にその旨を伝えてください。",
+ checkasknote:"次にあてはまる方は、薬剤師さんや医師にひとこと伝えてください。",
  checkask:[
-  "いま医師の治療を受けている、飲んでいる薬がある",
-  "薬でアレルギー症状を起こしたことがある",
-  "心臓・腎臓の病気、または重い胃腸の病気がある",
-  "セイヨウオトギリソウ（セント・ジョーンズ・ワート）を含むサプリメントや食品をとっている"
+  "いま医師の治療を受けている、飲んでいるお薬がある",
+  "お薬でアレルギー症状が出たことがある",
+  "心臓や腎臓の病気、または重い胃腸の病気がある",
+  "セイヨウオトギリソウ（セント・ジョーンズ・ワート）が入ったサプリメントや食品をとっている"
  ],
 
- spectitle:"薬について",
- spechint:"日本で薬局で買える緊急避妊薬は2種類です。成分と量は同じです。",
+ spectitle:"お薬について",
+ spechint:"日本の薬局で買える緊急避妊薬は2種類です。成分と量は同じです。",
  spec:[
   ["商品名","ノルレボ／レソエル72"],
   ["成分（1錠中）","レボノルゲストレル 1.5mg（2種類とも同じ）"],
   ["分類","特定要指導医薬品"],
   ["価格（税込・希望小売）","ノルレボ 7,480円／レソエル72 6,930円"],
-  ["飲み方","性交後72時間以内に1錠。薬剤師の前で飲みます"],
+  ["飲み方","性交後72時間以内に1錠。薬剤師さんの前で飲みます"],
   ["はたらき","排卵を遅らせるなどして、妊娠しにくくします"],
   ["健康保険","使えません（全額自己負担）"],
-  ["買い方","対面のみ。インターネット通販では買えません"]
+  ["受け取り方","薬局に行って受け取ります。お薬が家に配送されることはありません。オンライン診療で処方してもらった場合も、受け取りは薬局です"]
  ],
- specnote:"価格は希望小売価格です。薬局によって異なることがあります。出典: 厚生労働省、日本薬剤師会、各製品の添付文書。",
+ specnote:"価格は希望小売価格です。薬局によって違うことがあります。出典: 厚生労働省、日本薬剤師会、各製品の添付文書。",
 
  faqtitle:"よくある質問",
  faq:[
-  ["身分証は必要ですか","公的な案内では、必要と定められているのを確認できませんでした。ただし持っていくとやりとりが早く済むことがあります。持っていないことを理由に、行くのをやめないでください。"],
-  ["親に知られますか","年齢に関係なく、親の同意は必要ありません。薬局から家に連絡がいくこともありません。"],
-  ["16歳未満でも買えますか","年齢による制限はありません。ただし薬局では産婦人科をすすめられることがあります。それは断られたということではなく、病院でも同じ薬をもらえます。最初から産婦人科に行くほうが早い場合もあります。"],
-  ["代わりに買ってきてもらえますか","できません。薬を飲む本人が行き、薬剤師の前で飲む決まりです。"],
-  ["インターネットで買えますか","買えません。対面での購入が必要です。海外から個人輸入した薬は、偽物のおそれがあり、健康被害が出ても日本の救済制度の対象になりません。オンライン診療は別で、こちらは使えます。"],
-  ["100%妊娠を防げますか","防げません。飲んでも妊娠することがあります。飲んでから3週間後に、妊娠検査薬か医療機関で確認してください。"],
-  ["副作用はありますか","吐き気、頭痛、下腹部の痛み、不正出血などが起こることがあります。飲んで2時間以内に吐いてしまった場合は、薬剤師か医師に相談してください。"],
-  ["72時間を過ぎてしまいました","薬局では買えませんが、産婦人科では72時間から120時間の間に使える方法を相談できる場合があります。あきらめずに相談してください。"]
+  ["身分証は必要ですか","公式の案内に、身分証が必要だとは書かれていません。持っていくと確認がスムーズなことはありますが、なくても大丈夫です。持っていないからと、行くのをためらわないでくださいね。"],
+  ["親に知られますか","年齢に関係なく、親の同意はいりません。薬局から家に連絡がいくこともありません。"],
+  ["16歳未満でも買えますか","年齢による制限はありません。ただ薬局では、産婦人科をすすめられることがあります。断られたということではなく、病院でも同じお薬をもらえます。はじめから産婦人科に行くほうが早いこともあります。"],
+  ["かわりに買ってきてもらえますか","残念ながらできません。お薬を飲む本人が行って、薬剤師さんの前で飲む決まりになっています。"],
+  ["ネットで注文して届けてもらえますか","お薬が家に配送されることはありません。受け取りは必ず薬局です。ただし、オンライン診療で医師に処方してもらい、薬局で受け取る方法は使えます。海外から個人輸入したお薬は、偽物のおそれがあり、健康被害が出ても日本の救済制度の対象になりません。"],
+  ["100%妊娠を防げますか","残念ながら、100%ではありません。飲んでも妊娠することがあります。飲んでから3週間後に、妊娠検査薬か医療機関で確かめてください。"],
+  ["副作用はありますか","吐き気、頭痛、下腹部の痛み、不正出血などが起こることがあります。飲んで2時間以内に吐いてしまったときは、薬剤師さんか医師に相談してください。"],
+  ["72時間を過ぎてしまいました","薬局では買えませんが、産婦人科では72時間から120時間の間に使える方法を相談できることがあります。どうかあきらめずに、相談してみてください。"]
  ],
 
  knowtitle:"知っておくべきこと",
@@ -1391,7 +1431,6 @@ en:{
  r2n:"Online consultation", r2p:"approx. ¥5,000–15,000",
  r2d:"See a doctor by phone or computer, then collect the medicine at a pharmacy. Available at night, early morning and on holidays. Good if there is no pharmacy near you or you cannot go out. This is not online shopping — it is a medical consultation, and it is officially permitted.",
  r2b:"Find a participating pharmacy or doctor (Ministry of Health)",
- r3tag:"Choose this if you are under 16, past 72 hours, or a victim of sexual violence",
  r3n:"Visit an OB-GYN clinic", r3p:"approx. ¥6,000–15,000",
  r3d:"If you are under 16, a pharmacy will often refer you to a clinic anyway, so going straight here is faster. If you have experienced sexual violence, you can also discuss financial support and testing for sexually transmitted infections. Come here too if more than 72 hours have passed.",
  r3b:"Find an OB-GYN clinic (Ministry of Health)",
@@ -1449,7 +1488,6 @@ ko:{
  r2n:"온라인 진료", r2p:"약 5,000~15,000엔",
  r2d:"스마트폰이나 컴퓨터로 의사의 진료를 받고, 약국에서 받습니다. 밤중·새벽·공휴일에도 진료를 받을 수 있습니다. 근처에 약국이 없는 분, 외출이 어려운 분에게도 좋습니다. 이는 '인터넷 통신판매'가 아니라 '진료'이며, 국가가 인정한 방법입니다.",
  r2b:"대응 약국·의사 찾기 (후생노동성)",
- r3tag:"16세 미만·72시간 초과·성폭력 피해를 입은 분은 이쪽으로",
  r3n:"산부인과 진료", r3p:"약 6,000~15,000엔",
  r3d:"16세 미만인 분은 약국에서 진료를 권유받는 경우가 많으므로, 처음부터 이쪽이 빠릅니다. 성폭력 피해를 입은 경우에는 비용 지원이나 성감염증 검사도 상담할 수 있습니다. 72시간이 지난 경우에도 이쪽으로 오세요.",
  r3b:"산부인과 찾기 (후생노동성)",
@@ -1507,7 +1545,6 @@ zh:{
  r2n:"在线问诊", r2p:"约5,000～15,000日元",
  r2d:"通过手机或电脑接受医生问诊，然后在药店领取药品。深夜、清晨、节假日均可就诊。适合附近没有药店或外出困难的人。这不是「网络购物」，而是「问诊」，是国家认可的方式。",
  r2b:"查找可对应的药店和医生（厚生劳动省）",
- r3tag:"未满16岁、超过72小时、遭受性暴力者请选择此项",
  r3n:"前往妇产科就诊", r3p:"约6,000～15,000日元",
  r3d:"未满16岁者在药店往往会被建议就诊，因此直接前往妇产科反而更快。如果遭受了性暴力，还可以咨询费用支援和性传播疾病检查。超过72小时的情况也请前往这里。",
  r3b:"查找妇产科（厚生劳动省）",
@@ -1565,7 +1602,6 @@ vi:{
  r2n:"Khám trực tuyến", r2p:"khoảng 5.000–15.000 yên",
  r2d:"Khám bác sĩ qua điện thoại hoặc máy tính, rồi nhận thuốc tại nhà thuốc. Có thể khám vào ban đêm, sáng sớm và ngày lễ. Phù hợp với người không có nhà thuốc ở gần hoặc khó ra ngoài. Đây không phải là 'mua hàng qua mạng' mà là 'khám bệnh', và được nhà nước cho phép.",
  r2b:"Tìm nhà thuốc và bác sĩ hỗ trợ (Bộ Y tế)",
- r3tag:"Dành cho người dưới 16 tuổi, đã quá 72 giờ, hoặc là nạn nhân của bạo lực tình dục",
  r3n:"Đến phòng khám sản phụ khoa", r3p:"khoảng 6.000–15.000 yên",
  r3d:"Người dưới 16 tuổi thường được nhà thuốc khuyên đi khám, nên đến đây ngay từ đầu sẽ nhanh hơn. Nếu bạn là nạn nhân của bạo lực tình dục, bạn cũng có thể được tư vấn về hỗ trợ chi phí và xét nghiệm bệnh lây qua đường tình dục. Nếu đã quá 72 giờ, hãy đến đây.",
  r3b:"Tìm phòng khám sản phụ khoa (Bộ Y tế)",
@@ -1623,7 +1659,6 @@ ne:{
  r2n:"अनलाइन परामर्श", r2p:"लगभग ५,००० – १५,००० येन",
  r2d:"मोबाइल वा कम्प्युटरबाट डाक्टरको परामर्श लिई फार्मेसीमा औषधि लिनुहोस्। रात, बिहान सबेरै र सार्वजनिक बिदामा पनि सम्भव छ। नजिक फार्मेसी नभएका वा बाहिर निस्कन कठिन भएकाहरूका लागि उपयुक्त। यो 'अनलाइन किनमेल' होइन, 'परामर्श' हो र राज्यले मान्यता दिएको उपाय हो।",
  r2b:"सेवा दिने फार्मेसी र डाक्टर खोज्नुहोस् (मन्त्रालय)",
- r3tag:"१६ वर्षमुनिका, ७२ घण्टा नाघेका, वा यौन हिंसा भोगेकाहरूका लागि",
  r3n:"क्लिनिकमा जाने", r3p:"लगभग ६,००० – १५,००० येन",
  r3d:"१६ वर्षमुनिकाहरूलाई फार्मेसीले प्रायः क्लिनिक जाने सल्लाह दिन्छ, त्यसैले सुरुदेखै यहाँ आउनु छिटो हुन्छ। यौन हिंसा भोगेको भए खर्च सहयोग र यौन सम्पर्कबाट सर्ने रोगको परीक्षणबारे पनि परामर्श लिन सकिन्छ। ७२ घण्टा नाघेको भए पनि यहाँ आउनुहोस्।",
  r3b:"क्लिनिक खोज्नुहोस् (मन्त्रालय)",
@@ -1681,7 +1716,6 @@ ms:{
  r2n:"Konsultasi dalam talian", r2p:"kira-kira ¥5,000–15,000",
  r2d:"Berjumpa doktor melalui telefon atau komputer, kemudian ambil ubat di farmasi. Boleh dilakukan pada waktu malam, awal pagi dan hari kelepasan. Sesuai jika tiada farmasi berdekatan atau anda sukar keluar. Ini bukan 'beli-belah dalam talian' tetapi 'konsultasi perubatan', dan dibenarkan oleh kerajaan.",
  r2b:"Cari farmasi dan doktor yang menyediakan perkhidmatan ini (Kementerian)",
- r3tag:"Untuk yang bawah 16 tahun, melebihi 72 jam, atau mangsa keganasan seksual",
  r3n:"Pergi ke klinik sakit puan", r3p:"kira-kira ¥6,000–15,000",
  r3d:"Bagi yang bawah 16 tahun, farmasi selalunya akan merujuk anda ke klinik, jadi datang ke sini dari awal lebih cepat. Jika anda mangsa keganasan seksual, anda juga boleh membincangkan bantuan kos dan ujian penyakit kelamin. Jika sudah melebihi 72 jam, datang ke sini juga.",
  r3b:"Cari klinik sakit puan (Kementerian)",
@@ -1759,7 +1793,6 @@ function render(){
   txt("t-r1n", g("r1n")); txt("t-r1p", g("r1p")); txt("t-r1d", g("r1d")); txt("t-r1b", g("r1b"));
   txt("t-r2n", g("r2n")); txt("t-r2p", g("r2p")); txt("t-r2d", g("r2d")); txt("t-r2b", g("r2b"));
   txt("t-r3n", g("r3n")); txt("t-r3p", g("r3p")); txt("t-r3d", g("r3d")); txt("t-r3b", g("r3b"));
-  txt("t-r3tag", g("r3tag"));
   txt("t-stepstitle", g("stepstitle"));
   txt("t-stepshint", g("stepshint"));
   txt("t-checktitle", g("checktitle"));
@@ -1799,7 +1832,7 @@ function render(){
   });
 
   /* 服用前チェック: 文字列の配列を2群ぶん */
-  ["checkno","checkask"].forEach(function(id){
+  ["checkno","checknote","checkask"].forEach(function(id){
     var ul=document.getElementById(id);
     ul.innerHTML="";
     (g(id)||[]).forEach(function(t){
