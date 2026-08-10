@@ -131,30 +131,46 @@ a:not(.btn) {
   padding-inline: var(--wrap-pad);
 }
 
-/* 冒頭は温かいクリームから白へ。上端に鮮やかなオレンジの帯を入れて、
-   ページを開いた瞬間に色が目に入るようにしています。 */
+/* 冒頭は鮮やかなオレンジのベタ塗りに白抜き。
+   明るい側 #ea580c は白文字との比が 3.56:1 なので、
+   ここに置く文字は「大きい文字」の条件（24px以上、または18.66px以上の太字）を
+   満たすものだけにしています。小さい文字は白いバッジの上に載せます。 */
 .hero {
+  background: linear-gradient(135deg, #ea580c 0%, var(--brand) 100%);
+}
+
+.hero h1 {
+  color: #ffffff;
+}
+
+.hero .lead {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ヒーローのバッジは、ライトでもダークでも白地のままなので、
+   文字色を変数にせず固定する（変数にするとダークで淡い色になり読めなくなる）。 */
+.hero .label {
+  background: #ffffff;
+  color: #a63900;
+}
+
+/* 見出しの左に太いオレンジの縦棒（前身サイトと同じ形） */
+h2 {
   position: relative;
-  background: linear-gradient(180deg, #ffe8d6 0, var(--surface) 100%);
+  padding-left: 18px;
 }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 5px;
-  background: var(--brand-vivid);
-}
-
-/* 見出しの上に鮮やかなオレンジの短い線を置く */
 h2::before {
   content: "";
+  position: absolute;
+  top: 0.18em;
+  bottom: 0.18em;
+  left: 0;
   display: block;
-  width: 36px;
-  height: 4px;
-  margin-bottom: 16px;
+  width: 5px;
+  margin: 0;
   border-radius: 999px;
   background: var(--brand-vivid);
 }
@@ -289,9 +305,9 @@ small {
   text-align: center;
 }
 
-/* 冒頭は余白を大きくとる。装飾は置かず、文字の階層だけで見せる。 */
+/* オレンジの面をしっかり見せたいので、上下の余白を大きくとる */
 .hero {
-  padding-block: clamp(44px, 10vw, 80px) clamp(40px, 9vw, 64px);
+  padding-block: clamp(52px, 12vw, 96px) clamp(52px, 12vw, 88px);
 }
 
 /* カウントダウンは帯そのものが青の面になるため、ここでは箱を持たない */
@@ -1016,9 +1032,6 @@ footer p {
     color: #1a0f08;
   }
 
-  .hero {
-    background: var(--paper);
-  }
 
   table.eff tr.hit td {
     border-color: #7a4a2c;
