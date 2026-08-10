@@ -635,6 +635,11 @@ table.eff tr td.v3 {
   margin: 0 0 18px;
 }
 
+/* 帯の中に直接置く囲み */
+.inner > .way {
+  margin-top: 22px;
+}
+
 /* 【〜】のような小見出し */
 .blocktitle {
   margin: 0 0 8px;
@@ -1281,6 +1286,10 @@ footer p {
     <h2 id="t-aftertitle"></h2>
     <p id="t-afterbody1"></p>
     <p id="t-afterbody2"></p>
+    <div class="way">
+      <p class="waytitle" id="t-secrett"></p>
+      <p id="t-secretd"></p>
+    </div>
   </div>
 </section>
 
@@ -1304,15 +1313,6 @@ footer p {
   </div>
 </section>
 
-<!-- ===== 知っておくこと ===== -->
-<section class="band">
-  <div class="inner">
-    <h2 id="t-knowtitle"></h2>
-    <!-- 中身は JavaScript が <div class="item"><h3>…<p>… の形で作ります。
-         見た目を変えるときは CSS 側（.know .item）で調整してください。 -->
-    <div class="know" id="knowlist"></div>
-  </div>
-</section>
 
 <!-- ===== 相談 ===== -->
 <section class="band tint">
@@ -1406,13 +1406,15 @@ ja:{
  r1b:"薬局をさがす（厚生労働省）",
  r2n:"オンライン診療", r2p:"約5,000〜15,000円",
  r2d:"スマホやパソコンを使って、オンラインで医師の診察を受けることができます。夜中や早朝、土日祝日でも対応しているクリニックがあるため、すぐに行動したいときの大きな助けになります。",
- r2ways:"お薬の受け取り方には、大きく分けて2つの方法があります。",
+ r2ways:"本人が指定した薬局で受け取るか、自宅などに郵送され受け取ることができます。",
  r2w1t:"① 薬局に行って受け取る方法（国の指針に沿ったやり方）",
  r2w1d:"オンライン診療の後、医師が処方箋を出し、指定の薬局へお薬を取りに行く方法です。薬局で薬剤師さんから説明を受け、その場で（薬剤師さんの前で）お薬を飲みます。これが厚生労働省の指針で定められた原則的なルールです。",
  r2w2t:"② 自宅のポストなどに届けてもらう方法（自費診療クリニックの郵送サービス）",
  r2w2d:"自費診療を行っている一部のクリニックでは、診察後に「お薬そのもの」を自宅へ郵送・バイク便などで届けてくれるサービスを行っています。「どうしても外に出られない」「近くに開いている薬局がない」といった場合にとても助かる選択肢です。最短で当日や翌日にポストに届くこともあります。",
  r2cautiont:"【郵送サービスを利用するときの注意点】",
  r2cautiond:"とても便利な郵送サービスですが、いくつか気をつけてほしいことがあります。緊急避妊薬は「性交後72時間以内（お薬によっては120時間以内）」に、できるだけ早く飲むことが大切です。郵送の場合、届くまでに時間がかかってタイムリミットに間に合わないリスクがあります。利用する際は、必ず「いつ自分の手元に届くのか（発送日ではなく到着日）」をしっかり確認してください。また、海外からの個人輸入サイトは、届くのが遅く偽物の危険もあるため、絶対に利用しないでください。必ず国内の医師の診察を受けられるサービスを選びましょう。",
+ secrett:"秘密は守られます",
+ secretd:"薬剤師さんや医師には守秘義務があります。家族や学校、職場に伝わることはありません。相談機関を紹介する場合も、あなたの同意を得てから行われます。",
  aftertitle:"服用した後の不安について",
  afterbody1:"お薬を飲んだ後は、一時的に吐き気や頭痛がすることがありますが、数時間〜1日程度でおさまることが多いです。もし飲んでから2時間以内に吐いてしまった場合は、お薬が吸収されていない可能性があるため、すぐに医師や薬剤師に相談してください。",
  afterbody2:"また、早ければ数日〜3週間以内に「消退出血」という生理のような出血が来ます。3週間経っても出血がない場合は、念のため妊娠検査薬で確認するか、婦人科を受診してくださいね。",
@@ -1439,7 +1441,7 @@ ja:{
    "行けそうな産婦人科をさがします。夜間や休日は、地域の救急相談窓口でも案内してもらえます。",
    "電話で「緊急避妊のことで受診したい」と伝えて、診てもらえるか聞いてみてください。",
    "受診します。最後の生理の日を聞かれることが多いので、思い出しておくとスムーズです。",
-   "診察を受けて、お薬が処方されます。その場で飲みます。",
+   "診察を受けて、お薬が処方されます。その場で飲むことが多いですが、施設によって異なります。",
    "費用を支払います。健康保険は使えません。性暴力の被害にあった場合は公費で負担されることがあるので、そのことも遠慮なく相談してください。"
   ]],
   ["薬局・ドラッグストアで買う",[
@@ -1505,17 +1507,6 @@ ja:{
   ["副作用はありますか","吐き気、頭痛、下腹部の痛み、不正出血などが起こることがあります。飲んで2時間以内に吐いてしまったときは、薬剤師さんか医師に相談してください。"],
   ["72時間を過ぎてしまいました","薬局では買えませんが、産婦人科では72時間から120時間の間に使える方法を相談できることがあります。どうかあきらめずに、相談してみてください。"]
  ],
-
- knowtitle:"知っておくべきこと",
- know:[
-  ["本人が受け取ります","薬を飲む人が自分で受け取ります。家族や友人、パートナーが代わりに買うことはできません。"],
-  ["年齢の制限はありません","親やパートナーの同意も必要ありません。ただし16歳未満の方は、薬局で産婦人科をすすめられることがあります。断られたわけではありません。病院でも同じ薬をもらえます。"],
-  ["その場で飲みます","薬剤師の前で1錠を飲みます。持ち帰ることはできません。人に渡すこともできません。"],
-  ["健康保険は使えません","全額を自分で払います。現金を用意しておくと確実です。カードが使えない薬局もあります。"],
-  ["ネット通販では買えません","海外からの個人輸入は、偽物のおそれがあり、健康被害が出ても日本の救済制度の対象になりません。オンライン診療は別で、こちらは使えます。"],
-  ["3週間後に確認します","100%ではありません。飲んでから3週間後に、妊娠検査薬か医療機関で確認してください。"],
-  ["秘密は守られます","薬剤師や医師には守秘義務があります。家族や学校、職場に伝わることはありません。相談機関を紹介する場合も、あなたの同意を得てから行われます。"]
- ],
  consulttitle:"一人で抱えなくて大丈夫です",
  consulttext:"無料で相談できる公的な窓口があります。性暴力の被害にあった場合は、診察や薬の費用の支援を受けられる場合があります。費用を理由にあきらめないでください。",
  cb1:"性暴力の相談窓口をさがす（内閣府）",
@@ -1563,16 +1554,6 @@ en:{
  r3n:"Visit an OB-GYN clinic", r3p:"approx. ¥6,000–15,000",
  r3d:"If you are under 16, a pharmacy will often refer you to a clinic anyway, so going straight here is faster. If you have experienced sexual violence, you can also discuss financial support and testing for sexually transmitted infections. Come here too if more than 72 hours have passed.",
  r3b:"Find an OB-GYN clinic (Ministry of Health)",
- knowtitle:"What you need to know",
- know:[
-  ["You must collect it yourself","The person who will take the medicine must collect it. Family, friends or a partner cannot buy it for you."],
-  ["There is no age limit","You do not need permission from a parent or partner. However, if you are under 16, a pharmacy may refer you to an OB-GYN. This is not a refusal — the clinic gives you the same medicine."],
-  ["You take it on the spot","You take one tablet in front of the pharmacist. You cannot take it home or give it to anyone else."],
-  ["Health insurance does not cover it","You pay the full amount yourself. Bring cash — some pharmacies do not accept cards."],
-  ["You cannot buy it by mail order","Importing it from abroad risks counterfeit medicine, and Japan's injury relief system will not cover you. An online consultation is different — that option is available."],
-  ["Check again after 3 weeks","It is not 100% effective. Three weeks after taking it, use a pregnancy test or see a doctor."],
-  ["Your privacy is protected","Pharmacists and doctors are bound by confidentiality. Nothing is reported to your family, school or workplace. If they refer you to a support service, they will ask your permission first."]
- ],
  consulttitle:"You do not have to face this alone",
  consulttext:"Free public support services are available. If you have experienced sexual violence, the cost of the consultation and the medicine may be covered. Please do not give up because of money.",
  cb1:"Find a sexual violence support centre (Cabinet Office)",
@@ -1620,16 +1601,6 @@ ko:{
  r3n:"산부인과 진료", r3p:"약 6,000~15,000엔",
  r3d:"16세 미만인 분은 약국에서 진료를 권유받는 경우가 많으므로, 처음부터 이쪽이 빠릅니다. 성폭력 피해를 입은 경우에는 비용 지원이나 성감염증 검사도 상담할 수 있습니다. 72시간이 지난 경우에도 이쪽으로 오세요.",
  r3b:"산부인과 찾기 (후생노동성)",
- knowtitle:"알아두어야 할 것",
- know:[
-  ["본인이 받습니다","약을 복용하는 사람이 직접 받아야 합니다. 가족이나 친구, 파트너가 대신 살 수 없습니다."],
-  ["연령 제한은 없습니다","부모나 파트너의 동의도 필요하지 않습니다. 다만 16세 미만인 분은 약국에서 산부인과를 권유받을 수 있습니다. 거절당한 것이 아닙니다. 병원에서도 같은 약을 받을 수 있습니다."],
-  ["그 자리에서 복용합니다","약사 앞에서 1정을 복용합니다. 가지고 갈 수 없습니다. 다른 사람에게 줄 수도 없습니다."],
-  ["건강보험은 적용되지 않습니다","전액 본인이 부담합니다. 현금을 준비해 두면 확실합니다. 카드를 쓸 수 없는 약국도 있습니다."],
-  ["인터넷 통신판매로는 살 수 없습니다","해외에서 개인 수입하면 가짜 약일 우려가 있고, 건강 피해가 생겨도 일본의 구제 제도 대상이 되지 않습니다. 온라인 진료는 다르며, 이쪽은 이용할 수 있습니다."],
-  ["3주 후에 확인합니다","100%가 아닙니다. 복용 후 3주 뒤에 임신 검사약이나 의료기관에서 확인해 주세요."],
-  ["비밀은 지켜집니다","약사와 의사에게는 비밀유지 의무가 있습니다. 가족이나 학교, 직장에 알려지지 않습니다. 상담 기관을 소개하는 경우에도 본인의 동의를 얻은 후에 이루어집니다."]
- ],
  consulttitle:"혼자 감당하지 않아도 괜찮습니다",
  consulttext:"무료로 상담할 수 있는 공적 창구가 있습니다. 성폭력 피해를 입은 경우에는 진료나 약의 비용을 지원받을 수 있는 경우가 있습니다. 비용 때문에 포기하지 마세요.",
  cb1:"성폭력 상담 창구 찾기 (내각부)",
@@ -1677,16 +1648,6 @@ zh:{
  r3n:"前往妇产科就诊", r3p:"约6,000～15,000日元",
  r3d:"未满16岁者在药店往往会被建议就诊，因此直接前往妇产科反而更快。如果遭受了性暴力，还可以咨询费用支援和性传播疾病检查。超过72小时的情况也请前往这里。",
  r3b:"查找妇产科（厚生劳动省）",
- knowtitle:"需要了解的事项",
- know:[
-  ["必须本人领取","必须由服用药物的本人亲自领取。家人、朋友或伴侣不能代为购买。"],
-  ["没有年龄限制","也不需要父母或伴侣的同意。但未满16岁者在药店可能会被建议前往妇产科。这并不是拒绝，医院也能开出同样的药。"],
-  ["需当场服用","在药剂师面前服用一片。不能带回家，也不能转交他人。"],
-  ["医疗保险不适用","需全额自费。准备现金较为稳妥，有些药店无法使用银行卡。"],
-  ["无法通过网络购物购买","从海外个人进口有买到假药的风险，而且出现健康损害时也不在日本的救济制度范围内。在线问诊则不同，这种方式可以使用。"],
-  ["三周后需要确认","效果并非100%。服用三周后，请使用验孕棒或前往医疗机构确认。"],
-  ["秘密会被保护","药剂师和医生有保密义务。不会告知您的家人、学校或工作单位。如需介绍咨询机构，也会先征得您的同意。"]
- ],
  consulttitle:"您不必独自承受",
  consulttext:"有可以免费咨询的公共窗口。如果遭受了性暴力，问诊和药品的费用有可能获得支援。请不要因为费用而放弃。",
  cb1:"查找性暴力咨询窗口（内阁府）",
@@ -1734,16 +1695,6 @@ vi:{
  r3n:"Đến phòng khám sản phụ khoa", r3p:"khoảng 6.000–15.000 yên",
  r3d:"Người dưới 16 tuổi thường được nhà thuốc khuyên đi khám, nên đến đây ngay từ đầu sẽ nhanh hơn. Nếu bạn là nạn nhân của bạo lực tình dục, bạn cũng có thể được tư vấn về hỗ trợ chi phí và xét nghiệm bệnh lây qua đường tình dục. Nếu đã quá 72 giờ, hãy đến đây.",
  r3b:"Tìm phòng khám sản phụ khoa (Bộ Y tế)",
- knowtitle:"Những điều cần biết",
- know:[
-  ["Bạn phải tự nhận thuốc","Người sẽ uống thuốc phải tự mình đến nhận. Gia đình, bạn bè hay người yêu không thể mua thay."],
-  ["Không có giới hạn tuổi","Bạn cũng không cần sự đồng ý của cha mẹ hay người yêu. Tuy nhiên, nếu dưới 16 tuổi, nhà thuốc có thể khuyên bạn đến phòng khám sản phụ khoa. Đó không phải là từ chối — bệnh viện cũng cấp cùng loại thuốc."],
-  ["Bạn uống ngay tại chỗ","Bạn uống một viên trước mặt dược sĩ. Không được mang về nhà, cũng không được đưa cho người khác."],
-  ["Bảo hiểm y tế không áp dụng","Bạn tự trả toàn bộ. Nên mang tiền mặt vì một số nhà thuốc không nhận thẻ."],
-  ["Không thể mua qua mạng","Nhập khẩu cá nhân từ nước ngoài có nguy cơ nhận thuốc giả, và nếu bị tổn hại sức khỏe thì không được chế độ cứu trợ của Nhật Bản bảo vệ. Khám trực tuyến thì khác — cách đó có thể dùng."],
-  ["Kiểm tra lại sau 3 tuần","Hiệu quả không phải 100%. Ba tuần sau khi uống, hãy dùng que thử thai hoặc đến cơ sở y tế kiểm tra."],
-  ["Thông tin của bạn được bảo mật","Dược sĩ và bác sĩ có nghĩa vụ giữ bí mật. Không có gì được thông báo cho gia đình, trường học hay nơi làm việc. Nếu họ giới thiệu bạn đến cơ quan hỗ trợ, họ sẽ xin phép bạn trước."]
- ],
  consulttitle:"Bạn không phải một mình đối mặt với điều này",
  consulttext:"Có các cơ quan công có thể tư vấn miễn phí. Nếu bạn là nạn nhân của bạo lực tình dục, chi phí khám và thuốc có thể được hỗ trợ. Xin đừng bỏ cuộc vì tiền.",
  cb1:"Tìm trung tâm hỗ trợ nạn nhân bạo lực tình dục (Văn phòng Nội các)",
@@ -1791,16 +1742,6 @@ ne:{
  r3n:"क्लिनिकमा जाने", r3p:"लगभग ६,००० – १५,००० येन",
  r3d:"१६ वर्षमुनिकाहरूलाई फार्मेसीले प्रायः क्लिनिक जाने सल्लाह दिन्छ, त्यसैले सुरुदेखै यहाँ आउनु छिटो हुन्छ। यौन हिंसा भोगेको भए खर्च सहयोग र यौन सम्पर्कबाट सर्ने रोगको परीक्षणबारे पनि परामर्श लिन सकिन्छ। ७२ घण्टा नाघेको भए पनि यहाँ आउनुहोस्।",
  r3b:"क्लिनिक खोज्नुहोस् (मन्त्रालय)",
- knowtitle:"जान्नुपर्ने कुरा",
- know:[
-  ["आफैंले लिनुपर्छ","औषधि खाने व्यक्ति आफैंले लिनुपर्छ। परिवार, साथी वा साझेदारले किनिदिन मिल्दैन।"],
-  ["उमेरको सीमा छैन","अभिभावक वा साझेदारको अनुमति पनि चाहिँदैन। तर १६ वर्षमुनिका भए फार्मेसीले क्लिनिक जाने सल्लाह दिन सक्छ। यो अस्वीकार होइन — अस्पतालमा पनि त्यही औषधि पाइन्छ।"],
-  ["त्यहीँ खानुपर्छ","फार्मासिस्टको अगाडि एक चक्की खानुपर्छ। घर लिएर जान वा अरूलाई दिन मिल्दैन।"],
-  ["स्वास्थ्य बीमा लागू हुँदैन","पूरै रकम आफैंले तिर्नुपर्छ। नगद बोक्नु सुरक्षित हुन्छ — केही फार्मेसीमा कार्ड चल्दैन।"],
-  ["अनलाइन किनमेलबाट किन्न सकिँदैन","विदेशबाट व्यक्तिगत आयात गर्दा नक्कली औषधि आउने जोखिम हुन्छ, र स्वास्थ्यमा क्षति भए जापानको क्षतिपूर्ति प्रणालीले समेट्दैन। अनलाइन परामर्श भिन्न कुरा हो — त्यो प्रयोग गर्न सकिन्छ।"],
-  ["३ हप्तापछि जाँच गर्नुहोस्","यो १००% प्रभावकारी होइन। खाएको ३ हप्तापछि गर्भ परीक्षण किट प्रयोग गर्नुहोस् वा स्वास्थ्य संस्थामा जाँच गराउनुहोस्।"],
-  ["गोपनीयता सुरक्षित छ","फार्मासिस्ट र डाक्टरको गोपनीयता राख्ने कर्तव्य हुन्छ। परिवार, विद्यालय वा कार्यस्थलमा जानकारी जाँदैन। सहयोग संस्थामा पठाउनुपर्दा पनि तपाईंको अनुमति लिइन्छ।"]
- ],
  consulttitle:"तपाईं एक्लै सहनुपर्दैन",
  consulttext:"निःशुल्क परामर्श दिने सरकारी सेवा छन्। यौन हिंसा भोगेको भए परामर्श र औषधिको खर्च सहयोग पाउन सकिन्छ। कृपया पैसाको कारणले आशा नत्याग्नुहोस्।",
  cb1:"यौन हिंसा सहायता केन्द्र खोज्नुहोस् (क्याबिनेट कार्यालय)",
@@ -1848,16 +1789,6 @@ ms:{
  r3n:"Pergi ke klinik sakit puan", r3p:"kira-kira ¥6,000–15,000",
  r3d:"Bagi yang bawah 16 tahun, farmasi selalunya akan merujuk anda ke klinik, jadi datang ke sini dari awal lebih cepat. Jika anda mangsa keganasan seksual, anda juga boleh membincangkan bantuan kos dan ujian penyakit kelamin. Jika sudah melebihi 72 jam, datang ke sini juga.",
  r3b:"Cari klinik sakit puan (Kementerian)",
- knowtitle:"Perkara yang perlu anda tahu",
- know:[
-  ["Anda mesti mengambilnya sendiri","Orang yang akan mengambil ubat mesti mengambilnya sendiri. Keluarga, rakan atau pasangan tidak boleh membelinya untuk anda."],
-  ["Tiada batasan umur","Anda juga tidak memerlukan kebenaran ibu bapa atau pasangan. Namun jika anda bawah 16 tahun, farmasi mungkin merujuk anda ke klinik sakit puan. Itu bukan penolakan — hospital juga memberikan ubat yang sama."],
-  ["Anda mengambilnya di situ","Anda menelan satu tablet di hadapan ahli farmasi. Anda tidak boleh membawanya balik atau memberikannya kepada orang lain."],
-  ["Insurans kesihatan tidak melindunginya","Anda membayar sepenuhnya sendiri. Bawa wang tunai — sesetengah farmasi tidak menerima kad."],
-  ["Tidak boleh dibeli melalui pos atau dalam talian","Mengimport sendiri dari luar negara berisiko mendapat ubat tiruan, dan sistem pampasan Jepun tidak akan melindungi anda jika berlaku kemudaratan. Konsultasi dalam talian adalah berbeza — cara itu boleh digunakan."],
-  ["Periksa semula selepas 3 minggu","Ia tidak 100% berkesan. Tiga minggu selepas mengambilnya, gunakan ujian kehamilan atau berjumpa doktor."],
-  ["Kerahsiaan anda dilindungi","Ahli farmasi dan doktor terikat dengan kerahsiaan. Tiada apa-apa dilaporkan kepada keluarga, sekolah atau tempat kerja anda. Jika mereka merujuk anda kepada perkhidmatan bantuan, mereka akan meminta kebenaran anda terlebih dahulu."]
- ],
  consulttitle:"Anda tidak perlu menghadapinya sendiri",
  consulttext:"Terdapat perkhidmatan bantuan awam yang percuma. Jika anda mangsa keganasan seksual, kos konsultasi dan ubat mungkin ditanggung. Jangan berputus asa kerana wang.",
  cb1:"Cari pusat bantuan keganasan seksual (Pejabat Kabinet)",
@@ -1940,6 +1871,8 @@ function render(){
   txt("t-aftertitle", g("aftertitle"));
   txt("t-afterbody1", g("afterbody1"));
   txt("t-afterbody2", g("afterbody2"));
+  txt("t-secrett", g("secrett"));
+  txt("t-secretd", g("secretd"));
   txt("t-stepstitle", g("stepstitle"));
   txt("t-stepshint", g("stepshint"));
   txt("t-checktitle", g("checktitle"));
@@ -1952,7 +1885,6 @@ function render(){
   txt("t-spechint", g("spechint"));
   txt("t-specnote", g("specnote"));
   txt("t-faqtitle", g("faqtitle"));
-  txt("t-knowtitle", g("knowtitle"));
   txt("t-consulttitle", g("consulttitle"));
   txt("t-consulttext", g("consulttext"));
   txt("t-cb1", g("cb1")); txt("t-cb2", g("cb2")); txt("t-cb3", g("cb3"));
@@ -2019,14 +1951,6 @@ function render(){
     dt.appendChild(sm); dt.appendChild(p); fb.appendChild(dt);
   });
 
-  var box=document.getElementById("knowlist");
-  box.innerHTML="";
-  (g("know")||[]).forEach(function(pair){
-    var w=document.createElement("div"); w.className="item";
-    var h=document.createElement("h3"); h.textContent=pair[0];
-    var p=document.createElement("p"); p.textContent=pair[1];
-    w.appendChild(h); w.appendChild(p); box.appendChild(w);
-  });
 
   tick();
 }
