@@ -90,13 +90,18 @@ body {
     var(--paper);
   background-attachment: fixed;
   color: var(--ink);
+  /* やわらかい丸ゴシックを先に指定し、無い端末では順に通常のゴシックへ落とします。
+     外部フォントは読み込まないので、閲覧者の端末に入っている書体だけを並べています。
+     後半の3つ（YaHei / Nirmala UI / Kohinoor Devanagari）は
+     中国語・ネパール語の表示に効くので消さないでください。 */
   font-family:
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Hiragino Maru Gothic ProN", "Zen Maru Gothic", "Quicksand",
+    "Segoe UI Variable Display", system-ui, -apple-system, BlinkMacSystemFont,
     "Hiragino Sans", "Yu Gothic", "Malgun Gothic",
     "Microsoft YaHei", "Nirmala UI", "Kohinoor Devanagari", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.85;
   overflow-wrap: anywhere;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
@@ -150,8 +155,9 @@ a:not(.btn) {
 
 .hero .lead {
   color: var(--ink-2);
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
+  line-height: 2;
 }
 
 .hero .label {
@@ -201,11 +207,18 @@ p {
 
 h1 {
   max-width: 15em;
-  margin: 0 0 20px;
-  font-size: clamp(1.85rem, 7.2vw, 2.75rem);
+  margin: 0 0 22px;
+  font-size: clamp(1.6rem, 6.4vw, 2.35rem);
   font-weight: 600;
-  line-height: 1.42;
-  letter-spacing: 0.01em;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+/* 翻訳データの中の改行をそのまま活かします。
+   改行を入れていない言語は、これまでどおり自動で折り返します。 */
+#t-title,
+#t-subtitle {
+  white-space: pre-line;
 }
 
 /* 見出しの上の余白は帯（.band の padding-block）が持つので、ここでは付けない */
@@ -240,8 +253,8 @@ small {
 .lead {
   max-width: 42em;
   color: var(--ink-2);
-  font-size: 16px;
-  line-height: 1.9;
+  font-size: 15px;
+  line-height: 1.95;
 }
 
 .langbar {
@@ -1428,8 +1441,8 @@ ja:{
  pageTitle:"緊急避妊薬を手に入れる方法 | 7言語ガイド",
  tophint:"このサイトは公式サイトではありません（個人が運営しています）",
  eyebrow:"まだ、間に合う",
- title:"緊急避妊薬を手に入れる方法",
- subtitle:"日本では、産婦人科・薬局・オンライン診療の3つの方法で手に入れられます。夜おそくでも、方法はあります。ひとつずつ見ていきましょう。",
+ title:"緊急避妊薬を\n手に入れる方法",
+ subtitle:"日本では\n・産婦人科\n・薬局\n・オンライン診療\nの3つの方法で手に入れられます。\n\n夜おそくても方法はあります。\nひとつずつ見ていきましょう。",
  cdlabel:"避妊せずに性交をした日時を入れてみてください",
  cdempty:"日時を入れると、残り時間が出ます",
  cdprefix:"",
