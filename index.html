@@ -609,6 +609,48 @@ table.eff tr td.v3 {
   color: #ffffff;
 }
 
+/* オンライン診療カードの中の「受け取り方2つ」と注意書き */
+.ways {
+  display: grid;
+  margin: 0 0 18px;
+  gap: 12px;
+}
+
+.way {
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+}
+
+.waytitle {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.way p:last-child,
+.notebox p:last-child {
+  margin: 0;
+}
+
+.notebox {
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  border-left: 4px solid var(--brand);
+  border-radius: var(--radius);
+  background: var(--brand-tint);
+}
+
+.noteboxtitle {
+  margin: 0 0 8px;
+  color: var(--brand-dark);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
 /* ===== ここから、前身サイトにあった4つの内容を作り直したもの ===== */
 
 /* 購入の流れ: 経路ごとの手順を番号つきで分解して見せる */
@@ -1146,6 +1188,21 @@ footer p {
         <span class="no">03</span>
         <div class="hd"><h3 id="t-r2n"></h3><span class="price" id="t-r2p"></span></div>
         <p id="t-r2d"></p>
+        <p id="t-r2ways"></p>
+        <div class="ways">
+          <div class="way">
+            <p class="waytitle" id="t-r2w1t"></p>
+            <p id="t-r2w1d"></p>
+          </div>
+          <div class="way">
+            <p class="waytitle" id="t-r2w2t"></p>
+            <p id="t-r2w2d"></p>
+          </div>
+        </div>
+        <div class="notebox">
+          <p class="noteboxtitle" id="t-r2cautiont"></p>
+          <p id="t-r2cautiond"></p>
+        </div>
         <a class="btn sub" id="t-r2b" rel="noopener noreferrer" target="_blank"
            href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00004.html"></a>
       </div>
@@ -1183,6 +1240,15 @@ footer p {
       <p id="t-checkasknote"></p>
       <ul class="checklist ask" id="checkask"></ul>
     </div>
+  </div>
+</section>
+
+<!-- ===== 飲んだあとのこと ===== -->
+<section class="band">
+  <div class="inner">
+    <h2 id="t-aftertitle"></h2>
+    <p id="t-afterbody1"></p>
+    <p id="t-afterbody2"></p>
   </div>
 </section>
 
@@ -1298,7 +1364,17 @@ ja:{
  r1d:"処方箋はいりません。いちばん手軽で、早く手に入る方法です。ただ、すべての薬局に置いてあるわけではないので、行く前に電話で確かめると安心です。電話は薬を飲む本人からかけてください（かけるのを誰かに手伝ってもらうのはかまいません）。",
  r1b:"薬局をさがす（厚生労働省）",
  r2n:"オンライン診療", r2p:"約5,000〜15,000円",
- r2d:"スマホやパソコンで医師の診察を受けられます。夜中や早朝、祝日でも受けられるのが大きな利点です。お薬の受け取り方は2通りあります。ひとつは薬局へ行って薬剤師さんの前で飲む方法で、これが国の指針にそったやり方です。もうひとつは、自費のクリニックがお薬を自宅へ届ける方法です。外に出るのがむずかしいときの助けになりますが、下の「よくある質問」に書いた点だけ確かめてから使ってください。",
+ r2d:"スマホやパソコンを使って、オンラインで医師の診察を受けることができます。夜中や早朝、土日祝日でも対応しているクリニックがあるため、すぐに行動したいときの大きな助けになります。",
+ r2ways:"お薬の受け取り方には、大きく分けて2つの方法があります。",
+ r2w1t:"① 薬局に行って受け取る方法（国の指針に沿ったやり方）",
+ r2w1d:"オンライン診療の後、医師が処方箋を出し、指定の薬局へお薬を取りに行く方法です。薬局で薬剤師さんから説明を受け、その場で（薬剤師さんの前で）お薬を飲みます。これが厚生労働省の指針で定められた原則的なルールです。",
+ r2w2t:"② 自宅のポストなどに届けてもらう方法（自費診療クリニックの郵送サービス）",
+ r2w2d:"自費診療を行っている一部のクリニックでは、診察後に「お薬そのもの」を自宅へ郵送・バイク便などで届けてくれるサービスを行っています。「どうしても外に出られない」「近くに開いている薬局がない」といった場合にとても助かる選択肢です。最短で当日や翌日にポストに届くこともあります。",
+ r2cautiont:"【郵送サービスを利用するときの注意点】",
+ r2cautiond:"とても便利な郵送サービスですが、いくつか気をつけてほしいことがあります。緊急避妊薬は「性交後72時間以内（お薬によっては120時間以内）」に、できるだけ早く飲むことが大切です。郵送の場合、届くまでに時間がかかってタイムリミットに間に合わないリスクがあります。利用する際は、必ず「いつ自分の手元に届くのか（発送日ではなく到着日）」をしっかり確認してください。また、海外からの個人輸入サイトは、届くのが遅く偽物の危険もあるため、絶対に利用しないでください。必ず国内の医師の診察を受けられるサービスを選びましょう。",
+ aftertitle:"服用した後の不安について",
+ afterbody1:"お薬を飲んだ後は、一時的に吐き気や頭痛がすることがありますが、数時間〜1日程度でおさまることが多いです。もし飲んでから2時間以内に吐いてしまった場合は、お薬が吸収されていない可能性があるため、すぐに処方してもらった医師に相談してください。",
+ afterbody2:"また、早ければ数日〜3週間以内に「消退出血」という生理のような出血が来ます。3週間経っても出血がない場合は、念のため妊娠検査薬で確認するか、婦人科を受診してくださいね。",
  r2b:"対応する薬局・医師をさがす（厚生労働省）",
  r3n:"産婦人科を受診", r3p:"約6,000〜15,000円",
  r3d:"どなたでも受診できます。医師に直接聞けるので、不安なことをその場で相談できます。希望すれば性感染症の検査や、これからの避妊についての相談も一緒にできます。「こんなことで行っていいのかな」と迷わなくて大丈夫です。なお、16歳未満の方、72時間を過ぎてしまった方、性暴力の被害にあった方は、こちらのほうが早く進むことがあります。",
@@ -1794,6 +1870,13 @@ function render(){
   txt("t-r1n", g("r1n")); txt("t-r1p", g("r1p")); txt("t-r1d", g("r1d")); txt("t-r1b", g("r1b"));
   txt("t-r2n", g("r2n")); txt("t-r2p", g("r2p")); txt("t-r2d", g("r2d")); txt("t-r2b", g("r2b"));
   txt("t-r3n", g("r3n")); txt("t-r3p", g("r3p")); txt("t-r3d", g("r3d")); txt("t-r3b", g("r3b"));
+  txt("t-r2ways", g("r2ways"));
+  txt("t-r2w1t", g("r2w1t")); txt("t-r2w1d", g("r2w1d"));
+  txt("t-r2w2t", g("r2w2t")); txt("t-r2w2d", g("r2w2d"));
+  txt("t-r2cautiont", g("r2cautiont")); txt("t-r2cautiond", g("r2cautiond"));
+  txt("t-aftertitle", g("aftertitle"));
+  txt("t-afterbody1", g("afterbody1"));
+  txt("t-afterbody2", g("afterbody2"));
   txt("t-stepstitle", g("stepstitle"));
   txt("t-stepshint", g("stepshint"));
   txt("t-checktitle", g("checktitle"));
