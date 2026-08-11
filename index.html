@@ -403,6 +403,21 @@ small {
   outline-offset: 2px;
 }
 
+/* カウントダウンの上に置く小さなラベル。
+   残り時間が出ているときだけ表示します（未入力・72時間超のときは隠す）。 */
+.cdcap {
+  margin: 24px 0 0;
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+}
+
+.cdcap + .cdnum {
+  margin-top: 2px;
+}
+
 .cdnum {
   margin: 24px 0 0;
   color: var(--accent);
@@ -1364,6 +1379,7 @@ footer p {
   <div class="inner focal">
     <label for="when" id="t-cdlabel"></label>
     <input type="datetime-local" id="when">
+    <p class="cdcap" id="t-cdcap" hidden></p>
     <p class="cdnum" id="cdnum"></p>
     <div class="bar" aria-hidden="true"><i id="cdbar"></i></div>
     <p class="cdnote" id="cdnote"></p>
@@ -1606,6 +1622,7 @@ var LANGS = [
 var T = {
 
 ja:{
+ cdcap:"飲むまでの残り時間",
  acheckt:"飲んだ後の確認",
  acheck1:"避妊に成功していると、服用後3週間以内に消退出血が起こることがほとんどです。消退出血とは、緊急避妊薬によって高まった女性ホルモンが減少することで子宮内膜が剥がれ落ち、生理と同じように出血することです。",
  acheck2:"ただし、服用後には副作用により不正出血が起こる可能性もあります。確実に避妊できているか確かめるためには、服用から3週間後に妊娠検査薬で調べるか、産婦人科を受診しましょう。",
@@ -1762,6 +1779,7 @@ ja:{
 },
 
 en:{
+ cdcap:"Time left to take it",
  acheckt:"Checking afterwards",
  acheck1:"When the medicine has worked, withdrawal bleeding almost always occurs within three weeks of taking it. Withdrawal bleeding is when the female hormones raised by the emergency contraceptive fall again, the lining of the womb comes away, and you bleed just as you would in a period.",
  acheck2:"However, unexpected bleeding can also occur as a side effect after taking it. To be sure that pregnancy has been prevented, take a pregnancy test three weeks after taking the medicine, or see a clinic.",
@@ -1915,6 +1933,7 @@ en:{
 },
 
 ko:{
+ cdcap:"복용까지 남은 시간",
  acheckt:"복용한 뒤의 확인",
  acheck1:"피임에 성공한 경우, 복용 후 3주 이내에 소퇴출혈이 일어나는 것이 대부분입니다. 소퇴출혈이란 응급피임약으로 높아졌던 여성호르몬이 줄어들면서 자궁내막이 떨어져 나와, 생리와 마찬가지로 출혈하는 것을 말합니다.",
  acheck2:"다만 복용 후에는 부작용으로 부정출혈이 일어날 가능성도 있습니다. 확실히 피임이 되었는지 확인하려면, 복용으로부터 3주 뒤에 임신테스트기로 검사하거나 산부인과를 방문하세요.",
@@ -2068,6 +2087,7 @@ ko:{
 },
 
 zh:{
+ cdcap:"距离服用的剩余时间",
  acheckt:"服药后的确认",
  acheck1:"如果避孕成功，服药后三周以内几乎都会出现撤退性出血。撤退性出血是指因紧急避孕药而升高的女性激素下降，子宫内膜随之脱落，像月经一样出血。",
  acheck2:"不过，服药后也可能因副作用而出现不规则出血。为了确认是否确实避孕成功，请在服药三周后用验孕棒检查，或到妇产科就诊。",
@@ -2221,6 +2241,7 @@ zh:{
 },
 
 vi:{
+ cdcap:"Thời gian còn lại để uống",
  acheckt:"Kiểm tra sau khi uống",
  acheck1:"Khi thuốc đã có tác dụng, hầu như trong vòng ba tuần sau khi uống sẽ có hiện tượng ra máu do ngừng thuốc. Đó là khi nội tiết tố nữ đã tăng lên vì thuốc tránh thai khẩn cấp giảm xuống, lớp niêm mạc tử cung bong ra và bạn ra máu giống như kỳ kinh.",
  acheck2:"Tuy nhiên, sau khi uống cũng có thể ra máu bất thường do tác dụng phụ. Để chắc chắn đã tránh thai thành công, hãy thử que thử thai sau khi uống ba tuần, hoặc đi khám tại phòng khám sản phụ khoa.",
@@ -2374,6 +2395,7 @@ vi:{
 },
 
 ne:{
+ cdcap:"खानका लागि बाँकी समय",
  acheckt:"खाएपछिको जाँच",
  acheck1:"गर्भनिरोध सफल भएको अवस्थामा, औषधि खाएको तीन हप्ताभित्र प्रायः विदड्रल ब्लिडिङ हुन्छ। विदड्रल ब्लिडिङ भनेको आपत्कालीन गर्भनिरोधक औषधिले बढाएको महिला हर्मोन घट्दा पाठेघरको भित्री तह खुस्किएर, महिनावारीजस्तै रक्तस्राव हुनु हो।",
  acheck2:"तर औषधि खाएपछि साइड इफेक्टका कारण अनियमित रक्तस्राव पनि हुन सक्छ। गर्भनिरोध पक्का भयो कि भएन भनी निश्चित गर्न, औषधि खाएको तीन हप्तापछि गर्भ परीक्षण किटले जाँच्नुहोस् वा क्लिनिकमा जानुहोस्।",
@@ -2527,6 +2549,7 @@ ne:{
 },
 
 ms:{
+ cdcap:"Masa berbaki untuk menelannya",
  acheckt:"Semakan selepas menelannya",
  acheck1:"Apabila ubat berkesan, pendarahan tarik diri hampir selalu berlaku dalam tempoh tiga minggu selepas menelannya. Pendarahan tarik diri ialah apabila hormon wanita yang meningkat akibat kontraseptif kecemasan menurun semula, lapisan rahim terlerai, dan berlaku pendarahan seperti haid.",
  acheck2:"Namun, selepas menelannya juga boleh berlaku pendarahan luar jangka akibat kesan sampingan. Untuk memastikan kehamilan benar-benar dicegah, buat ujian kehamilan tiga minggu selepas menelannya, atau berjumpa doktor sakit puan.",
@@ -2715,6 +2738,7 @@ function render(){
   txt("t-title", g("title"));
   txt("t-subtitle", g("subtitle"));
   txt("t-cdlabel", g("cdlabel"));
+  txt("t-cdcap", g("cdcap"));
   txt("t-overtitle", g("overtitle"));
   txt("t-overtext", g("overtext"));
   txt("t-overbtn", g("overbtn"));
@@ -2873,9 +2897,11 @@ function tick(){
   var note = document.getElementById("cdnote");
   var bar = document.getElementById("cdbar");
   var over = document.getElementById("overbox");
+  var cap = document.getElementById("t-cdcap");
   ["row1","row2","row3"].forEach(function(id){ document.getElementById(id).className=""; });
 
   if(!v){
+    cap.hidden = true;
     num.innerHTML = "—";
     num.style.fontSize = "38px";
     note.textContent = g("cdempty");
@@ -2884,7 +2910,7 @@ function tick(){
     return;
   }
   var start = new Date(v).getTime();
-  if(isNaN(start)){ num.innerHTML="—"; note.textContent=g("cdempty"); return; }
+  if(isNaN(start)){ cap.hidden = true; num.innerHTML="—"; note.textContent=g("cdempty"); return; }
 
   var elapsedH = (Date.now()-start)/3600000;
   var leftMs = start + LIMIT_H*3600000 - Date.now();
@@ -2895,6 +2921,7 @@ function tick(){
   else if(elapsedH <= 72){ document.getElementById("row3").className="hit"; pct="58%"; }
 
   if(leftMs <= 0){
+    cap.hidden = true;
     num.textContent = g("cdover");
     num.style.fontSize = "30px";
     note.textContent = "";
@@ -2903,6 +2930,7 @@ function tick(){
     return;
   }
   over.hidden = true;
+  cap.hidden = false;
   var h = Math.floor(leftMs/3600000);
   var m = Math.floor((leftMs%3600000)/60000);
   var pre = g("cdprefix");
