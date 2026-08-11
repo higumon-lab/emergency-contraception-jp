@@ -9,6 +9,16 @@
 <title>緊急避妊薬を手に入れる方法 | 7言語ガイド</title>
 <meta name="description" content="日本で緊急避妊薬（アフターピル）を手に入れる3つの方法を7言語で案内します。産婦人科、薬局、オンライン診療。72時間の残り時間も確認できます。">
 <meta name="robots" content="index,follow">
+
+<!-- Webフォント（Google Fonts）
+     2026年8月11日、運営者の判断で「外部通信ゼロ」の方針を解除し、
+     見た目を優先することにしました。このサイトを開くと Google にも接続が飛びます。
+     display=swap にしているので、フォントの読み込みを待たずに文章は表示されます。
+     CJK・デーヴァナーガリーは unicode-range で分割配信されるため、
+     実際に使う文字の分だけがダウンロードされます。 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Outfit:wght@500;600;700&family=Noto+Sans+KR:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&display=swap">
 <meta property="og:type" content="website">
 <meta property="og:title" content="緊急避妊薬を手に入れる方法 | 7言語ガイド">
 <meta property="og:description" content="日本で緊急避妊薬を手に入れる3つの方法を7言語で案内します。産婦人科、薬局、オンライン診療。">
@@ -18,34 +28,58 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23FBF8F5'/><circle cx='16' cy='16' r='8' fill='none' stroke='%231C1C1A' stroke-width='1.4'/><ellipse cx='16' cy='16' rx='8' ry='3.4' fill='none' stroke='%23E0A9A0' stroke-width='1.4'/></svg>">
 
 <style>
-/* 配色はスカイブルー1色に絞る。淡い青の「面」と白の余白で構成し、
-   文字は濃いインクで置く（淡い青は背景専用。文字色には使わない）。 */
+/* ── 配色 ──────────────────────────────────────────────
+   マカロンのような淡い色を「面」に使い、文字は濃いすみれ墨で置きます。
+   淡い色は文字色には使いません（コントラストが取れないため）。
+
+   透明感は、色のついた背景の上に、半透明の白＋ぼかし（backdrop-filter）
+   を重ねて出しています。
+   ────────────────────────────────────────────────── */
 :root {
   color-scheme: light;
   --wrap-pad: 22px;
-  --paper: #ffffff;
-  --surface: #ffffff;
-  --surface-soft: #f4f8fa;
-  --pink: #e9f4f9;
-  --pink-soft: #f4f8fa;
-  --pink-line: #b9dee9;
-  --blue: #a9d8e8;
-  --blue-soft: #e9f4f9;
-  --blue-line: #7cbdd3;
-  --ink: #1b2124;
-  --ink-2: #454c50;
-  --ink-3: #5a6367;
-  --line: #dde5e9;
-  --line-strong: #9fadb3;
-  --accent: #125a70;
-  --accent-hover: #0d4557;
-  --focus: #0d4557;
+
+  /* マカロンの6色。透明度を調整できるよう rgb 成分でも持たせています。
+     rgb(var(--mint-rgb) / 0.8) のように書くと、下の色が透けます。 */
+  --mint-rgb: 200 247 227;
+  --lavender-rgb: 227 218 255;
+  --peach-rgb: 255 220 202;
+  --rose-rgb: 255 217 232;
+  --butter-rgb: 255 242 196;
+  --sky-rgb: 210 232 255;
+
+  --mint: rgb(var(--mint-rgb));
+  --lavender: rgb(var(--lavender-rgb));
+  --peach: rgb(var(--peach-rgb));
+  --rose: rgb(var(--rose-rgb));
+  --butter: rgb(var(--butter-rgb));
+  --sky: rgb(var(--sky-rgb));
+
+  --paper: #fdfcff;
+  --surface: rgba(255, 255, 255, 0.74);
+  --surface-solid: #ffffff;
+  --surface-soft: rgba(255, 255, 255, 0.5);
+  --card: rgba(255, 255, 255, 0.74);
+
+  --ink: #2f2b3a;
+  --ink-2: #494357;
+  --ink-3: #5d5770;
+
+  --line: rgba(255, 255, 255, 0.9);
+  --line-soft: rgba(101, 52, 201, 0.14);
+  --line-strong: rgba(101, 52, 201, 0.24);
+
+  --accent: #6534c9;
+  --accent-hover: #5228a8;
+  --focus: #5228a8;
+
   --ok: #14663f;
   --mid: #8a3f31;
   --low: #8a4a1c;
-  --radius: 10px;
-  --radius-small: 6px;
-  --shadow: none;
+
+  --radius: 20px;
+  --radius-small: 14px;
+  --shadow: 0 12px 34px rgba(101, 52, 201, 0.1);
 }
 
 * {
@@ -63,15 +97,27 @@ body {
 }
 
 body {
-  background: var(--paper);
+  /* 淡い色のにじみを画面に固定して敷き、その上に半透明の白を重ねます。
+     これが「透明感」の土台です。 */
+  background:
+    radial-gradient(60rem 40rem at 12% -8%, var(--mint) 0, transparent 60%),
+    radial-gradient(52rem 38rem at 92% 4%, var(--lavender) 0, transparent 62%),
+    radial-gradient(48rem 36rem at 78% 42%, var(--peach) 0, transparent 58%),
+    radial-gradient(44rem 34rem at 6% 68%, var(--sky) 0, transparent 60%),
+    radial-gradient(46rem 34rem at 88% 92%, var(--rose) 0, transparent 60%),
+    var(--paper);
+  background-attachment: fixed;
   color: var(--ink);
+  /* 本文は Zen Kaku Gothic New（読みやすい現代的なゴシック）。
+     欧文と数字は Outfit で、都会的な印象にしています。
+     韓国語・中国語・ネパール語はそれぞれ Noto Sans を当てています。 */
   font-family:
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Hiragino Sans", "Yu Gothic", "Malgun Gothic",
-    "Microsoft YaHei", "Nirmala UI", "Kohinoor Devanagari", sans-serif;
-  font-size: 16px;
+    "Outfit", "Zen Kaku Gothic New", "Noto Sans KR", "Noto Sans SC",
+    "Noto Sans Devanagari", system-ui, -apple-system, "Hiragino Sans",
+    "Yu Gothic", sans-serif;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.85;
   overflow-wrap: anywhere;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
@@ -99,19 +145,80 @@ a:not(.btn) {
   min-height: 48px;
 }
 
-.wrap {
-  width: min(100%, 680px);
-  margin: 0 auto;
-  padding: 0 var(--wrap-pad) 72px;
+/* 帯（全幅）。背景のにじみを透かしつつ、白いすりガラスを重ねます。 */
+.band {
+  padding-block: clamp(48px, 10vw, 80px);
+  background: transparent;
 }
 
+.band.tint {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-block: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.band > .inner {
+  width: min(100%, 680px);
+  margin-inline: auto;
+  padding-inline: var(--wrap-pad);
+}
+
+/* 冒頭は背景のにじみをそのまま見せます（塗りつぶさない）。 */
+.hero h1 {
+  color: var(--ink);
+}
+
+.hero .lead {
+  color: var(--ink-2);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2;
+}
+
+.hero .label {
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.9) 0%, rgb(var(--lavender-rgb) / 0.75) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 6px 16px rgba(101, 52, 201, 0.1);
+  color: var(--accent);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+}
+
+/* 見出しの左に太いオレンジの縦棒（前身サイトと同じ形） */
+h2 {
+  position: relative;
+  padding-left: 18px;
+}
+
+h2::before {
+  content: "";
+  position: absolute;
+  top: 0.18em;
+  bottom: 0.18em;
+  left: 0;
+  display: block;
+  width: 5px;
+  margin: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #6534c9 0%, #c02a6a 100%);
+}
+
+/* 見出しの上に置く小さなラベル。ピル形のバッジで見せます */
 .label {
-  margin: 0 0 14px;
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 18px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--lavender);
   color: var(--accent);
   font-size: 13px;
   font-weight: 700;
-  line-height: 1.6;
-  letter-spacing: 0.04em;
+  line-height: 1.5;
 }
 
 h1,
@@ -121,17 +228,47 @@ p {
   overflow-wrap: anywhere;
 }
 
-h1 {
-  max-width: 15em;
-  margin: 0 0 20px;
-  font-size: clamp(1.85rem, 7.2vw, 2.75rem);
-  font-weight: 600;
-  line-height: 1.42;
-  letter-spacing: 0.01em;
+/* 見出しは Zen Maru Gothic（丸みのある書体）。
+   h1 には紫→マゼンタのグラデーションをかけています。
+   両端とも白地で 5.5:1 以上あるので、グラデーションが効かない環境で
+   単色になっても読めます。 */
+h1,
+h2,
+h3,
+.waytitle,
+.blocktitle,
+.noteboxtitle,
+.faq summary,
+.label {
+  font-family:
+    "Outfit", "Zen Maru Gothic", "Noto Sans KR", "Noto Sans SC",
+    "Noto Sans Devanagari", system-ui, sans-serif;
 }
 
+h1 {
+  max-width: 15em;
+  margin: 0 0 22px;
+  font-size: clamp(1.7rem, 6.8vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+  background: linear-gradient(100deg, #6534c9 0%, #8a2fb0 46%, #c02a6a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 翻訳データの中の改行をそのまま活かします。
+   改行を入れていない言語は、これまでどおり自動で折り返します。 */
+#t-title,
+#t-subtitle {
+  white-space: pre-line;
+}
+
+/* 見出しの上の余白は帯（.band の padding-block）が持つので、ここでは付けない */
 h2 {
-  margin: 72px 0 22px;
+  margin: 0 0 22px;
   color: var(--ink);
   font-size: clamp(1.2rem, 4.8vw, 1.4rem);
   font-weight: 600;
@@ -161,8 +298,8 @@ small {
 .lead {
   max-width: 42em;
   color: var(--ink-2);
-  font-size: 16px;
-  line-height: 1.9;
+  font-size: 15px;
+  line-height: 1.95;
 }
 
 .langbar {
@@ -171,9 +308,9 @@ small {
   z-index: 20;
   padding: 8px 12px;
   border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .langbar ul {
@@ -207,21 +344,22 @@ small {
 }
 
 .langbar button:hover {
-  background: var(--blue-soft);
-  color: var(--ink);
+  background: var(--lavender);
+  color: var(--accent);
 }
 
 .langbar button[aria-current="true"] {
-  border-color: var(--blue);
-  background: var(--blue);
-  color: var(--ink);
+  border-color: transparent;
+  background: linear-gradient(100deg, #6534c9 0%, #8a2fb0 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(101, 52, 201, 0.26);
 }
 
 .tophint {
   margin: 0;
-  padding: 10px 18px;
-  border-bottom: 1px solid var(--line);
-  background: var(--surface-soft);
+  padding: 11px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.5);
   color: var(--ink-3);
   font-size: 12px;
   font-weight: 600;
@@ -229,37 +367,14 @@ small {
   text-align: center;
 }
 
-/* 装飾の円と線は、見出しに重なって読みにくくなるため表示しない。
-   余白と文字の階層だけで見せる。 */
+/* オレンジの面をしっかり見せたいので、上下の余白を大きくとる */
 .hero {
-  position: relative;
-  padding: clamp(40px, 9vw, 64px) 0 8px;
+  padding-block: clamp(52px, 12vw, 96px) clamp(52px, 12vw, 88px);
 }
 
-.hero svg {
-  display: none;
-}
-
-.hero > * {
-  position: relative;
-}
-
-/* カウントダウンはページで一番大きな「青の面」。
-   スマホでは画面の端まで広げ、フチのない一枚の面として見せる。 */
+/* カウントダウンは帯そのものが青の面になるため、ここでは箱を持たない */
 .focal {
-  margin: 32px 0 40px;
-  padding: clamp(26px, 7vw, 36px);
-  border: 0;
-  border-radius: var(--radius);
-  background: var(--blue-soft);
-}
-
-@media (max-width: 720px) {
-  .focal {
-    margin-inline: calc(-1 * var(--wrap-pad));
-    padding-inline: var(--wrap-pad);
-    border-radius: 0;
-  }
+  margin: 0;
 }
 
 .focal label {
@@ -290,21 +405,28 @@ small {
 
 .cdnum {
   margin: 24px 0 0;
-  color: var(--ink);
-  font-size: clamp(2.5rem, 12vw, 4rem);
+  color: var(--accent);
+  background: linear-gradient(100deg, #6534c9 0%, #b02a86 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Outfit", system-ui, sans-serif;
+  font-size: clamp(2.6rem, 13vw, 4.2rem);
   font-variant-numeric: tabular-nums;
-  font-weight: 650;
+  font-weight: 700;
   line-height: 1.08;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   word-break: normal;
 }
 
 .cdnum .u {
   display: inline-block;
-  margin: 4px 5px 0;
+  margin: 4px 6px 0;
   color: var(--ink-2);
+  -webkit-text-fill-color: var(--ink-2);
+  font-family: "Zen Maru Gothic", "Outfit", system-ui, sans-serif;
   font-size: 15px;
-  font-weight: 650;
+  font-weight: 700;
   letter-spacing: 0;
 }
 
@@ -314,7 +436,7 @@ small {
   margin: 22px 0 14px;
   overflow: hidden;
   border-radius: 999px;
-  background: #b7cbd2;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .bar i {
@@ -324,7 +446,7 @@ small {
   width: 0;
   height: 100%;
   border-radius: inherit;
-  background: var(--accent);
+  background: linear-gradient(90deg, #6534c9 0%, #c02a6a 100%);
   transition: width 0.4s ease;
 }
 
@@ -360,9 +482,9 @@ table.eff th:last-child {
 }
 
 table.eff td {
-  padding: 14px 10px;
+  padding: 15px 12px;
   border-block: 1px solid var(--line);
-  background: var(--surface);
+  background: var(--card);
   color: var(--ink-2);
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -384,8 +506,9 @@ table.eff td:last-child {
 }
 
 table.eff tr.hit td {
-  border-color: #8fadb9;
-  background: var(--blue-soft);
+  border-color: rgba(101, 52, 201, 0.3);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.7) 0%, rgb(var(--lavender-rgb) / 0.92) 100%);
   color: var(--ink);
 }
 
@@ -403,34 +526,33 @@ table.eff tr td.v3 {
   color: var(--low);
 }
 
-/* カードは3枚とも同じ白で統一し、01（産婦人科）だけ左の線で強調する。
-   背景色を変えて区別すると、色数が増えて散らかって見えるため。 */
-.route {
-  position: relative;
-  min-width: 0;
-  margin: 0 0 14px;
-  padding: clamp(22px, 6vw, 30px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
+/* 経路は前身サイトと同じくカードで見せる（白・角丸8px・細い枠・浅い影） */
+.routes {
+  display: grid;
+  margin-top: 26px;
+  gap: 16px;
 }
 
-/* 01（産婦人科）は青の面にして、白い02・03と交互に見せる。
-   線ではなく面で区別すると、参考サイトの落ち着いた見え方に近づく。 */
-.route.pick {
-  border-color: var(--blue-soft);
-  background: var(--blue-soft);
+.route {
+  min-width: 0;
+  padding: clamp(22px, 6vw, 30px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
 }
 
 .route .no {
   display: block;
   margin-bottom: 12px;
   color: var(--ink-3);
-  font-size: 11px;
-  font-weight: 750;
+  font-size: 13px;
+  font-weight: 700;
   line-height: 1.5;
   letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
 }
 
 .route .hd {
@@ -467,11 +589,13 @@ table.eff tr td.v3 {
   display: inline-flex;
   align-items: center;
   min-height: 32px;
-  margin: 0 0 16px;
-  padding: 7px 12px;
-  border: 1px solid var(--blue-line);
-  border-radius: var(--radius-small);
-  background: var(--surface);
+  margin: 0 0 14px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.85) 0%, rgb(var(--lavender-rgb) / 0.85) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
   color: var(--accent);
   font-size: 13px;
   font-weight: 700;
@@ -481,20 +605,27 @@ table.eff tr td.v3 {
 .btn {
   display: flex;
   width: 100%;
-  min-height: 52px;
-  padding: 13px 17px;
+  min-height: 54px;
+  padding: 14px 20px;
   gap: 14px;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid var(--accent);
-  border-radius: var(--radius-small);
-  background: var(--accent);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(100deg, #6534c9 0%, #8a2fb0 100%);
   color: #ffffff;
+  box-shadow: 0 8px 22px rgba(101, 52, 201, 0.28);
   font-size: 15px;
   font-weight: 700;
   line-height: 1.5;
   text-decoration: none;
   overflow-wrap: anywhere;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.btn:hover {
+  box-shadow: 0 12px 28px rgba(101, 52, 201, 0.36);
+  transform: translateY(-1px);
 }
 
 .btn:hover,
@@ -511,15 +642,18 @@ table.eff tr td.v3 {
 }
 
 .btn.sub {
-  border-color: var(--accent);
-  background: transparent;
+  border-color: rgba(101, 52, 201, 0.4);
+  background: rgba(255, 255, 255, 0.7);
   color: var(--accent);
+  box-shadow: none;
 }
 
 .btn.sub:hover,
 .btn.sub:focus {
-  background: var(--accent);
+  border-color: transparent;
+  background: linear-gradient(100deg, #6534c9 0%, #8a2fb0 100%);
   color: #ffffff;
+  box-shadow: 0 8px 22px rgba(101, 52, 201, 0.28);
 }
 
 .btn + .btn {
@@ -527,12 +661,11 @@ table.eff tr td.v3 {
 }
 
 .know {
-  margin-top: 4px;
-  border-top: 1px solid var(--line-strong);
+  border-top: 1px solid var(--line);
 }
 
 .know .item {
-  padding: 23px 4px;
+  padding: 24px 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -543,12 +676,21 @@ table.eff tr td.v3 {
   line-height: 1.85;
 }
 
+/* 帯の中の囲み。相談窓口は白地の箱、72時間超のお知らせは線で強調する。 */
 .callout {
-  margin-top: 6px;
-  padding: clamp(23px, 6vw, 31px);
-  border: 1px solid var(--line);
+  padding: clamp(24px, 6vw, 32px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   border-radius: var(--radius);
-  background: var(--surface-soft);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+}
+
+.callout.alert {
+  border-color: var(--accent);
+  border-left-width: 4px;
+  background: var(--lavender);
 }
 
 .callout p {
@@ -569,10 +711,325 @@ table.eff tr td.v3 {
   color: #ffffff;
 }
 
+/* オンライン診療カードの中の「受け取り方2つ」と注意書き */
+.ways {
+  display: grid;
+  margin: 0 0 18px;
+  gap: 12px;
+}
+
+/* 淡い色の面は、べた塗りではなく「色つきのガラス」にしています。
+   上から白い光が当たったように見せるため、
+   斜めのグラデーション＋内側の白いハイライト＋下に落ちる影を重ねています。 */
+.way {
+  --tint: var(--mint-rgb);
+  padding: 20px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-small);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.72) 0%, rgb(var(--tint) / 0.88) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 20px rgba(101, 52, 201, 0.08);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+}
+
+.ways .way:nth-child(2) {
+  --tint: var(--sky-rgb);
+}
+
+.ways .way:nth-child(3) {
+  --tint: var(--butter-rgb);
+}
+
+.waytitle {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+/* カードの中で、囲みを単体で置くときの余白 */
+.route > .way {
+  margin: 0 0 18px;
+}
+
+/* 帯の中に直接置く囲み */
+.inner > .way {
+  margin-top: 22px;
+}
+
+/* 【〜】のような小見出し */
+.blocktitle {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.way p:last-child,
+.notebox p:last-child {
+  margin: 0;
+}
+
+.notebox {
+  margin: 0 0 18px;
+  padding: 20px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-small);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.72) 0%, rgb(var(--rose-rgb) / 0.9) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 20px rgba(101, 52, 201, 0.08);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+}
+
+.noteboxtitle {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+/* ===== ここから、前身サイトにあった4つの内容を作り直したもの ===== */
+
+/* 購入の流れ: 経路ごとの手順を番号つきで分解して見せる */
+.steps {
+  display: grid;
+  margin-top: 26px;
+  gap: 16px;
+}
+
+.stepgroup {
+  padding: clamp(22px, 6vw, 30px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+}
+
+.stepgroup h3 {
+  margin-bottom: 16px;
+}
+
+.stepgroup ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.stepgroup li {
+  position: relative;
+  padding: 0 0 18px 40px;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.8;
+  counter-increment: step;
+}
+
+/* 手順どうしを縦線でつなぐ（最後の1つには引かない） */
+.stepgroup li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 26px;
+  height: 26px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.9) 0%, rgb(var(--lavender-rgb) / 0.9) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepgroup li::after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  bottom: 4px;
+  left: 13px;
+  width: 1px;
+  background: var(--line);
+}
+
+.stepgroup li:last-child {
+  padding-bottom: 0;
+}
+
+.stepgroup li:last-child::after {
+  display: none;
+}
+
+/* 服用前チェック: 「してはいけない」と「相談して」の2群 */
+.checkgroup + .checkgroup {
+  margin-top: 26px;
+}
+
+.checkgroup h3 {
+  margin-bottom: 6px;
+}
+
+.checkgroup > p {
+  margin: 0 0 14px;
+  color: var(--ink-3);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.checklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.checklist li {
+  position: relative;
+  padding: 13px 0 13px 32px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.checklist li::before {
+  position: absolute;
+  top: 13px;
+  left: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.75;
+}
+
+.checklist.no li::before {
+  content: "\00d7";
+  color: var(--accent);
+}
+
+.checklist.ask li::before {
+  content: "!";
+  color: var(--ink-3);
+}
+
+/* 授乳中は「飲めない」ではなく「気をつけてほしい」ことなので、
+   × ではなく落ち着いた印にしています。 */
+.checklist.note li::before {
+  content: "!";
+  top: 15px;
+  display: flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.9) 0%, rgb(var(--lavender-rgb) / 0.9) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* よくある質問 */
+.faq {
+  margin-top: 26px;
+  border-top: 1px solid var(--line);
+}
+
+.faq details {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq summary {
+  display: flex;
+  min-height: 56px;
+  padding: 16px 32px 16px 0;
+  gap: 12px;
+  align-items: center;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+  list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  color: var(--accent);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.faq details[open] summary::after {
+  content: "\2212";
+}
+
+.faq details {
+  position: relative;
+}
+
+.faq .answer {
+  margin: 0;
+  padding: 0 0 20px;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+/* 製品情報の表 */
+table.spec {
+  width: 100%;
+  margin-top: 26px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+table.spec th,
+table.spec td {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.7;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+table.spec th {
+  width: 38%;
+  padding-right: 14px;
+  color: var(--ink-3);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+table.spec td {
+  color: var(--ink-2);
+}
+
 footer {
-  margin-top: 64px;
-  padding-top: 28px;
-  border-top: 1px solid var(--line-strong);
+  padding-top: 4px;
 }
 
 footer h3 {
@@ -593,8 +1050,8 @@ footer p {
   bottom: 0;
   z-index: 20;
   padding: 9px 18px;
-  border-top: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.94);
+  border-top: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.72);
   text-align: right;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -615,7 +1072,7 @@ footer p {
 
 .exitbtn:hover {
   border-color: var(--accent);
-  background: var(--blue-soft);
+  background: var(--lavender);
 }
 
 :focus-visible {
@@ -652,44 +1109,166 @@ footer p {
 }
 
 @media (prefers-color-scheme: dark) {
+  /* ダークでも、淡い色のにじみは残します。面を暗くして文字を明るくします。 */
   :root {
     color-scheme: dark;
-    --paper: #12171a;
-    --surface: #181f23;
-    --surface-soft: #1c242a;
-    --pink: #172b33;
-    --pink-soft: #1c242a;
-    --pink-line: #3a5560;
-    --blue: #2b4c59;
-    --blue-soft: #172b33;
-    --blue-line: #5c8496;
-    --ink: #eef3f5;
-    --ink-2: #c5ced2;
-    --ink-3: #a6b1b6;
-    --line: #2d383d;
-    --line-strong: #63737a;
-    --accent: #8fcde3;
-    --accent-hover: #b3ddee;
-    --focus: #8fcde3;
+    --mint-rgb: 29 59 49;
+    --lavender-rgb: 47 39 70;
+    --peach-rgb: 61 43 38;
+    --rose-rgb: 58 36 48;
+    --butter-rgb: 58 51 32;
+    --sky-rgb: 31 50 66;
+
+    --paper: #141119;
+    --surface: rgba(40, 35, 50, 0.66);
+    --surface-solid: #241f2e;
+    --surface-soft: rgba(40, 35, 50, 0.45);
+    --card: rgba(42, 37, 53, 0.7);
+
+    --ink: #f2eff7;
+    --ink-2: #cec8da;
+    --ink-3: #ada6bc;
+
+    --line: rgba(255, 255, 255, 0.12);
+    --line-soft: rgba(255, 255, 255, 0.14);
+    --line-strong: rgba(255, 255, 255, 0.24);
+
+    --accent: #c4b1ee;
+    --accent-hover: #d8cbf5;
+    --focus: #c4b1ee;
+
     --ok: #7fd0a6;
     --mid: #f0a396;
     --low: #eeae79;
-    --shadow: none;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   }
 
-  body {
-    background: var(--paper);
+  .band.tint {
+    background: rgba(255, 255, 255, 0.05);
+    border-block-color: rgba(255, 255, 255, 0.09);
+  }
+
+  .tophint {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom-color: rgba(255, 255, 255, 0.09);
+  }
+
+  .hero .label {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent);
+  }
+
+  .bar {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* 暗い地では、見出しと数字のグラデーションを明るい側に振り替えます。
+     そのままだと濃い紫が背景に沈んで読めなくなるためです。 */
+  h1 {
+    background: linear-gradient(100deg, #c4a8ff 0%, #e6a6ff 46%, #ff9ec4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .cdnum {
+    background: linear-gradient(100deg, #c4a8ff 0%, #ff9ec4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  h2::before {
+    background: linear-gradient(180deg, #c4a8ff 0%, #ff9ec4 100%);
+  }
+
+  .bar i {
+    background: linear-gradient(90deg, #c4a8ff 0%, #ff9ec4 100%);
+  }
+
+  .btn {
+    background: linear-gradient(100deg, #c4a8ff 0%, #e6a6ff 100%);
+    box-shadow: none;
+  }
+
+  .btn.sub {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* ライト用に白で書いたガラスの塗りを、暗い地の値に置き換えます。
+     ここを忘れるとカードが白いままになり、明るい文字が読めなくなります。 */
+  .route,
+  .stepgroup,
+  .callout {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .way,
+  .notebox {
+    border-color: rgba(255, 255, 255, 0.1);
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.07) 0%, rgb(var(--tint, var(--lavender-rgb)) / 0.9) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .notebox {
+    --tint: var(--rose-rgb);
+  }
+
+  .hero .label,
+  .route .tag,
+  .stepgroup li::before,
+  .checklist.note li::before {
+    border-color: rgba(255, 255, 255, 0.12);
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.1) 0%, rgb(var(--lavender-rgb) / 0.95) 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    color: var(--accent);
+  }
+
+  table.eff tr.hit td {
+    border-color: rgba(196, 168, 255, 0.4);
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.06) 0%, rgb(var(--lavender-rgb) / 0.95) 100%);
   }
 
   .langbar,
   .exitbar {
-    background: rgba(18, 23, 26, 0.94);
+    background: rgba(20, 17, 25, 0.72);
+    border-color: rgba(255, 255, 255, 0.09);
   }
 
   .langbar button[aria-current="true"] {
-    border-color: var(--blue);
-    background: var(--blue);
-    color: var(--ink);
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #241a3a;
+  }
+
+
+  table.eff tr.hit td {
+    border-color: #7a4a2c;
+    background: var(--lavender);
+  }
+
+  .label,
+  .route .tag,
+  .stepgroup li::before {
+    background: var(--lavender);
+    color: var(--accent);
+  }
+
+  .callout.alert {
+    border-color: var(--accent);
+    background: var(--lavender);
+  }
+
+  .checklist.no li::before {
+    color: var(--accent);
+  }
+
+  .faq summary::after {
+    color: var(--accent);
   }
 
   /* ここで table.eff tr.hit td の color を指定すると、詳細度 (0,2,3) が同じで
@@ -700,7 +1279,7 @@ footer p {
   }
 
   .route .tag {
-    border-color: var(--blue-line);
+    border-color: var(--line-soft);
     background: var(--surface);
     color: var(--accent);
   }
@@ -708,14 +1287,14 @@ footer p {
   .btn {
     border-color: var(--accent);
     background: var(--accent);
-    color: #132126;
+    color: #241a3a;
   }
 
   .btn:hover,
   .btn:focus {
     border-color: var(--accent-hover);
     background: var(--accent-hover);
-    color: #10191c;
+    color: #241a3a;
   }
 
   .btn.sub {
@@ -726,7 +1305,7 @@ footer p {
   .btn.sub:hover,
   .btn.sub:focus {
     background: var(--accent);
-    color: #132126;
+    color: #241a3a;
   }
 
   .callout p {
@@ -742,7 +1321,7 @@ footer p {
   .callout .btn.sub:hover,
   .callout .btn.sub:focus {
     background: var(--accent);
-    color: #132126;
+    color: #1a0f08;
   }
 }
 
@@ -768,111 +1347,231 @@ footer p {
 
 <p class="tophint" id="tophint"></p>
 
-<div class="wrap">
-  <header class="hero">
-    <!-- 幾何コラージュ（外部画像を使わず、その場で描いています） -->
-    <svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">
-      <polygon points="30,150 95,18 150,132" fill="#F7DFDB" fill-opacity=".55"/>
-      <rect x="60" y="60" width="105" height="82" fill="#D6E7EF" fill-opacity=".6"/>
-      <ellipse cx="128" cy="72" rx="34" ry="13" fill="none" stroke="#1C1C1A" stroke-width="1"/>
-      <ellipse cx="128" cy="72" rx="15" ry="5.5" fill="#F7DFDB"/>
-      <line x1="8" y1="120" x2="192" y2="96" stroke="#1C1C1A" stroke-width=".8"/>
-      <circle cx="44" cy="46" r="14" fill="none" stroke="#E0A9A0" stroke-width="1"/>
-    </svg>
+<!-- ページは「帯（band）」を縦に積んで構成します。
+     .band が画面いっぱいの背景色を持ち、中身は .inner で読みやすい幅に絞ります。
+     .band.tint が淡い青の帯です。白と交互に並べてリズムを作っています。 -->
+
+<header class="band hero">
+  <div class="inner">
     <p class="label" id="t-eyebrow"></p>
     <h1 id="t-title"></h1>
     <p class="lead" id="t-subtitle"></p>
-  </header>
+  </div>
+</header>
 
-  <!-- ===== カウントダウン ===== -->
-  <section class="focal" aria-labelledby="t-cdlabel">
+<!-- ===== カウントダウン ===== -->
+<section class="band tint" aria-labelledby="t-cdlabel">
+  <div class="inner focal">
     <label for="when" id="t-cdlabel"></label>
     <input type="datetime-local" id="when">
     <p class="cdnum" id="cdnum"></p>
     <div class="bar" aria-hidden="true"><i id="cdbar"></i></div>
     <p class="cdnote" id="cdnote"></p>
-  </section>
-
-  <div id="overbox" class="callout" hidden style="background:var(--blue)">
-    <h3 id="t-overtitle"></h3>
-    <p id="t-overtext" style="margin-top:8px"></p>
-    <a class="btn" id="t-overbtn" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
   </div>
+</section>
 
-  <!-- ===== 効果 ===== -->
-  <h2 id="t-efftitle"></h2>
-  <table class="eff">
-    <thead><tr><th id="t-effh1"></th><th id="t-effh2"></th></tr></thead>
-    <tbody>
-      <tr id="row1"><td id="t-eff1"></td><td class="v1">95%</td></tr>
-      <tr id="row2"><td id="t-eff2"></td><td class="v2">85%</td></tr>
-      <tr id="row3"><td id="t-eff3"></td><td class="v3">58%</td></tr>
-    </tbody>
-  </table>
-  <small id="t-effsrc"></small>
-
-  <!-- ===== 3つの経路 =====
-       表示順: 1 産婦人科 → 2 薬局 → 3 オンライン診療
-       翻訳キーは r1=薬局 / r2=オンライン診療 / r3=産婦人科 のままです。
-       順番を変えたいときは、下の3つの <div class="route"> ブロックごと入れ替えてください。 -->
-  <h2 id="t-routestitle"></h2>
-  <p class="lead" id="t-routeshint" style="margin-bottom:22px"></p>
-
-  <div class="route pick">
-    <span class="no">01</span>
-    <span class="tag" id="t-r3tag"></span>
-    <div class="hd"><h3 id="t-r3n"></h3><span class="price" id="t-r3p"></span></div>
-    <p id="t-r3d"></p>
-    <a class="btn" id="t-r3b" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
+<!-- 72時間を過ぎたときだけ JavaScript が表示します（hidden を外します）。
+     id は帯そのものに付けます。中の箱に付けると、非表示時に空の帯が残ります。 -->
+<section class="band" id="overbox" hidden>
+  <div class="inner">
+    <div class="callout alert">
+      <h3 id="t-overtitle"></h3>
+      <p id="t-overtext" style="margin-top:8px"></p>
+      <a class="btn" id="t-overbtn" rel="noopener noreferrer" target="_blank"
+         href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
+    </div>
   </div>
+</section>
 
-  <div class="route">
-    <span class="no">02</span>
-    <div class="hd"><h3 id="t-r1n"></h3><span class="price" id="t-r1p"></span></div>
-    <p id="t-r1d"></p>
-    <a class="btn sub" id="t-r1b" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00005.html"></a>
+<!-- ===== 効果 ===== -->
+<section class="band">
+  <div class="inner">
+    <h2 id="t-efftitle"></h2>
+    <table class="eff">
+      <thead><tr><th id="t-effh1"></th><th id="t-effh2"></th></tr></thead>
+      <tbody>
+        <!-- この3つの <tr> にクラスを足さないでください。
+             JavaScript が className を丸ごと書き換えて該当行を示すため、消えます。 -->
+        <tr id="row1"><td id="t-eff1"></td><td class="v1">95%</td></tr>
+        <tr id="row2"><td id="t-eff2"></td><td class="v2">85%</td></tr>
+        <tr id="row3"><td id="t-eff3"></td><td class="v3">58%</td></tr>
+      </tbody>
+    </table>
+    <small id="t-effsrc"></small>
   </div>
+</section>
 
-  <div class="route">
-    <span class="no">03</span>
-    <div class="hd"><h3 id="t-r2n"></h3><span class="price" id="t-r2p"></span></div>
-    <p id="t-r2d"></p>
-    <a class="btn sub" id="t-r2b" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00004.html"></a>
+<!-- ===== 3つの経路 =====
+     表示順: 1 産婦人科 → 2 薬局 → 3 オンライン診療
+     翻訳キーは r1=薬局 / r2=オンライン診療 / r3=産婦人科 のままです。
+     順番を変えたいときは、下の3つの <div class="route"> ブロックごと入れ替えてください。 -->
+<section class="band tint">
+  <div class="inner">
+    <h2 id="t-routestitle"></h2>
+    <p class="lead" id="t-routeshint"></p>
+
+    <div class="routes">
+      <!-- 3つとも同じ見た目にしています。01を目立たせると、産婦人科が
+           「特別な事情がある人だけが行くところ」に見えてしまうためです。 -->
+      <div class="route">
+        <span class="no">01</span>
+        <div class="hd"><h3 id="t-r3n"></h3><span class="price" id="t-r3p"></span></div>
+        <p id="t-r3d"></p>
+        <p id="t-r3d2"></p>
+        <div class="way">
+          <p class="waytitle" id="t-r3meritt"></p>
+          <p id="t-r3meritd1"></p>
+          <p id="t-r3meritd2"></p>
+          <p id="t-r3meritd3"></p>
+        </div>
+        <p class="blocktitle" id="t-r3recot"></p>
+        <p id="t-r3recod"></p>
+        <!-- 中身は JavaScript が [見出し, 本文] の配列から作ります -->
+        <div class="ways" id="r3reco"></div>
+        <a class="btn" id="t-r3b" rel="noopener noreferrer" target="_blank"
+           href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
+      </div>
+
+      <div class="route">
+        <span class="no">02</span>
+        <div class="hd"><h3 id="t-r1n"></h3><span class="price" id="t-r1p"></span></div>
+        <p id="t-r1d"></p>
+        <p class="blocktitle" id="t-r1pointst"></p>
+        <div class="ways" id="r1points"></div>
+        <div class="notebox">
+          <p class="noteboxtitle" id="t-r1prept"></p>
+          <p id="t-r1prepd1"></p>
+          <p id="t-r1prepd2"></p>
+        </div>
+        <a class="btn sub" id="t-r1b" rel="noopener noreferrer" target="_blank"
+           href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00005.html"></a>
+      </div>
+
+      <div class="route">
+        <span class="no">03</span>
+        <div class="hd"><h3 id="t-r2n"></h3><span class="price" id="t-r2p"></span></div>
+        <p id="t-r2d"></p>
+        <p id="t-r2ways"></p>
+        <div class="ways">
+          <div class="way">
+            <p class="waytitle" id="t-r2w1t"></p>
+            <p id="t-r2w1d"></p>
+          </div>
+          <div class="way">
+            <p class="waytitle" id="t-r2w2t"></p>
+            <p id="t-r2w2d"></p>
+          </div>
+        </div>
+        <div class="notebox">
+          <p class="noteboxtitle" id="t-r2cautiont"></p>
+          <p id="t-r2cautiond"></p>
+        </div>
+        <a class="btn sub" id="t-r2b" rel="noopener noreferrer" target="_blank"
+           href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00004.html"></a>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- ===== 知っておくこと ===== -->
-  <h2 id="t-knowtitle"></h2>
-  <div class="know" id="knowlist"></div>
-
-  <!-- ===== 相談 ===== -->
-  <h2 id="t-consulttitle"></h2>
-  <div class="callout">
-    <p id="t-consulttext"></p>
-    <a class="btn" id="t-cb1" rel="noopener noreferrer" target="_blank"
-       href="https://www.gender.go.jp/policy/no_violence/seibouryoku/consult.html"></a>
-    <a class="btn sub" id="t-cb2" href="tel:%238103"></a>
-    <a class="btn sub" id="t-cb3" rel="noopener noreferrer" target="_blank"
-       href="https://precon.cfa.go.jp/soudan/nayami/"></a>
+<!-- ===== 購入の流れ =====
+     3経路それぞれの手順。中身は JavaScript が生成します（翻訳キー steps）。 -->
+<section class="band">
+  <div class="inner">
+    <h2 id="t-stepstitle"></h2>
+    <p class="lead" id="t-stepshint"></p>
+    <div class="steps" id="stepslist"></div>
   </div>
+</section>
 
-  <!-- ===== このサイトについて ===== -->
-  <footer>
-    <h3 id="t-abouttitle"></h3>
-    <p id="t-aboutbody"></p>
-    <a class="btn sub" id="t-ab1" rel="noopener noreferrer" target="_blank"
-       href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku.html"></a>
-    <a class="btn sub" id="t-ab2" rel="noopener noreferrer" target="_blank"
-       href="https://www.daiichisankyo-hc.co.jp/products/details/norlevo/"></a>
-    <p style="margin-top:24px"><small id="t-trnote"></small></p>
-    <p><small id="t-sources"></small></p>
-    <p><small id="t-tm"></small></p>
-    <p><small id="t-updated"></small></p>
-  </footer>
-</div>
+<!-- ===== 服用前チェック =====
+     出典: ノルレボ 添付文書／第一三共ヘルスケア 製品情報の「してはいけないこと」
+     「相談すること」。文面は流用せず、事実にもとづいて書き直しています。 -->
+<section class="band tint">
+  <div class="inner">
+    <h2 id="t-checktitle"></h2>
+    <p class="lead" id="t-checkhint"></p>
+
+    <div class="checkgroup">
+      <h3 id="t-checknotitle"></h3>
+      <p id="t-checknonote"></p>
+      <ul class="checklist no" id="checkno"></ul>
+      <ul class="checklist note" id="checknote"></ul>
+    </div>
+
+    <div class="checkgroup">
+      <h3 id="t-checkasktitle"></h3>
+      <p id="t-checkasknote"></p>
+      <ul class="checklist ask" id="checkask"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 飲んだあとのこと ===== -->
+<section class="band">
+  <div class="inner">
+    <h2 id="t-aftertitle"></h2>
+    <p id="t-afterbody1"></p>
+    <p id="t-afterbody2"></p>
+    <div class="way">
+      <p class="waytitle" id="t-secrett"></p>
+      <p id="t-secretd"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 製品情報 ===== -->
+<section class="band">
+  <div class="inner">
+    <h2 id="t-spectitle"></h2>
+    <p class="lead" id="t-spechint"></p>
+    <table class="spec">
+      <tbody id="speclist"></tbody>
+    </table>
+    <p style="margin-top:16px"><small id="t-specnote"></small></p>
+  </div>
+</section>
+
+<!-- ===== よくある質問 ===== -->
+<section class="band tint">
+  <div class="inner">
+    <h2 id="t-faqtitle"></h2>
+    <div class="faq" id="faqlist"></div>
+  </div>
+</section>
+
+
+<!-- ===== 相談 ===== -->
+<section class="band tint">
+  <div class="inner">
+    <h2 id="t-consulttitle"></h2>
+    <div class="callout">
+      <p id="t-consulttext"></p>
+      <a class="btn" id="t-cb1" rel="noopener noreferrer" target="_blank"
+         href="https://www.gender.go.jp/policy/no_violence/seibouryoku/consult.html"></a>
+      <a class="btn sub" id="t-cb2" href="tel:%238103"></a>
+      <a class="btn sub" id="t-cb3" rel="noopener noreferrer" target="_blank"
+         href="https://precon.cfa.go.jp/soudan/nayami/"></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== このサイトについて ===== -->
+<section class="band">
+  <div class="inner">
+    <footer>
+      <h3 id="t-abouttitle"></h3>
+      <p id="t-aboutbody"></p>
+      <a class="btn sub" id="t-ab1" rel="noopener noreferrer" target="_blank"
+         href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku.html"></a>
+      <a class="btn sub" id="t-ab2" rel="noopener noreferrer" target="_blank"
+         href="https://www.daiichisankyo-hc.co.jp/products/details/norlevo/"></a>
+      <p style="margin-top:24px"><small id="t-trnote"></small></p>
+      <p><small id="t-sources"></small></p>
+      <p><small id="t-tm"></small></p>
+      <p><small id="t-updated"></small></p>
+    </footer>
+  </div>
+</section>
 
 <div class="exitbar">
   <button class="exitbtn" id="exitbtn"></button>
@@ -901,43 +1600,138 @@ ja:{
  pageTitle:"緊急避妊薬を手に入れる方法 | 7言語ガイド",
  tophint:"このサイトは公式サイトではありません（個人が運営しています）",
  eyebrow:"まだ、間に合う",
- title:"緊急避妊薬を手に入れる方法",
- subtitle:"日本では、産婦人科・薬局・オンライン診療の3つの方法で手に入れられます。深夜でも方法があります。",
- cdlabel:"避妊せずに性交をした日時を入れてください",
+ title:"緊急避妊薬を\n手に入れる方法",
+ subtitle:"日本では\n・産婦人科\n・薬局\n・オンライン診療\nの3つの方法で手に入れられます。\n\n夜おそくても方法はあります。\nひとつずつ見ていきましょう。",
+ cdlabel:"避妊せずに性交をした日時を入れてみてください",
  cdempty:"日時を入れると、残り時間が出ます",
  cdprefix:"",
  cdh:"時間", cdm:"分",
- cdnote:"早く飲むほど効果が高くなります。待たないでください。",
+ cdnote:"早く飲むほど効果が高くなります。あとまわしにせず、いま動いてみてください。",
  cdnow:"いま飲めば、約{p}の効果が期待できます",
  cdover:"72時間を過ぎています",
  overtitle:"72時間を過ぎていても、方法があります",
- overtext:"薬局では買えませんが、産婦人科では72時間から120時間の間に使える方法を相談できる場合があります。日本で承認されていない薬を使う場合があり、効果も下がりますが、相談する価値はあります。あきらめないでください。",
+ overtext:"薬局では買えませんが、産婦人科では72時間から120時間の間に使える方法を相談できることがあります。日本で承認されていない薬を使うことがあり、効果も下がりますが、相談してみる価値はあります。どうかあきらめないでください。",
  overbtn:"産婦人科をさがす",
  efftitle:"妊娠を防げる割合の目安",
  effh1:"性交から飲むまでの時間", effh2:"割合",
  eff1:"24時間以内", eff2:"24〜48時間", eff3:"49〜72時間",
  effsrc:"出典: WHO Task Force on Postovulatory Methods of Fertility Regulation. Lancet 1998;352:428-433. これは目安で、体の状態によって変わります。",
  routestitle:"手に入れる方法は3つ",
- routeshint:"どれを選んでもかまいません。あなたの状況で選んでください。",
+ routeshint:"どれを選んでもかまいません。あなたが行きやすいところで大丈夫です。",
  r1n:"薬局で買う", r1p:"約6,930〜7,480円",
- r1d:"処方箋はいりません。一番安く、一番早い方法です。ただし、すべての薬局では扱っていません。行く前に必ず電話してください。電話は本人からかけます（かけるのを手伝ってもらうのはかまいません）。",
+ r1d:"2026年2月から、一部の薬局で医師の処方箋なしに緊急避妊薬を買えるようになりました。病院に行かずに一番早く手に入る方法ですが、いくつか大切なルールがあります。",
+ r1pointst:"【薬局で買うための3つのポイント】",
+ r1points:[
+  ["① 取り扱いのある薬局を事前に探すこと","すべての薬局に置いてあるわけではありません。厚生労働省のホームページに載っている「販売可能な薬局」を探し、行く前に必ず電話で「在庫があるか」「今から行って対応できる薬剤師さんがいるか」を確かめてください。"],
+  ["② 本人が行くこと（代理はNG）","必ず「お薬を飲むご本人」が薬局へ行ってください。パートナーや親など、代理の人が買うことはできません。"],
+  ["③ 薬剤師さんの前で飲むこと（面前服用）","買ったお薬を家に持ち帰ることはできません。安全に確実にできるだけ早く服用してもらうために、薬局内のプライバシーが守られた場所で、薬剤師さんの目の前でお薬を飲みます。"]
+ ],
+ r1prept:"【行く前の準備】",
+ r1prepd1:"マイナンバーカードや健康保険証などの「身分証明書」の提示を求められる場合があります。必須ではないですが、事前に確認しておくと安心です。",
+ r1prepd2:"購入の際には薬剤師さんから「性行為があった日時」「最後の生理がいつだったか」「アレルギー歴」「服用中の薬」など聞かれます。メモをしておくとスムーズです。",
  r1b:"薬局をさがす（厚生労働省）",
  r2n:"オンライン診療", r2p:"約5,000〜15,000円",
- r2d:"スマホやパソコンで医師の診察を受け、薬局で受け取ります。夜中・早朝・祝日でも受診できます。近くに薬局がない方、外出が難しい方にも。これは「ネット通販」ではなく「診察」で、国が認めた方法です。",
+ r2d:"スマホやパソコンを使って、オンラインで医師の診察を受けることができます。夜中や早朝、土日祝日でも対応しているクリニックがあるため、すぐに行動したいときの大きな助けになります。",
+ r2ways:"本人が指定した薬局で受け取るか、自宅などに郵送され受け取ることができます。",
+ r2w1t:"① 薬局に行って受け取る方法（国の指針に沿ったやり方）",
+ r2w1d:"オンライン診療の後、医師が処方箋を出し、指定の薬局へお薬を取りに行く方法です。薬局で薬剤師さんから説明を受け、その場で（薬剤師さんの前で）お薬を飲みます。これが厚生労働省の指針で定められた原則的なルールです。",
+ r2w2t:"② 自宅のポストなどに届けてもらう方法（自費診療クリニックの郵送サービス）",
+ r2w2d:"自費診療を行っている一部のクリニックでは、診察後に「お薬そのもの」を自宅へ郵送・バイク便などで届けてくれるサービスを行っています。「どうしても外に出られない」「近くに開いている薬局がない」といった場合にとても助かる選択肢です。最短で当日や翌日にポストに届くこともあります。",
+ r2cautiont:"【郵送サービスを利用するときの注意点】",
+ r2cautiond:"とても便利な郵送サービスですが、いくつか気をつけてほしいことがあります。緊急避妊薬は「性交後72時間以内（お薬によっては120時間以内）」に、できるだけ早く飲むことが大切です。郵送の場合、届くまでに時間がかかってタイムリミットに間に合わないリスクがあります。利用する際は、必ず「いつ自分の手元に届くのか（発送日ではなく到着日）」をしっかり確認してください。また、海外からの個人輸入サイトは、届くのが遅く偽物の危険もあるため、絶対に利用しないでください。必ず国内の医師の診察を受けられるサービスを選びましょう。",
+ secrett:"秘密は守られます",
+ secretd:"薬剤師さんや医師には守秘義務があります。家族や学校、職場に伝わることはありません。相談機関を紹介する場合も、あなたの同意を得てから行われます。",
+ aftertitle:"服用した後の不安について",
+ afterbody1:"お薬を飲んだ後は、一時的に吐き気や頭痛がすることがありますが、数時間〜1日程度でおさまることが多いです。もし飲んでから2時間以内に吐いてしまった場合は、お薬が吸収されていない可能性があるため、すぐに医師や薬剤師に相談してください。",
+ afterbody2:"また、早ければ数日〜3週間以内に「消退出血」という生理のような出血が来ます。3週間経っても出血がない場合は、念のため妊娠検査薬で確認するか、婦人科を受診してくださいね。",
  r2b:"対応する薬局・医師をさがす（厚生労働省）",
- r3tag:"16歳未満・72時間超・性暴力の被害にあった方はこちら",
  r3n:"産婦人科を受診", r3p:"約6,000〜15,000円",
- r3d:"16歳未満の方は薬局で受診をすすめられることが多いので、最初からこちらのほうが早いです。性暴力の被害にあった場合は、費用の支援や性感染症の検査も相談できます。72時間を過ぎた場合もこちらへ。",
+ r3d:"産婦人科や婦人科クリニック、レディースクリニックを受診して、医師の診察を受けてからお薬をもらう方法です。",
+ r3d2:"原則として、服用する本人であれば年齢に関係なく受診し処方を受けることができます。しかし、施設によっては未成年の場合保護者の同意書や同伴をお願いされることもあるので、必ず事前に電話などで問い合わせて確認してから受診しましょう。",
+ r3meritt:"【産婦人科を受診するメリット】",
+ r3meritd1:"一番の安心は、医師に直接会って不安なことをその場で相談できることです。",
+ r3meritd2:"お薬の飲み方や副作用のことだけでなく、希望すれば性感染症の検査や婦人科検診、これからの確実な避妊方法（低用量ピルなど）についても一緒に相談できます。",
+ r3meritd3:"「こんなことで行っていいのかな」「怒られないかな」と迷わなくて大丈夫です。医師はあなたの体と心を守るために診察してくれます。",
+ r3recot:"【こんな方は産婦人科がおすすめです】",
+ r3recod:"以下に当てはまる方は、オンライン診療や薬局での購入よりも、産婦人科を直接受診したほうがより確実でスムーズな対応を受けられます。",
+ r3reco:[
+  ["性行為から72時間を過ぎてしまった方","国内で一般的な緊急避妊薬（72時間以内に使用する薬）ではなく、120時間（5日）以内まで効果が期待できるお薬を取り扱っている産婦人科もあります。"],
+  ["16歳未満（中学生など）の方","オンライン診療や薬局では、年齢を理由に対応を断られ産婦人科の受診を勧められる場合があります。家の近くに受診できそうな産婦人科があれば、直接相談に行くほうが早い場合もあります。健康保険証を使わない自費診療ですが、もし家族に知られたくないなどの希望があれば、それも含めて相談してみましょう。"],
+  ["同意のない性行為や、性暴力の被害にあった方","無理やりされたり、断れなかったりした場合は、決してあなたのせいではありません。各都道府県にある「性犯罪・性暴力被害者のためのワンストップ支援センター（全国共通無料ダイヤル：#8891）」に電話すると、緊急避妊薬の費用が無料（公費負担）になる制度や、病院への付き添いなどのサポートを受けられます。一人で抱え込まず、まずは相談してください。"]
+ ],
  r3b:"産婦人科をさがす（厚生労働省）",
- knowtitle:"知っておくべきこと",
- know:[
-  ["本人が受け取ります","薬を飲む人が自分で受け取ります。家族や友人、パートナーが代わりに買うことはできません。"],
-  ["年齢の制限はありません","親やパートナーの同意も必要ありません。ただし16歳未満の方は、薬局で産婦人科をすすめられることがあります。断られたわけではありません。病院でも同じ薬をもらえます。"],
-  ["その場で飲みます","薬剤師の前で1錠を飲みます。持ち帰ることはできません。人に渡すこともできません。"],
-  ["健康保険は使えません","全額を自分で払います。現金を用意しておくと確実です。カードが使えない薬局もあります。"],
-  ["ネット通販では買えません","海外からの個人輸入は、偽物のおそれがあり、健康被害が出ても日本の救済制度の対象になりません。オンライン診療は別で、こちらは使えます。"],
-  ["3週間後に確認します","100%ではありません。飲んでから3週間後に、妊娠検査薬か医療機関で確認してください。"],
-  ["秘密は守られます","薬剤師や医師には守秘義務があります。家族や学校、職場に伝わることはありません。相談機関を紹介する場合も、あなたの同意を得てから行われます。"]
+ stepstitle:"手に入れるまでの流れ",
+ stepshint:"それぞれの方法で、実際にすることを順番に並べました。",
+ steps:[
+  ["産婦人科を受診する",[
+   "行けそうな産婦人科をさがします。夜間や休日は、地域の救急相談窓口でも案内してもらえます。",
+   "電話で「緊急避妊のことで受診したい」と伝えて、診てもらえるか聞いてみてください。",
+   "受診します。最後の生理の日を聞かれることが多いので、思い出しておくとスムーズです。",
+   "診察を受けて、お薬が処方されます。その場で飲むことが多いですが、施設によって異なります。",
+   "費用を支払います。健康保険は使えません。性暴力の被害にあった場合は公費で負担されることがあるので、そのことも遠慮なく相談してください。"
+  ]],
+  ["薬局・ドラッグストアで買う",[
+   "厚生労働省の一覧で、緊急避妊薬を扱っている薬局をさがします。すべての薬局にあるわけではありません。",
+   "行く前に電話して、お薬があるか、薬剤師さんがいる時間かを確かめると安心です。電話は薬を飲む本人からかけてください（かけるのを手伝ってもらうのはかまいません）。",
+   "薬を飲む本人が行きます。かわりの人が受け取ることはできません。",
+   "薬剤師さんと、まわりに聞こえない場所でお話しします。聞かれたことに答えるだけで大丈夫です。",
+   "薬剤師さんの前で1錠飲みます。持ち帰ることはできません。",
+   "お支払いをします。全額自己負担です。カードが使えない薬局もあるので、現金があると安心です。"
+  ]],
+  ["オンライン診療を受ける",[
+   "対応している医療機関をさがして予約します。はじめての受診でも大丈夫です。",
+   "スマホやパソコンで、医師の診察を受けます。",
+   "お薬の受け取り方を決めます。薬局へ行く場合は、行ける場所を選んでください。自宅へ届けてもらう場合は、いつ届くかを必ず確かめてください。",
+   "薬局で受け取る場合は、薬剤師さんの前で飲みます。自宅に届く場合は、届いたらすぐに飲んでください。",
+   "診察代とお薬代を支払います。"
+  ]]
+ ],
+
+ checktitle:"飲む前に確かめたいこと",
+ checkhint:"薬剤師さんや医師が確かめる内容です。あてはまるものがあっても、まずは相談してみてください。ご自分で判断してあきらめないでくださいね。",
+ checknotitle:"この薬が使えない場合",
+ checknonote:"次にあてはまる方は、この薬は飲めません。産婦人科で相談してみてください。",
+ checkno:[
+  "この薬の成分で、アレルギー症状が出たことがある",
+  "肝臓の病気がある",
+  "すでに妊娠している"
+ ],
+ checknote:[
+  "授乳中の方 — 飲む場合は、飲んだあと24時間は授乳を控えてください"
+ ],
+ checkasktitle:"先に伝えてほしいこと",
+ checkasknote:"次にあてはまる方は、薬剤師さんや医師にひとこと伝えてください。",
+ checkask:[
+  "いま医師の治療を受けている、飲んでいるお薬がある",
+  "お薬でアレルギー症状が出たことがある",
+  "心臓や腎臓の病気、または重い胃腸の病気がある",
+  "セイヨウオトギリソウ（セント・ジョーンズ・ワート）が入ったサプリメントや食品をとっている"
+ ],
+
+ spectitle:"お薬について",
+ spechint:"日本の薬局で買える緊急避妊薬は2種類です。成分と量は同じです。",
+ spec:[
+  ["商品名","ノルレボ／レソエル72"],
+  ["成分（1錠中）","レボノルゲストレル 1.5mg（2種類とも同じ）"],
+  ["分類","特定要指導医薬品"],
+  ["価格（税込・希望小売）","ノルレボ 7,480円／レソエル72 6,930円"],
+  ["飲み方","性交後72時間以内に1錠。薬剤師さんの前で飲みます"],
+  ["はたらき","排卵を遅らせるなどして、妊娠しにくくします"],
+  ["健康保険","使えません（全額自己負担）"]
+ ],
+ specnote:"価格は希望小売価格です。薬局によって違うことがあります。出典: 厚生労働省、日本薬剤師会、各製品の添付文書。",
+
+ faqtitle:"よくある質問",
+ faq:[
+  ["身分証は必要ですか","決まりとして必要とされているわけではありません。ただ、年齢などの確認のために見せてほしいと言われることはあります。あれば持っていくと安心です。もし手元になくても、まずはその場で相談してみてください。"],
+  ["親に知られますか","年齢に関係なく、親の同意はいりません。薬局から家に連絡がいくこともありません。"],
+  ["16歳未満でも買えますか","年齢による制限はありません。ただ薬局では、産婦人科をすすめられることがあります。断られたということではなく、病院でも同じお薬をもらえます。はじめから産婦人科に行くほうが早いこともあります。"],
+  ["かわりに買ってきてもらえますか","残念ながらできません。お薬を飲む本人が行って、薬剤師さんの前で飲む決まりになっています。"],
+  ["薬局に行かずに、自宅に届けてもらえますか","オンライン診療をしている自費のクリニックのなかには、お薬を自宅へ配送するところがあります。外に出るのがむずかしいときの助けになります。使う前に3つだけ確かめてください。ひとつめは、いつ届くか。72時間の期限に間に合うかどうかが大切です。ふたつめは、日本で承認されたお薬かどうか。120時間用として案内されるウリプリスタル酢酸エステルは、日本では承認されていません。みっつめは、承認されていないお薬は、万一からだに不調が出ても国の救済制度の対象にならないことです。なお国の指針では、薬局で受け取って薬剤師さんの前で飲む方法が示されています。"],
+  ["ドラッグストアの通販で買えますか","買えません。薬局・ドラッグストアで買う場合は、お店に行って薬剤師さんと対面でのやりとりが必要です。海外から個人輸入したお薬は、偽物のおそれがあり、健康被害が出ても日本の救済制度の対象になりません。"],
+  ["100%妊娠を防げますか","残念ながら、100%ではありません。飲んでも妊娠することがあります。飲んでから3週間後に、妊娠検査薬か医療機関で確かめてください。"],
+  ["副作用はありますか","吐き気、頭痛、下腹部の痛み、不正出血などが起こることがあります。飲んで2時間以内に吐いてしまったときは、薬剤師さんか医師に相談してください。"],
+  ["72時間を過ぎてしまいました","薬局では買えませんが、産婦人科では72時間から120時間の間に使える方法を相談できることがあります。どうかあきらめずに、相談してみてください。"]
  ],
  consulttitle:"一人で抱えなくて大丈夫です",
  consulttext:"無料で相談できる公的な窓口があります。性暴力の被害にあった場合は、診察や薬の費用の支援を受けられる場合があります。費用を理由にあきらめないでください。",
@@ -956,47 +1750,139 @@ ja:{
 },
 
 en:{
+ stepstitle:"Step by step",
+ stepshint:"Here is what actually happens with each option.",
+ steps:[
+  ["Visit a clinic",[
+   "Look for a clinic you can get to. At night or on holidays, your local emergency advice line can help you find one.",
+   "Call and say you would like to be seen about emergency contraception, and ask whether they can see you.",
+   "Go in. You will often be asked the date of your last period, so it helps to recall it beforehand.",
+   "After the examination the medicine is prescribed. You will often take it there, though this varies by clinic.",
+   "Pay. Health insurance does not cover this. If you experienced sexual violence the cost may be covered by public funds, so please feel free to mention it."
+  ]],
+  ["Buy at a pharmacy",[
+   "Use the health ministry list to find a pharmacy that stocks emergency contraception. Not every pharmacy has it.",
+   "Call before you go, to check it is in stock and that a pharmacist is available. The person who will take the medicine makes the call (someone may help you dial).",
+   "The person who will take the medicine goes in. Nobody can collect it on your behalf.",
+   "You talk with the pharmacist somewhere private. You only need to answer what you are asked.",
+   "You take one tablet in front of the pharmacist. You cannot take it home.",
+   "Pay. You pay the full cost yourself. Some pharmacies do not accept cards, so cash is safest."
+  ]],
+  ["Have an online consultation",[
+   "Find a clinic that offers this and book. A first visit is fine.",
+   "See the doctor on your phone or computer.",
+   "Decide how to receive the medicine. If you collect it at a pharmacy, choose one you can get to. If it is posted, always check when it will arrive.",
+   "If you collect it at a pharmacy you take it in front of the pharmacist. If it is posted, take it as soon as it arrives.",
+   "Pay for the consultation and the medicine."
+  ]]
+ ],
+ checktitle:"Before you take it",
+ checkhint:"These are the things a pharmacist or doctor will check. Even if something applies to you, please ask first. Do not give up on your own.",
+ checknotitle:"When this medicine cannot be used",
+ checknonote:"If any of these apply, you cannot take this medicine. Please talk to a clinic.",
+ checkno:[
+  "You have had an allergic reaction to an ingredient of this medicine",
+  "You have liver disease",
+  "You are already pregnant"
+ ],
+ checknote:[
+  "If you are breastfeeding — if you do take it, avoid breastfeeding for 24 hours afterwards"
+ ],
+ checkasktitle:"Please mention these",
+ checkasknote:"If any of these apply, just let the pharmacist or doctor know.",
+ checkask:[
+  "You are under a doctor's care, or you are taking any medicine",
+  "You have had an allergic reaction to a medicine",
+  "You have heart or kidney disease, or a serious stomach or bowel condition",
+  "You take supplements or foods containing St. John's wort"
+ ],
+ spectitle:"About the medicine",
+ spechint:"Two emergency contraceptives are sold at pharmacies in Japan. The ingredient and the dose are the same.",
+ spec:[
+  ["Product names","NorLevo / Resoel 72"],
+  ["Ingredient (per tablet)","Levonorgestrel 1.5mg (the same in both)"],
+  ["Category","Designated pharmacist-guidance medicine"],
+  ["Price (incl. tax, suggested)","NorLevo 7,480 yen / Resoel 72 6,930 yen"],
+  ["How to take it","One tablet within 72 hours of sex, in front of a pharmacist"],
+  ["How it works","It delays ovulation and makes pregnancy less likely"],
+  ["Health insurance","Not covered (you pay in full)"]
+ ],
+ specnote:"Prices are suggested retail prices and may differ by pharmacy. Sources: Ministry of Health, Labour and Welfare; Japan Pharmaceutical Association; package inserts.",
+ faqtitle:"Common questions",
+ faq:[
+  ["Do I need ID?","It is not a rule that you must have one. Still, you may be asked to show it, for example to confirm your age. It is reassuring to bring one if you have it. If you do not, just ask when you are there."],
+  ["Will my parents find out?","Whatever your age, you do not need a parent's consent. The pharmacy will not contact your home."],
+  ["Can I buy it if I am under 16?","There is no age limit. At a pharmacy you may be advised to see a clinic instead. That is not a refusal — you can get the same medicine at a hospital. Sometimes going straight to a clinic is faster."],
+  ["Can someone buy it for me?","Unfortunately not. The person who will take the medicine has to go, and take it in front of the pharmacist."],
+  ["Can it be posted to me?","Some private online clinics do post the medicine to your home. It helps when going out is hard. Please check three things first. When will it actually arrive — will it be within the 72 hours? Is it approved in Japan? Ulipristal acetate, offered for use within 120 hours, is not approved in Japan. And a medicine that is not approved is not covered by the national relief system if it harms your health. Note that the national guideline describes collecting it at a pharmacy and taking it there."],
+  ["Can I order it from an online drugstore?","No. To buy it at a pharmacy you have to go in and speak with a pharmacist. Medicines imported privately from overseas may be counterfeit, and are not covered by the national relief system if harm occurs."],
+  ["Does it prevent pregnancy 100%?","Sadly not. Pregnancy can still happen. Three weeks after taking it, check with a pregnancy test or at a medical facility."],
+  ["Are there side effects?","Nausea, headache, lower abdominal pain and unexpected bleeding can occur. If you vomit within two hours of taking it, talk to a pharmacist or doctor."],
+  ["I am past 72 hours","You cannot buy it at a pharmacy, but a clinic may be able to discuss options that work between 72 and 120 hours. Please do not give up — go and ask."]
+ ],
+ aftertitle:"After you take it",
+ afterbody1:"Afterwards you may feel sick or have a headache for a while, but this usually settles within a few hours to a day. If you vomit within two hours of taking it, the medicine may not have been absorbed, so please talk to a doctor or pharmacist right away.",
+ afterbody2:"Bleeding like a period, called withdrawal bleeding, usually comes within a few days to three weeks. If nothing has come after three weeks, please check with a pregnancy test or see a clinic.",
+ secrett:"Your privacy is protected",
+ secretd:"Pharmacists and doctors are bound by confidentiality. Nothing is passed on to your family, your school or your workplace. If they suggest a support service, they will ask for your agreement first.",
+ r3d2:"As a rule, anyone who will take the medicine can be seen and receive a prescription, whatever their age. Some clinics may ask a minor for a parent's consent form or for a parent to come along, so please call ahead and check before you go.",
+ r3meritt:"Why a clinic can help",
+ r3meritd1:"The greatest reassurance is meeting a doctor face to face and asking about anything that worries you, right there.",
+ r3meritd2:"Beyond how to take the medicine and its side effects, you can also ask about testing for sexually transmitted infections, a gynaecological check, and reliable contraception from now on, such as the pill.",
+ r3meritd3:"You do not need to wonder whether this is worth going in for, or whether you will be told off. Doctors are there to look after your body and your mind.",
+ r3recot:"A clinic is a good choice if",
+ r3recod:"If any of these apply to you, going straight to a clinic tends to be more certain and smoother than an online consultation or a pharmacy.",
+ r3reco:[
+  ["More than 72 hours have passed","Some clinics carry a medicine that can still work up to 120 hours (5 days), rather than the usual one that has to be taken within 72 hours."],
+  ["You are under 16 (at junior high, for example)","Online services and pharmacies may decline because of your age and suggest a clinic. If there is a clinic near you, going to ask directly can be faster. It is paid privately, without your health insurance card, and if you would rather your family did not know, you can talk about that too."],
+  ["You did not consent, or you experienced sexual violence","If you were forced, or could not say no, it is never your fault. Every prefecture has a one-stop support centre for victims of sexual crime and violence (national freephone #8891). They can tell you about public funding that makes the medicine free, and can go with you to hospital. Please do not carry this alone."]
+ ],
+ r1pointst:"Three things to know",
+ r1points:[
+  ["1. Find a pharmacy that stocks it, in advance","Not every pharmacy carries it. Look for a pharmacy on the health ministry list, and before you go, call to check that it is in stock and that a pharmacist is there to help you now."],
+  ["2. Go yourself (nobody else can)","The person who will take the medicine has to go. A partner, a parent or anyone else cannot buy it for you."],
+  ["3. Take it in front of the pharmacist","You cannot take the medicine home. So that it is taken safely and as soon as possible, you take it in a private area of the pharmacy, in front of the pharmacist."]
+ ],
+ r1prept:"Before you go",
+ r1prepd1:"You may be asked to show ID such as a My Number card or a health insurance card. It is not required, but it is reassuring to check beforehand.",
+ r1prepd2:"The pharmacist will ask things like when you had sex, when your last period was, any allergies, and any medicines you take. A quick note to yourself makes it go smoothly.",
+ r2ways:"You can either collect it at a pharmacy you choose, or have it posted to your home.",
+ r2w1t:"1. Collect it at a pharmacy (the national guideline)",
+ r2w1d:"After the online consultation the doctor issues a prescription and you collect the medicine at the pharmacy you chose. The pharmacist explains it, and you take it there, in front of them. This is the standard route set out in the health ministry guideline.",
+ r2w2t:"2. Have it posted to your home (private clinics)",
+ r2w2d:"Some private clinics send the medicine itself to your home, by post or courier, after the consultation. It really helps when you cannot go out, or when no pharmacy near you is open. It can arrive the same day or the next day.",
+ r2cautiont:"Before using a postal service",
+ r2cautiond:"Posting is convenient, but there are a few things to watch. Emergency contraception should be taken as soon as possible, within 72 hours of sex (or 120 hours with some medicines). With post there is a risk it arrives too late. Always check when it will actually reach you — the arrival date, not the dispatch date. And never use overseas private import sites: delivery is slow and counterfeits are a real risk. Always choose a service where you are seen by a doctor in Japan.",
  pageTitle:"How to get emergency contraception in Japan | 7 languages",
  tophint:"This is not an official website (run by a private individual)",
  eyebrow:"THERE IS STILL TIME",
  title:"How to get emergency contraception in Japan",
- subtitle:"There are three ways: an OB-GYN clinic, a pharmacy, or an online consultation. Options exist even late at night.",
- cdlabel:"Enter the date and time of the unprotected sex",
+ subtitle:"In Japan there are three ways to get it\n\u30fba clinic\n\u30fba pharmacy\n\u30fban online consultation\n\nThere is a way even late at night.\nLet us go through them one by one.",
+ cdlabel:"Try entering the date and time you had sex without contraception",
  cdempty:"Enter the date and time to see how long you have left",
  cdprefix:"",
  cdh:"h", cdm:"m",
- cdnote:"The sooner you take it, the better it works. Please do not wait.",
+ cdnote:"The sooner you take it, the better it works. Please act now rather than later.",
  cdnow:"If you take it now, it is about {p} effective",
  cdover:"More than 72 hours have passed",
  overtitle:"Even after 72 hours, there are options",
- overtext:"You cannot buy it at a pharmacy, but an OB-GYN may be able to discuss options for the 72 to 120 hour window. This can involve a medicine not approved in Japan, and it works less well, but it is still worth asking. Please do not give up.",
+ overtext:"You cannot buy it at a pharmacy, but a clinic may be able to discuss options that work between 72 and 120 hours. It may involve a medicine not approved in Japan and it is less effective, but it is worth asking. Please do not give up.",
  overbtn:"Find an OB-GYN clinic",
  efftitle:"How well it works",
  effh1:"Time from sex to taking it", effh2:"Prevented",
  eff1:"Within 24 hours", eff2:"24–48 hours", eff3:"49–72 hours",
  effsrc:"Source: WHO Task Force on Postovulatory Methods of Fertility Regulation. Lancet 1998;352:428-433. These are estimates and vary from person to person.",
  routestitle:"Three ways to get it",
- routeshint:"Any of these is fine. Choose the one that fits your situation.",
+ routeshint:"Any of them is fine. Choose whichever is easiest for you to get to.",
  r1n:"Buy at a pharmacy", r1p:"approx. ¥6,930–7,480",
- r1d:"No prescription needed. This is the cheapest and usually the fastest way. However, not all pharmacies carry it. Always call before you go. The person taking the medicine must make the call (but someone may help you make it).",
+ r1d:"Since February 2026, some pharmacies have been able to sell emergency contraception without a doctor\u2019s prescription. It is the fastest way without going to hospital, but there are some important rules.",
  r1b:"Find a pharmacy (Ministry of Health)",
  r2n:"Online consultation", r2p:"approx. ¥5,000–15,000",
- r2d:"See a doctor by phone or computer, then collect the medicine at a pharmacy. Available at night, early morning and on holidays. Good if there is no pharmacy near you or you cannot go out. This is not online shopping — it is a medical consultation, and it is officially permitted.",
+ r2d:"You can see a doctor online using your phone or computer. Some clinics are open late at night, early in the morning, and at weekends and on holidays, which is a real help when you want to act straight away.",
  r2b:"Find a participating pharmacy or doctor (Ministry of Health)",
- r3tag:"Choose this if you are under 16, past 72 hours, or a victim of sexual violence",
  r3n:"Visit an OB-GYN clinic", r3p:"approx. ¥6,000–15,000",
- r3d:"If you are under 16, a pharmacy will often refer you to a clinic anyway, so going straight here is faster. If you have experienced sexual violence, you can also discuss financial support and testing for sexually transmitted infections. Come here too if more than 72 hours have passed.",
+ r3d:"You see a doctor at an obstetrics and gynaecology clinic, a women\u2019s clinic or a ladies clinic, and receive the medicine after the consultation.",
  r3b:"Find an OB-GYN clinic (Ministry of Health)",
- knowtitle:"What you need to know",
- know:[
-  ["You must collect it yourself","The person who will take the medicine must collect it. Family, friends or a partner cannot buy it for you."],
-  ["There is no age limit","You do not need permission from a parent or partner. However, if you are under 16, a pharmacy may refer you to an OB-GYN. This is not a refusal — the clinic gives you the same medicine."],
-  ["You take it on the spot","You take one tablet in front of the pharmacist. You cannot take it home or give it to anyone else."],
-  ["Health insurance does not cover it","You pay the full amount yourself. Bring cash — some pharmacies do not accept cards."],
-  ["You cannot buy it by mail order","Importing it from abroad risks counterfeit medicine, and Japan's injury relief system will not cover you. An online consultation is different — that option is available."],
-  ["Check again after 3 weeks","It is not 100% effective. Three weeks after taking it, use a pregnancy test or see a doctor."],
-  ["Your privacy is protected","Pharmacists and doctors are bound by confidentiality. Nothing is reported to your family, school or workplace. If they refer you to a support service, they will ask your permission first."]
- ],
  consulttitle:"You do not have to face this alone",
  consulttext:"Free public support services are available. If you have experienced sexual violence, the cost of the consultation and the medicine may be covered. Please do not give up because of money.",
  cb1:"Find a sexual violence support centre (Cabinet Office)",
@@ -1014,47 +1900,139 @@ en:{
 },
 
 ko:{
+ stepstitle:"손에 넣기까지의 흐름",
+ stepshint:"각 방법마다 실제로 하게 되는 일을 순서대로 적었습니다.",
+ steps:[
+  ["산부인과 진료받기",[
+   "갈 수 있는 산부인과를 찾습니다. 야간이나 휴일에는 지역 응급 상담 창구에서도 안내받을 수 있습니다.",
+   "전화로 응급피임 때문에 진료받고 싶다고 전하고, 진료가 가능한지 물어보세요.",
+   "진료를 받습니다. 마지막 생리일을 묻는 경우가 많으니 미리 떠올려 두면 수월합니다.",
+   "진찰 후 약이 처방됩니다. 그 자리에서 복용하는 경우가 많지만 시설에 따라 다릅니다.",
+   "비용을 냅니다. 건강보험은 적용되지 않습니다. 성폭력 피해를 입은 경우 공적 비용으로 부담되는 제도가 있으니 그 점도 편하게 상담해 보세요."
+  ]],
+  ["약국에서 구입하기",[
+   "후생노동성 목록에서 응급피임약을 취급하는 약국을 찾습니다. 모든 약국에 있는 것은 아닙니다.",
+   "가기 전에 전화로 재고가 있는지, 약사가 있는 시간인지 확인하면 안심입니다. 전화는 약을 복용할 본인이 겁니다(거는 것을 도와주는 것은 괜찮습니다).",
+   "약을 복용할 본인이 갑니다. 대신 받아 올 수는 없습니다.",
+   "약사와 주위에 들리지 않는 곳에서 이야기합니다. 묻는 말에 답하기만 하면 됩니다.",
+   "약사 앞에서 한 알을 복용합니다. 가지고 돌아갈 수는 없습니다.",
+   "결제합니다. 전액 본인 부담입니다. 카드를 받지 않는 약국도 있으니 현금이 있으면 안심입니다."
+  ]],
+  ["온라인 진료받기",[
+   "대응하는 의료기관을 찾아 예약합니다. 첫 진료여도 괜찮습니다.",
+   "스마트폰이나 컴퓨터로 의사의 진찰을 받습니다.",
+   "약을 받는 방법을 정합니다. 약국에서 받는 경우에는 갈 수 있는 곳을 고르세요. 집으로 배송받는 경우에는 언제 도착하는지 꼭 확인하세요.",
+   "약국에서 받는 경우에는 약사 앞에서 복용합니다. 집으로 도착하는 경우에는 도착하는 대로 바로 복용하세요.",
+   "진료비와 약값을 결제합니다."
+  ]]
+ ],
+ checktitle:"복용 전에 확인할 것",
+ checkhint:"약사나 의사가 확인하는 내용입니다. 해당되는 것이 있어도 우선 상담해 보세요. 혼자 판단해서 포기하지 마세요.",
+ checknotitle:"이 약을 쓸 수 없는 경우",
+ checknonote:"다음에 해당하는 분은 이 약을 복용할 수 없습니다. 산부인과에서 상담해 보세요.",
+ checkno:[
+  "이 약의 성분으로 알레르기 증상이 나타난 적이 있다",
+  "간 질환이 있다",
+  "이미 임신 중이다"
+ ],
+ checknote:[
+  "수유 중인 분 — 복용하는 경우에는 복용 후 24시간은 수유를 피해 주세요"
+ ],
+ checkasktitle:"미리 알려 주세요",
+ checkasknote:"다음에 해당하는 분은 약사나 의사에게 한마디 전해 주세요.",
+ checkask:[
+  "현재 의사의 치료를 받고 있다, 복용 중인 약이 있다",
+  "약으로 알레르기 증상이 나타난 적이 있다",
+  "심장이나 신장 질환, 또는 중한 위장 질환이 있다",
+  "세인트존스워트가 들어간 보충제나 식품을 먹고 있다"
+ ],
+ spectitle:"약에 대하여",
+ spechint:"일본의 약국에서 살 수 있는 응급피임약은 두 종류입니다. 성분과 용량은 같습니다.",
+ spec:[
+  ["제품명","노르레보 / 레소엘72"],
+  ["성분(1정 중)","레보노르게스트렐 1.5mg (두 종류 모두 동일)"],
+  ["분류","특정요지도의약품"],
+  ["가격(세금 포함, 희망 소매가)","노르레보 7,480엔 / 레소엘72 6,930엔"],
+  ["복용법","성관계 후 72시간 이내에 한 알. 약사 앞에서 복용"],
+  ["작용","배란을 늦추는 등으로 임신하기 어렵게 합니다"],
+  ["건강보험","적용되지 않습니다(전액 본인 부담)"]
+ ],
+ specnote:"가격은 희망 소매가이며 약국에 따라 다를 수 있습니다. 출처: 후생노동성, 일본약제사회, 각 제품 첨부문서.",
+ faqtitle:"자주 있는 질문",
+ faq:[
+  ["신분증이 필요한가요","반드시 필요하다고 정해져 있지는 않습니다. 다만 나이 등을 확인하기 위해 보여 달라는 경우는 있습니다. 있다면 가져가면 안심입니다. 없더라도 우선 그 자리에서 상담해 보세요."],
+  ["부모님께 알려지나요","나이와 관계없이 부모의 동의는 필요 없습니다. 약국에서 집으로 연락이 가는 일도 없습니다."],
+  ["16세 미만도 살 수 있나요","나이 제한은 없습니다. 다만 약국에서는 산부인과를 권유받는 경우가 있습니다. 거절당한 것이 아니라 병원에서도 같은 약을 받을 수 있습니다. 처음부터 산부인과에 가는 편이 빠른 경우도 있습니다."],
+  ["대신 사다 줄 수 있나요","아쉽지만 불가능합니다. 약을 복용할 본인이 가서 약사 앞에서 복용하도록 정해져 있습니다."],
+  ["집으로 배송받을 수 있나요","온라인 진료를 하는 자비 진료 클리닉 중에는 약을 집으로 배송하는 곳이 있습니다. 외출이 어려울 때 도움이 됩니다. 이용 전에 세 가지만 확인하세요. 첫째, 언제 도착하는지. 72시간 기한에 맞출 수 있는지가 중요합니다. 둘째, 일본에서 승인된 약인지. 120시간용으로 안내되는 울리프리스탈 아세테이트는 일본에서 승인되지 않았습니다. 셋째, 승인되지 않은 약은 만일 몸에 이상이 생겨도 국가 구제 제도의 대상이 되지 않습니다. 참고로 국가 지침에서는 약국에서 받아 약사 앞에서 복용하는 방법을 제시하고 있습니다."],
+  ["드러그스토어 온라인몰에서 살 수 있나요","살 수 없습니다. 약국에서 사는 경우에는 매장에 가서 약사와 대면으로 이야기해야 합니다. 해외에서 개인 수입한 약은 가짜일 우려가 있고, 건강 피해가 생겨도 국가 구제 제도의 대상이 되지 않습니다."],
+  ["100% 임신을 막을 수 있나요","아쉽지만 100%는 아닙니다. 복용해도 임신하는 경우가 있습니다. 복용 후 3주 뒤에 임신테스트기나 의료기관에서 확인하세요."],
+  ["부작용이 있나요","메스꺼움, 두통, 아랫배 통증, 부정출혈 등이 나타날 수 있습니다. 복용 후 2시간 이내에 토한 경우에는 약사나 의사에게 상담하세요."],
+  ["72시간이 지나 버렸어요","약국에서는 살 수 없지만, 산부인과에서는 72시간에서 120시간 사이에 쓸 수 있는 방법을 상담할 수 있는 경우가 있습니다. 부디 포기하지 말고 상담해 보세요."]
+ ],
+ aftertitle:"복용한 뒤의 불안에 대하여",
+ afterbody1:"약을 복용한 뒤에는 일시적으로 메스꺼움이나 두통이 있을 수 있지만, 몇 시간에서 하루 정도면 가라앉는 경우가 많습니다. 만약 복용 후 2시간 이내에 토했다면 약이 흡수되지 않았을 가능성이 있으니 바로 의사나 약사에게 상담하세요.",
+ afterbody2:"또한 이르면 며칠에서 3주 이내에 소퇴출혈이라는 생리 같은 출혈이 옵니다. 3주가 지나도 출혈이 없다면 혹시 모르니 임신테스트기로 확인하거나 산부인과를 방문해 주세요.",
+ secrett:"비밀은 지켜집니다",
+ secretd:"약사와 의사에게는 비밀유지 의무가 있습니다. 가족이나 학교, 직장에 전해지는 일은 없습니다. 상담 기관을 소개하는 경우에도 본인의 동의를 받은 뒤에 이루어집니다.",
+ r3d2:"원칙적으로 복용할 본인이라면 나이와 관계없이 진료를 받고 처방받을 수 있습니다. 다만 시설에 따라 미성년자의 경우 보호자의 동의서나 동반을 요청하는 경우도 있으니, 반드시 미리 전화 등으로 문의해 확인한 뒤에 방문하세요.",
+ r3meritt:"산부인과를 찾는 장점",
+ r3meritd1:"가장 큰 안심은 의사를 직접 만나 불안한 점을 그 자리에서 상담할 수 있다는 것입니다.",
+ r3meritd2:"약 복용법이나 부작용뿐 아니라, 원한다면 성매개감염 검사나 부인과 검진, 앞으로의 확실한 피임 방법(경구피임약 등)에 대해서도 함께 상담할 수 있습니다.",
+ r3meritd3:"이런 일로 가도 되나, 혼나지 않을까 하고 망설이지 않아도 괜찮습니다. 의사는 당신의 몸과 마음을 지키기 위해 진료합니다.",
+ r3recot:"이런 분께는 산부인과를 권합니다",
+ r3recod:"다음에 해당하는 분은 온라인 진료나 약국 구입보다, 산부인과를 직접 찾는 편이 더 확실하고 순조롭게 대응받을 수 있습니다.",
+ r3reco:[
+  ["성관계로부터 72시간이 지난 분","국내에서 일반적인 응급피임약(72시간 이내에 사용하는 약)이 아니라, 120시간(5일) 이내까지 효과를 기대할 수 있는 약을 취급하는 산부인과도 있습니다."],
+  ["16세 미만(중학생 등)인 분","온라인 진료나 약국에서는 나이를 이유로 대응을 거절당하고 산부인과 진료를 권유받는 경우가 있습니다. 집 근처에 진료받을 수 있는 산부인과가 있다면 직접 상담하러 가는 편이 빠른 경우도 있습니다. 건강보험증을 쓰지 않는 자비 진료이지만, 가족에게 알리고 싶지 않은 등의 바람이 있다면 그것도 함께 상담해 보세요."],
+  ["동의 없는 성관계나 성폭력 피해를 입은 분","강제로 당했거나 거절할 수 없었던 경우는 결코 당신의 잘못이 아닙니다. 각 도도부현에 있는 성범죄·성폭력 피해자를 위한 원스톱 지원센터(전국 공통 무료 다이얼 #8891)에 전화하면, 응급피임약 비용이 무료(공적 부담)가 되는 제도나 병원 동행 등의 지원을 받을 수 있습니다. 혼자 끌어안지 말고 우선 상담해 주세요."]
+ ],
+ r1pointst:"약국에서 사기 위한 세 가지 포인트",
+ r1points:[
+  ["1. 취급하는 약국을 미리 찾아 둘 것","모든 약국에 있는 것은 아닙니다. 후생노동성 홈페이지에 실린 판매 가능한 약국을 찾고, 가기 전에 반드시 전화로 재고가 있는지, 지금 가면 대응할 수 있는 약사가 있는지 확인하세요."],
+  ["2. 본인이 갈 것(대리 불가)","반드시 약을 복용할 본인이 약국에 가세요. 파트너나 부모 등 대리인이 살 수는 없습니다."],
+  ["3. 약사 앞에서 복용할 것(면전 복용)","산 약을 집으로 가져갈 수는 없습니다. 안전하고 확실하게 되도록 빨리 복용하도록, 약국 안의 프라이버시가 지켜지는 장소에서 약사가 보는 앞에서 약을 복용합니다."]
+ ],
+ r1prept:"가기 전 준비",
+ r1prepd1:"마이넘버카드나 건강보험증 등 신분증 제시를 요청받는 경우가 있습니다. 필수는 아니지만 미리 확인해 두면 안심입니다.",
+ r1prepd2:"구입 시 약사에게서 성관계가 있었던 일시, 마지막 생리가 언제였는지, 알레르기 이력, 복용 중인 약 등을 질문받습니다. 메모해 두면 수월합니다.",
+ r2ways:"본인이 지정한 약국에서 받거나, 집 등으로 배송받아 수령할 수 있습니다.",
+ r2w1t:"1. 약국에 가서 받는 방법(국가 지침에 따른 방식)",
+ r2w1d:"온라인 진료 후 의사가 처방전을 발행하고, 지정한 약국으로 약을 받으러 가는 방법입니다. 약국에서 약사의 설명을 듣고 그 자리에서(약사 앞에서) 약을 복용합니다. 이것이 후생노동성 지침에 정해진 원칙적인 방식입니다.",
+ r2w2t:"2. 집 우편함 등으로 배송받는 방법(자비 진료 클리닉의 배송 서비스)",
+ r2w2d:"자비 진료를 하는 일부 클리닉에서는 진료 후 약 자체를 집으로 우편이나 퀵서비스 등으로 보내 주는 서비스를 하고 있습니다. 도저히 외출할 수 없다, 근처에 문을 연 약국이 없다 같은 경우에 큰 도움이 되는 선택지입니다. 빠르면 당일이나 다음 날 우편함에 도착하기도 합니다.",
+ r2cautiont:"배송 서비스를 이용할 때의 주의점",
+ r2cautiond:"매우 편리한 배송 서비스이지만 몇 가지 주의해 주셨으면 하는 점이 있습니다. 응급피임약은 성관계 후 72시간 이내(약에 따라서는 120시간 이내)에 되도록 빨리 복용하는 것이 중요합니다. 배송의 경우 도착까지 시간이 걸려 기한에 맞추지 못할 위험이 있습니다. 이용할 때는 반드시 언제 내 손에 도착하는지(발송일이 아니라 도착일)를 확실히 확인하세요. 또한 해외 개인 수입 사이트는 도착이 늦고 가짜일 위험도 있으므로 절대 이용하지 마세요. 반드시 국내 의사의 진료를 받을 수 있는 서비스를 고르세요.",
  pageTitle:"일본에서 응급피임약을 구하는 방법 | 7개 언어 안내",
  tophint:"이 사이트는 공식 사이트가 아닙니다 (개인이 운영합니다)",
  eyebrow:"아직 늦지 않았습니다",
  title:"응급피임약을 구하는 방법",
- subtitle:"일본에서는 산부인과, 약국, 온라인 진료의 세 가지 방법으로 구할 수 있습니다. 한밤중에도 방법이 있습니다.",
- cdlabel:"피임하지 않은 성관계를 한 날짜와 시간을 입력해 주세요",
+ subtitle:"일본에서는 세 가지 방법으로 구할 수 있습니다\n\u30fb산부인과\n\u30fb약국\n\u30fb온라인 진료\n\n밤늦은 시간에도 방법은 있습니다.\n하나씩 살펴봅시다.",
+ cdlabel:"피임하지 않고 성관계를 한 날짜와 시간을 입력해 보세요",
  cdempty:"날짜와 시간을 입력하면 남은 시간이 표시됩니다",
  cdprefix:"",
  cdh:"시간", cdm:"분",
- cdnote:"빨리 복용할수록 효과가 높습니다. 기다리지 마세요.",
+ cdnote:"빨리 복용할수록 효과가 높아집니다. 미루지 말고 지금 움직여 보세요.",
  cdnow:"지금 복용하면 약 {p}의 효과를 기대할 수 있습니다",
  cdover:"72시간이 지났습니다",
  overtitle:"72시간이 지나도 방법이 있습니다",
- overtext:"약국에서는 살 수 없지만, 산부인과에서는 72시간에서 120시간 사이에 쓸 수 있는 방법을 상담할 수 있는 경우가 있습니다. 일본에서 승인되지 않은 약을 쓰는 경우가 있고 효과도 낮아지지만, 상담할 가치는 있습니다. 포기하지 마세요.",
+ overtext:"약국에서는 살 수 없지만, 산부인과에서는 72시간에서 120시간 사이에 쓸 수 있는 방법을 상담할 수 있는 경우가 있습니다. 일본에서 승인되지 않은 약을 쓰는 경우가 있고 효과도 떨어지지만, 상담해 볼 가치는 있습니다. 부디 포기하지 마세요.",
  overbtn:"산부인과 찾기",
  efftitle:"임신을 막을 수 있는 비율의 목표치",
  effh1:"성관계 후 복용까지의 시간", effh2:"비율",
  eff1:"24시간 이내", eff2:"24~48시간", eff3:"49~72시간",
  effsrc:"출처: WHO Task Force on Postovulatory Methods of Fertility Regulation. Lancet 1998;352:428-433. 이는 목표치이며 신체 상태에 따라 달라집니다.",
  routestitle:"구하는 방법은 세 가지",
- routeshint:"어느 것을 선택해도 괜찮습니다. 본인의 상황에 맞게 골라 주세요.",
+ routeshint:"어느 것을 골라도 괜찮습니다. 당신이 가기 쉬운 곳이면 됩니다.",
  r1n:"약국에서 구입", r1p:"약 6,930~7,480엔",
- r1d:"처방전은 필요하지 않습니다. 가장 저렴하고 가장 빠른 방법입니다. 다만 모든 약국에서 취급하지는 않습니다. 가기 전에 반드시 전화해 주세요. 전화는 본인이 걸어야 합니다(거는 것을 도와받는 것은 괜찮습니다).",
+ r1d:"2026년 2월부터 일부 약국에서 의사의 처방전 없이 응급피임약을 살 수 있게 되었습니다. 병원에 가지 않고 가장 빨리 손에 넣는 방법이지만, 몇 가지 중요한 규칙이 있습니다.",
  r1b:"약국 찾기 (후생노동성)",
  r2n:"온라인 진료", r2p:"약 5,000~15,000엔",
- r2d:"스마트폰이나 컴퓨터로 의사의 진료를 받고, 약국에서 받습니다. 밤중·새벽·공휴일에도 진료를 받을 수 있습니다. 근처에 약국이 없는 분, 외출이 어려운 분에게도 좋습니다. 이는 '인터넷 통신판매'가 아니라 '진료'이며, 국가가 인정한 방법입니다.",
+ r2d:"스마트폰이나 컴퓨터로 온라인으로 의사의 진찰을 받을 수 있습니다. 밤늦은 시간이나 이른 아침, 주말과 공휴일에도 대응하는 클리닉이 있어서 바로 움직이고 싶을 때 큰 도움이 됩니다.",
  r2b:"대응 약국·의사 찾기 (후생노동성)",
- r3tag:"16세 미만·72시간 초과·성폭력 피해를 입은 분은 이쪽으로",
  r3n:"산부인과 진료", r3p:"약 6,000~15,000엔",
- r3d:"16세 미만인 분은 약국에서 진료를 권유받는 경우가 많으므로, 처음부터 이쪽이 빠릅니다. 성폭력 피해를 입은 경우에는 비용 지원이나 성감염증 검사도 상담할 수 있습니다. 72시간이 지난 경우에도 이쪽으로 오세요.",
+ r3d:"산부인과나 여성의원, 레이디스 클리닉에서 진료를 받고, 의사의 진찰 후에 약을 받는 방법입니다.",
  r3b:"산부인과 찾기 (후생노동성)",
- knowtitle:"알아두어야 할 것",
- know:[
-  ["본인이 받습니다","약을 복용하는 사람이 직접 받아야 합니다. 가족이나 친구, 파트너가 대신 살 수 없습니다."],
-  ["연령 제한은 없습니다","부모나 파트너의 동의도 필요하지 않습니다. 다만 16세 미만인 분은 약국에서 산부인과를 권유받을 수 있습니다. 거절당한 것이 아닙니다. 병원에서도 같은 약을 받을 수 있습니다."],
-  ["그 자리에서 복용합니다","약사 앞에서 1정을 복용합니다. 가지고 갈 수 없습니다. 다른 사람에게 줄 수도 없습니다."],
-  ["건강보험은 적용되지 않습니다","전액 본인이 부담합니다. 현금을 준비해 두면 확실합니다. 카드를 쓸 수 없는 약국도 있습니다."],
-  ["인터넷 통신판매로는 살 수 없습니다","해외에서 개인 수입하면 가짜 약일 우려가 있고, 건강 피해가 생겨도 일본의 구제 제도 대상이 되지 않습니다. 온라인 진료는 다르며, 이쪽은 이용할 수 있습니다."],
-  ["3주 후에 확인합니다","100%가 아닙니다. 복용 후 3주 뒤에 임신 검사약이나 의료기관에서 확인해 주세요."],
-  ["비밀은 지켜집니다","약사와 의사에게는 비밀유지 의무가 있습니다. 가족이나 학교, 직장에 알려지지 않습니다. 상담 기관을 소개하는 경우에도 본인의 동의를 얻은 후에 이루어집니다."]
- ],
  consulttitle:"혼자 감당하지 않아도 괜찮습니다",
  consulttext:"무료로 상담할 수 있는 공적 창구가 있습니다. 성폭력 피해를 입은 경우에는 진료나 약의 비용을 지원받을 수 있는 경우가 있습니다. 비용 때문에 포기하지 마세요.",
  cb1:"성폭력 상담 창구 찾기 (내각부)",
@@ -1072,47 +2050,139 @@ ko:{
 },
 
 zh:{
+ stepstitle:"获取的流程",
+ stepshint:"按顺序列出每种方法实际要做的事。",
+ steps:[
+  ["前往妇产科就诊",[
+   "先找一家你能去的妇产科。夜间或节假日，也可以通过当地的急救咨询窗口获得指引。",
+   "打电话说明希望就诊紧急避孕，问一下能否接诊。",
+   "前往就诊。常会被问到最后一次月经的日期，事先回想一下会更顺利。",
+   "经过诊察后医生会开药。多数情况下会当场服用，但各机构做法不同。",
+   "支付费用。健康保险不适用。如果遭受了性暴力，有由公费负担的制度，请放心一并咨询。"
+  ]],
+  ["在药店购买",[
+   "在厚生劳动省的名单中查找有售紧急避孕药的药店。并非所有药店都有。",
+   "出发前打电话确认是否有库存、是否有药剂师在岗会更放心。电话请由要服药的本人拨打（请别人帮忙拨号是可以的）。",
+   "由要服药的本人前往。不能由他人代买。",
+   "会在药店内不会被旁人听到的地方与药剂师交谈。只需回答被问到的问题即可。",
+   "在药剂师面前服用一片。不能带回家。",
+   "付款。全额自费。有些药店不能刷卡，带现金更稳妥。"
+  ]],
+  ["接受在线问诊",[
+   "找到提供该服务的医疗机构并预约。初诊也可以。",
+   "用手机或电脑接受医生问诊。",
+   "决定取药方式。若到药店领取，请选择你能去的地方。若邮寄到家，务必确认何时送达。",
+   "若在药店领取，需在药剂师面前服用。若邮寄到家，收到后请尽快服用。",
+   "支付诊查费和药费。"
+  ]]
+ ],
+ checktitle:"服用前的确认",
+ checkhint:"这些是药剂师或医生会确认的内容。即使有符合的项目，也请先咨询。不要自己判断而放弃。",
+ checknotitle:"不能使用这种药的情况",
+ checknonote:"符合以下情况的人不能服用本药。请到妇产科咨询。",
+ checkno:[
+  "曾因本药成分出现过敏症状",
+  "有肝脏疾病",
+  "已经怀孕"
+ ],
+ checknote:[
+  "哺乳期的人 —— 若要服用，服药后24小时内请避免哺乳"
+ ],
+ checkasktitle:"请事先告知",
+ checkasknote:"符合以下情况的人，请向药剂师或医生说明一句。",
+ checkask:[
+  "正在接受医生治疗，或正在服用其他药物",
+  "曾因药物出现过敏症状",
+  "有心脏或肾脏疾病，或严重的胃肠疾病",
+  "正在服用含贯叶连翘（圣约翰草）的保健品或食品"
+ ],
+ spectitle:"关于这种药",
+ spechint:"在日本药店能买到的紧急避孕药有两种，成分和剂量相同。",
+ spec:[
+  ["商品名","诺尔乐 / 雷索尔72"],
+  ["成分（每片）","左炔诺孕酮 1.5mg（两种相同）"],
+  ["分类","特定需指导药品"],
+  ["价格（含税·建议零售价）","诺尔乐 7,480日元 / 雷索尔72 6,930日元"],
+  ["服用方法","性行为后72小时内服用一片，在药剂师面前服用"],
+  ["作用","通过延迟排卵等方式，使人不易怀孕"],
+  ["健康保险","不适用（全额自费）"]
+ ],
+ specnote:"价格为建议零售价，各药店可能不同。来源：厚生劳动省、日本药剂师会、各产品说明书。",
+ faqtitle:"常见问题",
+ faq:[
+  ["需要身份证件吗","并没有规定必须携带。不过为了确认年龄等，有时会被要求出示。有的话带上会更安心。若手头没有，先在现场咨询即可。"],
+  ["父母会知道吗","无论年龄大小，都不需要父母同意。药店也不会联系家里。"],
+  ["未满16岁也能买吗","没有年龄限制。不过在药店有时会被建议去妇产科。这并不是拒绝，在医院也能拿到同样的药。有时一开始就去妇产科反而更快。"],
+  ["可以让别人代买吗","很遗憾不可以。规定必须由要服药的本人前往，并在药剂师面前服用。"],
+  ["可以寄到家里吗","在提供在线问诊的自费诊疗诊所中，有些会把药寄到家里。在难以外出时很有帮助。使用前请确认三点。第一，什么时候送达，能否赶上72小时的期限很关键。第二，是否为日本已批准的药。作为120小时用介绍的醋酸乌利司他在日本尚未批准。第三，未获批准的药物，万一身体出现不适，也不属于国家救济制度的对象。另外，国家指南所示的方式是在药店领取并在药剂师面前服用。"],
+  ["能在药妆店的网店买吗","不能。在药店购买需要到店与药剂师当面沟通。从海外个人进口的药物有假货风险，出现健康损害也不属于国家救济制度的对象。"],
+  ["能100%防止怀孕吗","很遗憾并非100%。服用后仍可能怀孕。服药三周后，请用验孕棒或到医疗机构确认。"],
+  ["有副作用吗","可能出现恶心、头痛、下腹痛、不规则出血等。若服药后2小时内呕吐，请咨询药剂师或医生。"],
+  ["已经超过72小时了","药店买不到，但妇产科有时可以商量在72小时至120小时之间可用的方法。请不要放弃，去咨询看看。"]
+ ],
+ aftertitle:"关于服药后的不安",
+ afterbody1:"服药后可能会暂时出现恶心或头痛，但多数在数小时至一天左右缓解。如果服药后2小时内呕吐，药物可能没有被吸收，请立即咨询医生或药剂师。",
+ afterbody2:"另外，快则数日、慢则三周内会出现称为撤退性出血的类似月经的出血。若过了三周仍没有出血，请用验孕棒确认或到妇科就诊。",
+ secrett:"隐私会被保护",
+ secretd:"药剂师和医生负有保密义务。不会传达给家人、学校或工作单位。即使要介绍咨询机构，也会在征得你同意之后进行。",
+ r3d2:"原则上只要是要服药的本人，无论年龄都可以就诊并获得处方。不过部分机构对未成年人可能会要求监护人的同意书或陪同，因此请务必事先通过电话等方式确认后再前往。",
+ r3meritt:"到妇产科就诊的好处",
+ r3meritd1:"最大的安心，是能当面见到医生，把不安的事情当场说出来商量。",
+ r3meritd2:"除了服药方法和副作用，如果希望，还可以一并咨询性传播感染的检查、妇科检查，以及今后可靠的避孕方法（如低剂量避孕药等）。",
+ r3meritd3:"不用犹豫这种事去看医生好不好、会不会被责备。医生是为了守护你的身体和心而诊治的。",
+ r3recot:"这些情况推荐去妇产科",
+ r3recod:"符合以下情况的人，比起在线问诊或在药店购买，直接前往妇产科能得到更确实、更顺畅的处理。",
+ r3reco:[
+  ["距离性行为已超过72小时的人","有些妇产科提供的不是国内常见的紧急避孕药（需在72小时内使用），而是可望在120小时（5天）以内仍有效果的药。"],
+  ["未满16岁（如初中生）的人","在线问诊或药店可能以年龄为由拒绝对应，并建议去妇产科就诊。如果家附近有能就诊的妇产科，直接去咨询有时更快。这是不使用健康保险证的自费诊疗，如果有不想让家人知道等的想法，也可以一并商量。"],
+  ["遭受非自愿性行为或性暴力的人","被强迫、或无法拒绝，这绝不是你的错。拨打各都道府县设有的性犯罪·性暴力受害者一站式支援中心（全国统一免费电话 #8891），可以了解让紧急避孕药费用免费（公费负担）的制度，也能获得陪同就医等支持。请不要独自承受，先联系咨询。"]
+ ],
+ r1pointst:"在药店购买的三个要点",
+ r1points:[
+  ["1. 事先找好有售的药店","并非所有药店都有。请查找厚生劳动省网站上列出的可销售药店，出发前务必打电话确认是否有库存、现在过去是否有能对应的药剂师。"],
+  ["2. 本人前往（不可代办）","请务必由要服药的本人前往药店。伴侣或父母等他人不能代买。"],
+  ["3. 在药剂师面前服用（面前服用）","买到的药不能带回家。为了安全、确实、尽快服用，会在药店内保护隐私的地方，在药剂师注视下服药。"]
+ ],
+ r1prept:"出发前的准备",
+ r1prepd1:"有时会被要求出示个人编号卡或健康保险证等身份证明。虽非必须，但事先确认会更安心。",
+ r1prepd2:"购买时药剂师会询问性行为的日期时间、最后一次月经是什么时候、过敏史、正在服用的药物等。事先做个备忘会更顺利。",
+ r2ways:"可以在本人指定的药店领取，也可以邮寄到家中等地址领取。",
+ r2w1t:"1. 到药店领取（符合国家指南的方式）",
+ r2w1d:"在线问诊后由医生开具处方，前往指定药店取药。在药店听取药剂师说明，并当场（在药剂师面前）服药。这是厚生劳动省指南规定的原则性方式。",
+ r2w2t:"2. 邮寄到家中信箱等（自费诊疗诊所的邮寄服务）",
+ r2w2d:"部分开展自费诊疗的诊所，会在问诊后通过邮寄、摩托快递等方式把药本身送到家里。在实在无法外出、附近没有营业药店等情况下，这是非常有帮助的选择。快的话当天或次日就会送到信箱。",
+ r2cautiont:"使用邮寄服务时的注意事项",
+ r2cautiond:"邮寄服务非常方便，但有几点希望你注意。紧急避孕药要在性行为后72小时内（有些药为120小时内）尽早服用，这一点很重要。采用邮寄时，存在因送达耗时而赶不上时限的风险。使用时请务必确认药物何时能到你手上（是送达日而非发货日）。此外，海外个人进口网站送达慢且有假货风险，请绝对不要使用。请务必选择能接受日本国内医生诊察的服务。",
  pageTitle:"在日本获取紧急避孕药的方法 | 七种语言指南",
  tophint:"本网站不是官方网站（由个人运营）",
  eyebrow:"现在还来得及",
  title:"获取紧急避孕药的方法",
- subtitle:"在日本可以通过三种途径获取：妇产科、药店、在线问诊。即使在深夜也有办法。",
+ subtitle:"在日本可以通过三种方法获取\n\u30fb妇产科\n\u30fb药店\n\u30fb在线问诊\n\n即使是深夜，也有办法。\n我们一个一个来看。",
  cdlabel:"请输入未采取避孕措施的性行为的日期和时间",
  cdempty:"输入日期和时间后会显示剩余时间",
  cdprefix:"",
  cdh:"小时", cdm:"分钟",
- cdnote:"服用越早，效果越好。请不要等待。",
+ cdnote:"越早服用效果越好。不要往后拖，现在就行动起来。",
  cdnow:"现在服用，预计约有 {p} 的效果",
  cdover:"已超过72小时",
  overtitle:"即使超过72小时，仍有办法",
- overtext:"药店无法购买，但妇产科有时可以就72至120小时内可用的方法进行咨询。可能会使用日本尚未批准的药物，效果也会下降，但仍然值得咨询。请不要放弃。",
+ overtext:"药店买不到，但妇产科有时可以商量在72小时至120小时之间可用的方法。可能会使用在日本尚未批准的药物，效果也会下降，但仍值得咨询。请不要放弃。",
  overbtn:"查找妇产科",
  efftitle:"可以避免怀孕的比例（参考值）",
  effh1:"从性行为到服用的时间", effh2:"比例",
  eff1:"24小时以内", eff2:"24～48小时", eff3:"49～72小时",
  effsrc:"出处：WHO Task Force on Postovulatory Methods of Fertility Regulation. Lancet 1998;352:428-433。这些为参考值，会因身体状况而有所不同。",
  routestitle:"获取方法有三种",
- routeshint:"选择哪一种都可以。请根据您的情况选择。",
+ routeshint:"选哪一个都可以。选你方便前往的地方就好。",
  r1n:"在药店购买", r1p:"约6,930～7,480日元",
- r1d:"无需处方。这是最便宜、通常也是最快的方法。但并非所有药店都有售。前往之前请务必打电话确认。电话需由服用者本人拨打（可以请人帮忙拨打）。",
+ r1d:"从2026年2月起，部分药店可以在没有医生处方的情况下出售紧急避孕药。这是不去医院、最快拿到药的方法，但有几条重要的规定。",
  r1b:"查找药店（厚生劳动省）",
  r2n:"在线问诊", r2p:"约5,000～15,000日元",
- r2d:"通过手机或电脑接受医生问诊，然后在药店领取药品。深夜、清晨、节假日均可就诊。适合附近没有药店或外出困难的人。这不是「网络购物」，而是「问诊」，是国家认可的方式。",
+ r2d:"可以用手机或电脑在线接受医生问诊。有些诊所在深夜、清晨以及周末和节假日也能对应，想马上行动时会有很大帮助。",
  r2b:"查找可对应的药店和医生（厚生劳动省）",
- r3tag:"未满16岁、超过72小时、遭受性暴力者请选择此项",
  r3n:"前往妇产科就诊", r3p:"约6,000～15,000日元",
- r3d:"未满16岁者在药店往往会被建议就诊，因此直接前往妇产科反而更快。如果遭受了性暴力，还可以咨询费用支援和性传播疾病检查。超过72小时的情况也请前往这里。",
+ r3d:"前往妇产科、妇科诊所或女性诊所，接受医生诊察后拿到药的方法。",
  r3b:"查找妇产科（厚生劳动省）",
- knowtitle:"需要了解的事项",
- know:[
-  ["必须本人领取","必须由服用药物的本人亲自领取。家人、朋友或伴侣不能代为购买。"],
-  ["没有年龄限制","也不需要父母或伴侣的同意。但未满16岁者在药店可能会被建议前往妇产科。这并不是拒绝，医院也能开出同样的药。"],
-  ["需当场服用","在药剂师面前服用一片。不能带回家，也不能转交他人。"],
-  ["医疗保险不适用","需全额自费。准备现金较为稳妥，有些药店无法使用银行卡。"],
-  ["无法通过网络购物购买","从海外个人进口有买到假药的风险，而且出现健康损害时也不在日本的救济制度范围内。在线问诊则不同，这种方式可以使用。"],
-  ["三周后需要确认","效果并非100%。服用三周后，请使用验孕棒或前往医疗机构确认。"],
-  ["秘密会被保护","药剂师和医生有保密义务。不会告知您的家人、学校或工作单位。如需介绍咨询机构，也会先征得您的同意。"]
- ],
  consulttitle:"您不必独自承受",
  consulttext:"有可以免费咨询的公共窗口。如果遭受了性暴力，问诊和药品的费用有可能获得支援。请不要因为费用而放弃。",
  cb1:"查找性暴力咨询窗口（内阁府）",
@@ -1130,47 +2200,139 @@ zh:{
 },
 
 vi:{
+ stepstitle:"Các bước thực hiện",
+ stepshint:"Đây là những việc bạn thực sự sẽ làm với từng cách.",
+ steps:[
+  ["Đến khám tại phòng khám sản phụ khoa",[
+   "Tìm một phòng khám bạn có thể đến. Ban đêm hoặc ngày lễ, tổng đài tư vấn cấp cứu ở địa phương cũng có thể hướng dẫn cho bạn.",
+   "Gọi điện nói rằng bạn muốn khám về tránh thai khẩn cấp, và hỏi xem họ có tiếp nhận không.",
+   "Đi khám. Bạn thường được hỏi ngày kinh cuối, nên nhớ lại trước sẽ nhanh hơn.",
+   "Sau khi khám, bác sĩ sẽ kê thuốc. Thường bạn sẽ uống ngay tại chỗ, nhưng điều này khác nhau tùy cơ sở.",
+   "Thanh toán. Bảo hiểm y tế không áp dụng. Nếu bạn bị bạo lực tình dục, có chế độ chi trả bằng ngân sách công, nên hãy cứ trao đổi về điều đó."
+  ]],
+  ["Mua tại nhà thuốc",[
+   "Dùng danh sách của Bộ Y tế để tìm nhà thuốc có bán thuốc tránh thai khẩn cấp. Không phải nhà thuốc nào cũng có.",
+   "Trước khi đi, hãy gọi điện xác nhận còn thuốc không và có dược sĩ trực hay không. Người sẽ uống thuốc tự gọi điện (nhờ người khác bấm số giúp thì không sao).",
+   "Chính người sẽ uống thuốc phải đến. Người khác không thể mua thay.",
+   "Bạn sẽ nói chuyện với dược sĩ ở nơi kín đáo. Chỉ cần trả lời những gì được hỏi.",
+   "Bạn uống một viên trước mặt dược sĩ. Không thể mang về nhà.",
+   "Thanh toán. Bạn tự trả toàn bộ chi phí. Một số nhà thuốc không nhận thẻ, nên có tiền mặt sẽ yên tâm hơn."
+  ]],
+  ["Khám trực tuyến",[
+   "Tìm cơ sở y tế có dịch vụ này và đặt hẹn. Khám lần đầu cũng được.",
+   "Khám với bác sĩ qua điện thoại hoặc máy tính.",
+   "Quyết định cách nhận thuốc. Nếu nhận tại nhà thuốc, hãy chọn nơi bạn đến được. Nếu gửi về nhà, nhất định phải xác nhận khi nào thuốc tới.",
+   "Nếu nhận tại nhà thuốc, bạn uống trước mặt dược sĩ. Nếu gửi về nhà, hãy uống ngay khi nhận được.",
+   "Thanh toán tiền khám và tiền thuốc."
+  ]]
+ ],
+ checktitle:"Cần xác nhận trước khi uống",
+ checkhint:"Đây là những điều dược sĩ hoặc bác sĩ sẽ kiểm tra. Dù có mục nào đúng với bạn, hãy cứ hỏi trước. Đừng tự mình kết luận rồi bỏ cuộc.",
+ checknotitle:"Trường hợp không dùng được thuốc này",
+ checknonote:"Nếu bạn thuộc các trường hợp sau, bạn không uống được thuốc này. Hãy trao đổi với phòng khám sản phụ khoa.",
+ checkno:[
+  "Từng bị dị ứng với thành phần của thuốc này",
+  "Có bệnh gan",
+  "Đang mang thai"
+ ],
+ checknote:[
+  "Người đang cho con bú — nếu uống, hãy tránh cho bú trong 24 giờ sau khi uống"
+ ],
+ checkasktitle:"Hãy nói trước những điều này",
+ checkasknote:"Nếu bạn thuộc các trường hợp sau, chỉ cần nói một câu với dược sĩ hoặc bác sĩ.",
+ checkask:[
+  "Đang được bác sĩ điều trị, hoặc đang uống thuốc nào đó",
+  "Từng bị dị ứng với thuốc",
+  "Có bệnh tim, bệnh thận, hoặc bệnh dạ dày ruột nặng",
+  "Đang dùng thực phẩm hoặc thực phẩm chức năng có chứa cỏ St. John"
+ ],
+ spectitle:"Về thuốc",
+ spechint:"Ở Nhật có hai loại thuốc tránh thai khẩn cấp bán tại nhà thuốc. Thành phần và hàm lượng giống nhau.",
+ spec:[
+  ["Tên sản phẩm","NorLevo / Resoel 72"],
+  ["Thành phần (mỗi viên)","Levonorgestrel 1,5mg (cả hai loại như nhau)"],
+  ["Phân loại","Thuốc cần hướng dẫn đặc biệt của dược sĩ"],
+  ["Giá (đã gồm thuế, giá đề xuất)","NorLevo 7.480 yên / Resoel 72 6.930 yên"],
+  ["Cách uống","Một viên trong vòng 72 giờ sau quan hệ, uống trước mặt dược sĩ"],
+  ["Tác dụng","Làm chậm rụng trứng và khiến khó thụ thai hơn"],
+  ["Bảo hiểm y tế","Không áp dụng (bạn tự trả toàn bộ)"]
+ ],
+ specnote:"Giá là giá bán lẻ đề xuất và có thể khác nhau tùy nhà thuốc. Nguồn: Bộ Y tế, Lao động và Phúc lợi; Hội Dược sĩ Nhật Bản; tờ hướng dẫn sử dụng của từng sản phẩm.",
+ faqtitle:"Câu hỏi thường gặp",
+ faq:[
+  ["Có cần giấy tờ tùy thân không?","Không có quy định bắt buộc phải có. Tuy nhiên bạn có thể được yêu cầu cho xem để xác nhận tuổi. Nếu có thì mang theo sẽ yên tâm hơn. Nếu không có, cứ hỏi ngay tại chỗ."],
+  ["Bố mẹ có biết không?","Bất kể tuổi nào, bạn không cần sự đồng ý của bố mẹ. Nhà thuốc cũng không liên hệ về nhà bạn."],
+  ["Dưới 16 tuổi có mua được không?","Không có giới hạn tuổi. Tuy nhiên tại nhà thuốc bạn có thể được khuyên đến phòng khám sản phụ khoa. Đó không phải là từ chối — ở bệnh viện bạn cũng nhận được đúng loại thuốc đó. Đôi khi đến thẳng phòng khám lại nhanh hơn."],
+  ["Người khác mua giúp được không?","Rất tiếc là không. Quy định là chính người sẽ uống thuốc phải đến và uống trước mặt dược sĩ."],
+  ["Có thể gửi về nhà không?","Một số phòng khám tự chi trả có khám trực tuyến sẽ gửi thuốc về tận nhà. Điều này giúp ích khi bạn khó ra ngoài. Trước khi dùng, hãy kiểm tra ba điều. Thứ nhất, khi nào thuốc tới — có kịp trong 72 giờ không. Thứ hai, đó có phải thuốc được cấp phép tại Nhật không. Ulipristal acetate, được giới thiệu dùng trong 120 giờ, chưa được cấp phép ở Nhật. Thứ ba, thuốc chưa được cấp phép sẽ không thuộc diện được chế độ cứu trợ của nhà nước hỗ trợ nếu có vấn đề sức khỏe. Ngoài ra, hướng dẫn của nhà nước nêu cách nhận thuốc tại nhà thuốc và uống trước mặt dược sĩ."],
+  ["Mua qua trang bán hàng của hiệu thuốc được không?","Không được. Nếu mua tại nhà thuốc, bạn phải đến nơi và trao đổi trực tiếp với dược sĩ. Thuốc nhập khẩu cá nhân từ nước ngoài có nguy cơ là hàng giả, và nếu gây hại sức khỏe cũng không thuộc diện được chế độ cứu trợ của nhà nước hỗ trợ."],
+  ["Có ngăn được thai 100% không?","Rất tiếc là không. Vẫn có thể mang thai. Ba tuần sau khi uống, hãy kiểm tra bằng que thử thai hoặc tại cơ sở y tế."],
+  ["Có tác dụng phụ không?","Có thể buồn nôn, đau đầu, đau bụng dưới, ra máu bất thường. Nếu bạn nôn trong vòng 2 giờ sau khi uống, hãy hỏi dược sĩ hoặc bác sĩ."],
+  ["Tôi đã quá 72 giờ rồi","Nhà thuốc không bán được, nhưng phòng khám sản phụ khoa đôi khi có thể trao đổi về cách dùng trong khoảng từ 72 đến 120 giờ. Xin đừng bỏ cuộc, hãy thử hỏi."]
+ ],
+ aftertitle:"Về những lo lắng sau khi uống",
+ afterbody1:"Sau khi uống, bạn có thể buồn nôn hoặc đau đầu một thời gian, nhưng thường dịu đi trong vài giờ đến một ngày. Nếu bạn nôn trong vòng 2 giờ sau khi uống, thuốc có thể chưa được hấp thu, nên hãy hỏi bác sĩ hoặc dược sĩ ngay.",
+ afterbody2:"Ngoài ra, sớm thì vài ngày, muộn thì trong vòng ba tuần sẽ có hiện tượng ra máu giống kinh nguyệt, gọi là ra máu do ngừng thuốc. Nếu quá ba tuần vẫn chưa ra máu, hãy kiểm tra bằng que thử thai hoặc đến khám phụ khoa cho yên tâm.",
+ secrett:"Bí mật của bạn được giữ kín",
+ secretd:"Dược sĩ và bác sĩ có nghĩa vụ bảo mật. Thông tin sẽ không được chuyển tới gia đình, trường học hay nơi làm việc của bạn. Nếu họ giới thiệu một tổ chức hỗ trợ, việc đó cũng chỉ tiến hành sau khi có sự đồng ý của bạn.",
+ r3d2:"Về nguyên tắc, nếu là chính người sẽ uống thuốc thì có thể khám và được kê đơn, bất kể tuổi tác. Tuy nhiên một số cơ sở có thể yêu cầu giấy đồng ý của người giám hộ hoặc yêu cầu đi cùng nếu bạn chưa thành niên, nên hãy gọi điện hỏi trước rồi mới đến.",
+ r3meritt:"Lợi ích khi đến phòng khám sản phụ khoa",
+ r3meritd1:"Điều yên tâm nhất là được gặp trực tiếp bác sĩ và hỏi ngay tại chỗ những điều bạn đang lo lắng.",
+ r3meritd2:"Ngoài cách uống thuốc và tác dụng phụ, nếu muốn bạn còn có thể trao đổi về xét nghiệm bệnh lây qua đường tình dục, khám phụ khoa, và cách tránh thai chắc chắn về sau (như thuốc tránh thai hằng ngày).",
+ r3meritd3:"Bạn không cần băn khoăn rằng chuyện thế này có nên đi khám không, hay có bị mắng không. Bác sĩ khám để bảo vệ cơ thể và tinh thần của bạn.",
+ r3recot:"Những trường hợp nên đến phòng khám sản phụ khoa",
+ r3recod:"Nếu bạn thuộc các trường hợp sau, đến thẳng phòng khám sản phụ khoa thường chắc chắn và suôn sẻ hơn so với khám trực tuyến hay mua ở nhà thuốc.",
+ r3reco:[
+  ["Đã quá 72 giờ kể từ khi quan hệ","Có những phòng khám sản phụ khoa cung cấp loại thuốc có thể còn hiệu quả trong vòng 120 giờ (5 ngày), thay vì loại thông thường ở Nhật phải dùng trong 72 giờ."],
+  ["Người dưới 16 tuổi (ví dụ học sinh cấp hai)","Khám trực tuyến hoặc nhà thuốc có thể từ chối vì lý do tuổi và khuyên bạn đến phòng khám sản phụ khoa. Nếu gần nhà có phòng khám, đến hỏi trực tiếp đôi khi nhanh hơn. Đây là khám tự chi trả, không dùng thẻ bảo hiểm y tế, và nếu bạn không muốn gia đình biết thì cũng có thể trao đổi luôn điều đó."],
+  ["Người bị quan hệ không có sự đồng thuận hoặc bị bạo lực tình dục","Nếu bạn bị ép buộc, hoặc không thể từ chối, đó hoàn toàn không phải lỗi của bạn. Mỗi tỉnh thành đều có Trung tâm hỗ trợ một cửa dành cho nạn nhân của tội phạm tình dục và bạo lực tình dục (số miễn phí toàn quốc #8891). Gọi tới đó, bạn sẽ được biết về chế độ chi trả bằng ngân sách công giúp miễn phí tiền thuốc, và được hỗ trợ như đi cùng đến bệnh viện. Xin đừng ôm một mình, hãy liên hệ trước đã."]
+ ],
+ r1pointst:"Ba điểm quan trọng khi mua ở nhà thuốc",
+ r1points:[
+  ["1. Tìm trước nhà thuốc có bán","Không phải nhà thuốc nào cũng có. Hãy tìm nhà thuốc trong danh sách trên trang của Bộ Y tế, và trước khi đi nhất định gọi điện xác nhận còn thuốc không, và bây giờ đến thì có dược sĩ tiếp nhận không."],
+  ["2. Chính bạn phải đi (không nhờ người khác)","Nhất định người sẽ uống thuốc phải đến nhà thuốc. Bạn đời, bố mẹ hay người khác không thể mua thay."],
+  ["3. Uống trước mặt dược sĩ","Bạn không thể mang thuốc đã mua về nhà. Để việc uống thuốc diễn ra an toàn, chắc chắn và sớm nhất có thể, bạn sẽ uống ở nơi kín đáo trong nhà thuốc, ngay trước mặt dược sĩ."]
+ ],
+ r1prept:"Chuẩn bị trước khi đi",
+ r1prepd1:"Bạn có thể được yêu cầu xuất trình giấy tờ tùy thân như thẻ My Number hoặc thẻ bảo hiểm y tế. Không bắt buộc, nhưng xác nhận trước sẽ yên tâm hơn.",
+ r1prepd2:"Khi mua, dược sĩ sẽ hỏi những điều như thời điểm quan hệ, kỳ kinh cuối là khi nào, tiền sử dị ứng, thuốc đang dùng. Ghi sẵn ra giấy sẽ nhanh hơn.",
+ r2ways:"Bạn có thể nhận tại nhà thuốc do mình chỉ định, hoặc nhận qua đường bưu điện gửi về nhà.",
+ r2w1t:"1. Nhận tại nhà thuốc (cách theo hướng dẫn của nhà nước)",
+ r2w1d:"Sau khi khám trực tuyến, bác sĩ kê đơn và bạn đến nhà thuốc đã chỉ định để lấy thuốc. Bạn nghe dược sĩ giải thích và uống ngay tại chỗ, trước mặt dược sĩ. Đây là cách nguyên tắc được quy định trong hướng dẫn của Bộ Y tế.",
+ r2w2t:"2. Gửi về hộp thư tại nhà (dịch vụ gửi thuốc của phòng khám tự chi trả)",
+ r2w2d:"Một số phòng khám tự chi trả có dịch vụ gửi chính thuốc về nhà bạn qua bưu điện hoặc chuyển phát nhanh sau khi khám. Đây là lựa chọn rất hữu ích khi bạn không thể ra ngoài, hoặc gần nhà không có nhà thuốc nào đang mở. Nhanh thì có thể tới hộp thư ngay trong ngày hoặc hôm sau.",
+ r2cautiont:"Lưu ý khi dùng dịch vụ gửi thuốc",
+ r2cautiond:"Dịch vụ gửi thuốc rất tiện, nhưng có vài điều mong bạn lưu ý. Thuốc tránh thai khẩn cấp cần được uống càng sớm càng tốt, trong vòng 72 giờ sau quan hệ (với một số thuốc là 120 giờ). Khi gửi qua bưu điện, có rủi ro thuốc tới muộn và không kịp thời hạn. Khi sử dụng, nhất định phải xác nhận khi nào thuốc thực sự tới tay bạn (là ngày nhận, không phải ngày gửi). Ngoài ra, tuyệt đối không dùng các trang nhập khẩu cá nhân từ nước ngoài, vì thuốc tới chậm và có nguy cơ là hàng giả. Hãy luôn chọn dịch vụ mà bạn được bác sĩ trong nước khám.",
  pageTitle:"Cách lấy thuốc tránh thai khẩn cấp tại Nhật Bản | 7 ngôn ngữ",
  tophint:"Đây không phải là trang web chính thức (do cá nhân vận hành)",
  eyebrow:"VẪN CÒN KỊP",
  title:"Cách lấy thuốc tránh thai khẩn cấp",
- subtitle:"Tại Nhật Bản có ba cách: phòng khám sản phụ khoa, nhà thuốc, hoặc khám trực tuyến. Ngay cả lúc nửa đêm vẫn có cách.",
- cdlabel:"Hãy nhập ngày và giờ quan hệ tình dục không dùng biện pháp tránh thai",
+ subtitle:"Tại Nhật Bản có ba cách để lấy thuốc\n\u30fbphòng khám sản phụ khoa\n\u30fbnhà thuốc\n\u30fbkhám trực tuyến\n\nNgay cả đêm khuya vẫn có cách.\nChúng ta hãy xem lần lượt từng cách.",
+ cdlabel:"Hãy thử nhập ngày và giờ quan hệ tình dục không dùng biện pháp tránh thai",
  cdempty:"Nhập ngày và giờ để xem thời gian còn lại",
  cdprefix:"",
  cdh:"giờ", cdm:"phút",
- cdnote:"Uống càng sớm thì hiệu quả càng cao. Xin đừng chờ đợi.",
+ cdnote:"Uống càng sớm thì hiệu quả càng cao. Đừng để đến sau, hãy hành động ngay bây giờ.",
  cdnow:"Nếu uống ngay bây giờ, hiệu quả khoảng {p}",
  cdover:"Đã quá 72 giờ",
  overtitle:"Dù đã quá 72 giờ, vẫn còn cách",
- overtext:"Bạn không thể mua ở nhà thuốc, nhưng phòng khám sản phụ khoa có thể tư vấn về các phương pháp dùng trong khoảng 72 đến 120 giờ. Có thể phải dùng thuốc chưa được cấp phép tại Nhật Bản và hiệu quả cũng giảm, nhưng vẫn nên đi tư vấn. Xin đừng bỏ cuộc.",
+ overtext:"Nhà thuốc không bán được, nhưng phòng khám sản phụ khoa đôi khi có thể trao đổi về cách dùng trong khoảng từ 72 đến 120 giờ. Có thể phải dùng thuốc chưa được cấp phép tại Nhật và hiệu quả cũng giảm, nhưng vẫn đáng để hỏi. Xin đừng bỏ cuộc.",
  overbtn:"Tìm phòng khám sản phụ khoa",
  efftitle:"Tỷ lệ ngăn được thai (ước tính)",
  effh1:"Thời gian từ khi quan hệ đến khi uống", effh2:"Tỷ lệ",
  eff1:"Trong 24 giờ", eff2:"24–48 giờ", eff3:"49–72 giờ",
  effsrc:"Nguồn: WHO Task Force on Postovulatory Methods of Fertility Regulation. Lancet 1998;352:428-433. Đây là con số ước tính và thay đổi tùy theo tình trạng cơ thể.",
  routestitle:"Ba cách để lấy thuốc",
- routeshint:"Chọn cách nào cũng được. Hãy chọn theo hoàn cảnh của bạn.",
+ routeshint:"Chọn cách nào cũng được. Chỗ nào bạn dễ đến là được.",
  r1n:"Mua tại nhà thuốc", r1p:"khoảng 6.930–7.480 yên",
- r1d:"Không cần đơn thuốc. Đây là cách rẻ nhất và thường là nhanh nhất. Tuy nhiên không phải nhà thuốc nào cũng có. Hãy luôn gọi điện trước khi đến. Người sẽ uống thuốc phải tự gọi điện (nhưng có thể nhờ người khác giúp gọi).",
+ r1d:"Từ tháng 2 năm 2026, một số nhà thuốc có thể bán thuốc tránh thai khẩn cấp mà không cần đơn của bác sĩ. Đây là cách nhanh nhất mà không phải đến bệnh viện, nhưng có vài quy định quan trọng.",
  r1b:"Tìm nhà thuốc (Bộ Y tế, Lao động và Phúc lợi)",
  r2n:"Khám trực tuyến", r2p:"khoảng 5.000–15.000 yên",
- r2d:"Khám bác sĩ qua điện thoại hoặc máy tính, rồi nhận thuốc tại nhà thuốc. Có thể khám vào ban đêm, sáng sớm và ngày lễ. Phù hợp với người không có nhà thuốc ở gần hoặc khó ra ngoài. Đây không phải là 'mua hàng qua mạng' mà là 'khám bệnh', và được nhà nước cho phép.",
+ r2d:"Bạn có thể khám với bác sĩ trực tuyến bằng điện thoại hoặc máy tính. Có những phòng khám làm việc cả đêm khuya, sáng sớm, cuối tuần và ngày lễ, nên rất hữu ích khi bạn muốn hành động ngay.",
  r2b:"Tìm nhà thuốc và bác sĩ hỗ trợ (Bộ Y tế)",
- r3tag:"Dành cho người dưới 16 tuổi, đã quá 72 giờ, hoặc là nạn nhân của bạo lực tình dục",
  r3n:"Đến phòng khám sản phụ khoa", r3p:"khoảng 6.000–15.000 yên",
- r3d:"Người dưới 16 tuổi thường được nhà thuốc khuyên đi khám, nên đến đây ngay từ đầu sẽ nhanh hơn. Nếu bạn là nạn nhân của bạo lực tình dục, bạn cũng có thể được tư vấn về hỗ trợ chi phí và xét nghiệm bệnh lây qua đường tình dục. Nếu đã quá 72 giờ, hãy đến đây.",
+ r3d:"Bạn đến khám tại phòng khám sản phụ khoa, phòng khám phụ khoa hoặc phòng khám dành cho nữ giới, và nhận thuốc sau khi được bác sĩ khám.",
  r3b:"Tìm phòng khám sản phụ khoa (Bộ Y tế)",
- knowtitle:"Những điều cần biết",
- know:[
-  ["Bạn phải tự nhận thuốc","Người sẽ uống thuốc phải tự mình đến nhận. Gia đình, bạn bè hay người yêu không thể mua thay."],
-  ["Không có giới hạn tuổi","Bạn cũng không cần sự đồng ý của cha mẹ hay người yêu. Tuy nhiên, nếu dưới 16 tuổi, nhà thuốc có thể khuyên bạn đến phòng khám sản phụ khoa. Đó không phải là từ chối — bệnh viện cũng cấp cùng loại thuốc."],
-  ["Bạn uống ngay tại chỗ","Bạn uống một viên trước mặt dược sĩ. Không được mang về nhà, cũng không được đưa cho người khác."],
-  ["Bảo hiểm y tế không áp dụng","Bạn tự trả toàn bộ. Nên mang tiền mặt vì một số nhà thuốc không nhận thẻ."],
-  ["Không thể mua qua mạng","Nhập khẩu cá nhân từ nước ngoài có nguy cơ nhận thuốc giả, và nếu bị tổn hại sức khỏe thì không được chế độ cứu trợ của Nhật Bản bảo vệ. Khám trực tuyến thì khác — cách đó có thể dùng."],
-  ["Kiểm tra lại sau 3 tuần","Hiệu quả không phải 100%. Ba tuần sau khi uống, hãy dùng que thử thai hoặc đến cơ sở y tế kiểm tra."],
-  ["Thông tin của bạn được bảo mật","Dược sĩ và bác sĩ có nghĩa vụ giữ bí mật. Không có gì được thông báo cho gia đình, trường học hay nơi làm việc. Nếu họ giới thiệu bạn đến cơ quan hỗ trợ, họ sẽ xin phép bạn trước."]
- ],
  consulttitle:"Bạn không phải một mình đối mặt với điều này",
  consulttext:"Có các cơ quan công có thể tư vấn miễn phí. Nếu bạn là nạn nhân của bạo lực tình dục, chi phí khám và thuốc có thể được hỗ trợ. Xin đừng bỏ cuộc vì tiền.",
  cb1:"Tìm trung tâm hỗ trợ nạn nhân bạo lực tình dục (Văn phòng Nội các)",
@@ -1188,47 +2350,139 @@ vi:{
 },
 
 ne:{
+ stepstitle:"पाउनेसम्मको प्रक्रिया",
+ stepshint:"हरेक उपायमा वास्तवमा के गर्नुपर्छ, क्रमैसँग राखिएको छ।",
+ steps:[
+  ["प्रसूति एवं स्त्री रोग क्लिनिकमा जाने",[
+   "जान सकिने क्लिनिक खोज्नुहोस्। रातिको समय वा बिदाको दिन भए स्थानीय आकस्मिक परामर्श लाइनबाट पनि जानकारी पाइन्छ।",
+   "फोन गरेर आपत्कालीन गर्भनिरोधका लागि जाँच गराउन चाहेको बताउनुहोस् र हेर्न मिल्छ कि भनी सोध्नुहोस्।",
+   "जाँच गराउनुहोस्। अन्तिम महिनावारी कहिले भएको हो भनी प्रायः सोधिन्छ, त्यसैले पहिल्यै सम्झेर जानु राम्रो हुन्छ।",
+   "जाँचपछि औषधि लेखिन्छ। धेरैजसो त्यहीँ खुवाइन्छ, तर संस्थाअनुसार फरक हुन सक्छ।",
+   "शुल्क तिर्नुहोस्। स्वास्थ्य बिमा लागू हुँदैन। यौन हिंसा भोगेको भए सरकारी खर्चमा हुने व्यवस्था छ, त्यसैले त्यो कुरा पनि निस्फिक्री सोध्नुहोस्।"
+  ]],
+  ["फार्मेसीमा किन्ने",[
+   "स्वास्थ्य मन्त्रालयको सूचीबाट आपत्कालीन गर्भनिरोधक औषधि राख्ने फार्मेसी खोज्नुहोस्। सबै फार्मेसीमा हुँदैन।",
+   "जानुअघि फोन गरेर औषधि छ कि छैन र फार्मासिस्ट भएको समय हो कि भनी पक्का गर्दा ढुक्क हुन्छ। फोन औषधि खाने व्यक्ति आफैंले गर्नुहोस् (फोन गर्न कसैको सहयोग लिनु हुन्छ)।",
+   "औषधि खाने व्यक्ति आफैं जानुहोस्। अरूले किनिदिन मिल्दैन।",
+   "फार्मेसीभित्र अरूले नसुन्ने ठाउँमा फार्मासिस्टसँग कुरा गरिन्छ। सोधिएका कुराको जवाफ दिए पुग्छ।",
+   "फार्मासिस्टकै अगाडि एक ट्याब्लेट खानुहोस्। घर लैजान मिल्दैन।",
+   "भुक्तानी गर्नुहोस्। पूरै रकम आफैंले तिर्नुपर्छ। कार्ड नचल्ने फार्मेसी पनि हुन्छन्, त्यसैले नगद भए ढुक्क हुन्छ।"
+  ]],
+  ["अनलाइन परामर्श लिने",[
+   "यो सेवा दिने स्वास्थ्य संस्था खोजेर समय लिनुहोस्। पहिलो पटकको जाँच भए पनि हुन्छ।",
+   "मोबाइल वा कम्प्युटरबाट डाक्टरको जाँच गराउनुहोस्।",
+   "औषधि लिने तरिका छान्नुहोस्। फार्मेसीबाट लिने भए जान सकिने ठाउँ छान्नुहोस्। घरमा पठाइने भए कहिले आइपुग्छ भनी अनिवार्य रूपमा पक्का गर्नुहोस्।",
+   "फार्मेसीबाट लिने भए फार्मासिस्टको अगाडि खानुहोस्। घरमा आइपुग्ने भए आएपछि तुरुन्तै खानुहोस्।",
+   "जाँच शुल्क र औषधिको मूल्य तिर्नुहोस्।"
+  ]]
+ ],
+ checktitle:"खानुअघि पक्का गर्ने कुरा",
+ checkhint:"यी फार्मासिस्ट वा डाक्टरले पक्का गर्ने कुरा हुन्। मिल्ने कुरा भए पनि पहिले सोध्नुहोस्। आफैं निर्णय गरेर हरेस नखानुहोस्।",
+ checknotitle:"यो औषधि प्रयोग गर्न नमिल्ने अवस्था",
+ checknonote:"तलका कुरा मिल्ने व्यक्तिले यो औषधि खान मिल्दैन। क्लिनिकमा गएर परामर्श लिनुहोस्।",
+ checkno:[
+  "यो औषधिको तत्वबाट एलर्जीको लक्षण देखिएको छ",
+  "कलेजोको रोग छ",
+  "पहिले नै गर्भवती हुनुहुन्छ"
+ ],
+ checknote:[
+  "स्तनपान गराइरहनुभएको भए — खाने हो भने, खाएपछि २४ घण्टा स्तनपान नगराउनुहोस्"
+ ],
+ checkasktitle:"पहिले नै बताइदिनुहोस्",
+ checkasknote:"तलका कुरा मिल्ने भए फार्मासिस्ट वा डाक्टरलाई एक शब्द भनिदिनुहोस्।",
+ checkask:[
+  "अहिले डाक्टरको उपचारमा हुनुहुन्छ, वा कुनै औषधि खाइरहनुभएको छ",
+  "औषधिबाट एलर्जीको लक्षण देखिएको छ",
+  "मुटु वा मृगौलाको रोग, वा गम्भीर पेट-आन्द्राको रोग छ",
+  "सेन्ट जोन्स वर्ट भएको सप्लिमेन्ट वा खानेकुरा लिइरहनुभएको छ"
+ ],
+ spectitle:"औषधिबारे",
+ spechint:"जापानमा फार्मेसीबाट किन्न सकिने आपत्कालीन गर्भनिरोधक औषधि दुई प्रकारका छन्। तत्व र मात्रा उही हो।",
+ spec:[
+  ["उत्पादनको नाम","नोरलेभो / रेसोएल ७२"],
+  ["तत्व (प्रति ट्याब्लेट)","लेभोनोर्जेस्ट्रेल १.५ मिग्रा (दुवैमा उही)"],
+  ["वर्गीकरण","विशेष निर्देशन आवश्यक औषधि"],
+  ["मूल्य (कर सहित, सुझाव मूल्य)","नोरलेभो ७,४८० येन / रेसोएल ७२ ६,९३० येन"],
+  ["खाने तरिका","यौन सम्पर्कपछि ७२ घण्टाभित्र एक ट्याब्लेट, फार्मासिस्टको अगाडि"],
+  ["कसरी काम गर्छ","अण्डा निस्कने प्रक्रिया ढिलो बनाएर गर्भ रहन गाह्रो बनाउँछ"],
+  ["स्वास्थ्य बिमा","लागू हुँदैन (पूरै आफैंले तिर्नुपर्छ)"]
+ ],
+ specnote:"मूल्य सुझाव गरिएको खुद्रा मूल्य हो, फार्मेसीअनुसार फरक हुन सक्छ। स्रोत: स्वास्थ्य, श्रम र कल्याण मन्त्रालय, जापान फार्मासिस्ट संघ, प्रत्येक उत्पादनको प्रयोग निर्देशिका।",
+ faqtitle:"बारम्बार सोधिने प्रश्न",
+ faq:[
+  ["परिचयपत्र चाहिन्छ?","अनिवार्य चाहिन्छ भन्ने नियम छैन। तर उमेर पक्का गर्न देखाउन भनिन सक्छ। भएमा लिएर जाँदा ढुक्क हुन्छ। नभए पनि त्यहीँ सोधे पुग्छ।"],
+  ["आमाबुबालाई थाहा हुन्छ?","उमेर जेसुकै भए पनि आमाबुबाको सहमति चाहिँदैन। फार्मेसीबाट घरमा सम्पर्क पनि गरिँदैन।"],
+  ["१६ वर्षमुनिकाले किन्न सक्छन्?","उमेरको बन्देज छैन। तर फार्मेसीमा क्लिनिक जान सुझाव दिइन सक्छ। त्यो अस्वीकार गरेको होइन, अस्पतालबाट पनि उही औषधि पाइन्छ। सुरुदेखि नै क्लिनिक जाँदा छिटो हुन सक्छ।"],
+  ["अरूले किनिदिन सक्छन्?","दुःखको कुरा, मिल्दैन। औषधि खाने व्यक्ति आफैं गएर फार्मासिस्टको अगाडि खाने नियम छ।"],
+  ["घरमा पठाइदिन मिल्छ?","अनलाइन परामर्श दिने केही निजी क्लिनिकले औषधि घरमै पठाउँछन्। बाहिर निस्कन गाह्रो हुँदा यो सहयोगी हुन्छ। प्रयोग गर्नुअघि तीन कुरा पक्का गर्नुहोस्। पहिलो, कहिले आइपुग्छ — ७२ घण्टाको समयभित्र आउँछ कि आउँदैन। दोस्रो, जापानमा स्वीकृत औषधि हो कि होइन। १२० घण्टाका लागि भनी बताइने युलिप्रिस्टल एसिटेट जापानमा स्वीकृत छैन। तेस्रो, स्वीकृत नभएको औषधिबाट स्वास्थ्यमा असर परे राष्ट्रिय राहत प्रणालीले समेट्दैन। साथै, राष्ट्रिय निर्देशिकाले फार्मेसीबाट लिएर फार्मासिस्टको अगाडि खाने तरिका देखाएको छ।"],
+  ["अनलाइन पसलबाट किन्न मिल्छ?","मिल्दैन। फार्मेसीबाट किन्ने भए पसलमै गएर फार्मासिस्टसँग आमनेसामने कुरा गर्नुपर्छ। विदेशबाट व्यक्तिगत रूपमा मगाइएको औषधि नक्कली हुन सक्छ र स्वास्थ्यमा असर परे राष्ट्रिय राहत प्रणालीले समेट्दैन।"],
+  ["१००% गर्भ रोक्न सकिन्छ?","दुःखको कुरा, १००% होइन। खाएपछि पनि गर्भ रहन सक्छ। खाएको तीन हप्तापछि गर्भ परीक्षण किट वा स्वास्थ्य संस्थामा पक्का गर्नुहोस्।"],
+  ["साइड इफेक्ट हुन्छ?","वाकवाकी, टाउको दुख्ने, तल्लो पेट दुख्ने, अनियमित रक्तस्राव आदि हुन सक्छ। खाएको २ घण्टाभित्र बान्ता भएमा फार्मासिस्ट वा डाक्टरसँग सल्लाह गर्नुहोस्।"],
+  ["७२ घण्टा नाघिसक्यो","फार्मेसीबाट किन्न मिल्दैन, तर क्लिनिकमा ७२ देखि १२० घण्टाबीच प्रयोग गर्न मिल्ने उपायबारे कुरा गर्न सकिने हुन्छ। कृपया हरेस नखाई सोध्न जानुहोस्।"]
+ ],
+ aftertitle:"खाएपछिको चिन्ताबारे",
+ afterbody1:"औषधि खाएपछि केही समय वाकवाकी वा टाउको दुख्न सक्छ, तर प्रायः केही घण्टादेखि एक दिनभित्र कम हुन्छ। खाएको २ घण्टाभित्र बान्ता भएमा औषधि सोसिएको नहुन सक्छ, त्यसैले तुरुन्तै डाक्टर वा फार्मासिस्टसँग सल्लाह गर्नुहोस्।",
+ afterbody2:"साथै, छिटो भए केही दिनमा, ढिलो भए तीन हप्ताभित्र महिनावारीजस्तै रक्तस्राव हुन्छ, जसलाई विदड्रल ब्लिडिङ भनिन्छ। तीन हप्ता नाघ्दा पनि रक्तस्राव नभएमा गर्भ परीक्षण किटले जाँच्नुहोस् वा स्त्री रोग विशेषज्ञकहाँ जानुहोस्।",
+ secrett:"गोपनीयता सुरक्षित रहन्छ",
+ secretd:"फार्मासिस्ट र डाक्टरको गोपनीयता राख्ने कर्तव्य हुन्छ। परिवार, विद्यालय वा कार्यस्थलमा जानकारी जाँदैन। परामर्श संस्था सिफारिस गर्दा पनि तपाईंको सहमति लिएर मात्र गरिन्छ।",
+ r3d2:"सिद्धान्ततः औषधि खाने व्यक्ति आफैं भए उमेर जेसुकै भए पनि जाँच गराएर औषधि लेखाउन सकिन्छ। तर कतिपय संस्थाले नाबालिग भए अभिभावकको सहमति पत्र वा साथमा आउन भन्न सक्छन्, त्यसैले जानुअघि फोन आदिबाट अनिवार्य रूपमा सोधेर पक्का गर्नुहोस्।",
+ r3meritt:"क्लिनिक जाँदाको फाइदा",
+ r3meritd1:"सबैभन्दा ठूलो ढुक्क कुरा भनेको डाक्टरसँग प्रत्यक्ष भेटेर चिन्ताका कुरा त्यहीँ सोध्न पाइनु हो।",
+ r3meritd2:"औषधि खाने तरिका र साइड इफेक्टबाहेक, चाहेमा यौन सम्पर्कबाट सर्ने रोगको परीक्षण, स्त्री रोग जाँच, र अबका लागि भरपर्दो गर्भनिरोधका उपाय (जस्तै नियमित खाने गर्भनिरोधक चक्की) बारे पनि सँगै कुरा गर्न सकिन्छ।",
+ r3meritd3:"यस्तो कुराका लागि जान हुन्छ कि हुँदैन, गाली त पाइँदैन भनेर अलमलिनु पर्दैन। डाक्टरले तपाईंको शरीर र मन जोगाउन जाँच गर्ने हो।",
+ r3recot:"यस्ता व्यक्तिलाई क्लिनिक सिफारिस गरिन्छ",
+ r3recod:"तलका कुरा मिल्ने व्यक्तिलाई अनलाइन परामर्श वा फार्मेसीबाट किन्नुभन्दा सिधै क्लिनिक जाँदा बढी पक्का र सहज हुन्छ।",
+ r3reco:[
+  ["यौन सम्पर्कदेखि ७२ घण्टा नाघिसकेका","जापानमा सामान्य रूपमा पाइने औषधि (७२ घण्टाभित्र प्रयोग गर्ने) होइन, १२० घण्टा (५ दिन) भित्रसम्म असर हुन सक्ने औषधि राख्ने क्लिनिक पनि छन्।"],
+  ["१६ वर्षमुनिका (जस्तै माध्यमिक तहका विद्यार्थी)","अनलाइन परामर्श वा फार्मेसीले उमेरका कारण सेवा दिन नमानी क्लिनिक जान सुझाव दिन सक्छन्। घर नजिकै क्लिनिक भए सिधै गएर सोध्दा छिटो हुन सक्छ। स्वास्थ्य बिमा कार्ड नचल्ने निजी खर्चको जाँच हो, तर परिवारलाई थाहा नहोस् भन्ने चाहना भए त्यो पनि सँगै भन्न सकिन्छ।"],
+  ["सहमतिबिनाको यौन सम्पर्क वा यौन हिंसा भोगेका","जबरजस्ती भएको वा अस्वीकार गर्न नसकेको अवस्था कहिल्यै तपाईंको गल्ती होइन। हरेक प्रान्तमा रहेको यौन अपराध तथा यौन हिंसा पीडितका लागि वन-स्टप सहयोग केन्द्र (देशभर निःशुल्क नम्बर #8891) मा फोन गर्दा, आपत्कालीन गर्भनिरोधक औषधिको खर्च निःशुल्क (सरकारी खर्च) हुने व्यवस्था र अस्पतालसम्म साथ जाने जस्ता सहयोग पाइन्छ। एक्लै नबोकी पहिले सम्पर्क गर्नुहोस्।"]
+ ],
+ r1pointst:"फार्मेसीबाट किन्नका तीन कुरा",
+ r1points:[
+  ["१. राख्ने फार्मेसी पहिल्यै खोज्ने","सबै फार्मेसीमा हुँदैन। स्वास्थ्य मन्त्रालयको वेबसाइटमा भएको बिक्री गर्न मिल्ने फार्मेसीको सूचीबाट खोज्नुहोस्, र जानुअघि अनिवार्य फोन गरेर औषधि छ कि छैन, अहिले गए सेवा दिन सक्ने फार्मासिस्ट छन् कि भनी पक्का गर्नुहोस्।"],
+  ["२. आफैं जाने (अरूले मिल्दैन)","अनिवार्य रूपमा औषधि खाने व्यक्ति आफैं फार्मेसी जानुहोस्। साथी, आमाबुबा वा अरू कसैले किनिदिन मिल्दैन।"],
+  ["३. फार्मासिस्टको अगाडि खाने","किनेको औषधि घर लैजान मिल्दैन। सुरक्षित र पक्का रूपमा सकेसम्म चाँडो खुवाउन, फार्मेसीभित्र गोपनीयता हुने ठाउँमा फार्मासिस्टकै अगाडि औषधि खुवाइन्छ।"]
+ ],
+ r1prept:"जानुअघिको तयारी",
+ r1prepd1:"माइ नम्बर कार्ड वा स्वास्थ्य बिमा कार्ड जस्ता परिचयपत्र देखाउन भनिन सक्छ। अनिवार्य होइन, तर पहिल्यै पक्का गर्दा ढुक्क हुन्छ।",
+ r1prepd2:"किन्दा फार्मासिस्टले यौन सम्पर्क भएको मिति र समय, अन्तिम महिनावारी कहिले भएको, एलर्जीको इतिहास, खाइरहेको औषधि आदि सोध्छन्। टिपोट गरेर लगे सहज हुन्छ।",
+ r2ways:"आफैंले तोकेको फार्मेसीबाट लिन सकिन्छ, वा घरमा पठाइएको औषधि प्राप्त गर्न सकिन्छ।",
+ r2w1t:"१. फार्मेसीमा गएर लिने तरिका (राष्ट्रिय निर्देशिकाअनुसार)",
+ r2w1d:"अनलाइन परामर्शपछि डाक्टरले प्रिस्क्रिप्सन दिन्छन् र तोकिएको फार्मेसीमा गएर औषधि लिनुहुन्छ। फार्मेसीमा फार्मासिस्टको व्याख्या सुनेर त्यहीँ (फार्मासिस्टकै अगाडि) औषधि खानुहुन्छ। स्वास्थ्य मन्त्रालयको निर्देशिकाले तोकेको सिद्धान्तगत तरिका यही हो।",
+ r2w2t:"२. घरको पत्रपेटीमा पठाइदिने तरिका (निजी क्लिनिकको पठाउने सेवा)",
+ r2w2d:"निजी खर्चमा सेवा दिने केही क्लिनिकले परामर्शपछि औषधि नै घरमा हुलाक वा कुरियरबाट पठाइदिने सेवा दिन्छन्। कुनै हालतमा बाहिर निस्कन नसक्ने, वा नजिकै खुलेको फार्मेसी नभएको अवस्थामा यो निकै सहयोगी विकल्प हो। छिटो भए सोही दिन वा भोलिपल्ट पत्रपेटीमा आइपुग्न सक्छ।",
+ r2cautiont:"पठाउने सेवा प्रयोग गर्दाका सावधानी",
+ r2cautiond:"पठाउने सेवा निकै सजिलो भए पनि केही कुरामा ध्यान दिनुहोस्। आपत्कालीन गर्भनिरोधक औषधि यौन सम्पर्कपछि ७२ घण्टाभित्र (कुनै औषधिको हकमा १२० घण्टाभित्र) सकेसम्म चाँडो खानु महत्त्वपूर्ण हुन्छ। पठाइने अवस्थामा आइपुग्न समय लागेर समयसीमा नभ्याउने जोखिम हुन्छ। प्रयोग गर्दा औषधि कहिले आफ्नो हातमा आइपुग्छ (पठाएको मिति होइन, आइपुग्ने मिति) अनिवार्य रूपमा पक्का गर्नुहोस्। साथै विदेशबाट व्यक्तिगत रूपमा मगाउने साइट ढिलो आइपुग्ने र नक्कली हुन सक्ने भएकाले कदापि प्रयोग नगर्नुहोस्। सधैं देशभित्रैका डाक्टरको जाँच पाइने सेवा छान्नुहोस्।",
  pageTitle:"जापानमा आपत्कालीन गर्भनिरोधक औषधि कसरी पाउने | ७ भाषा",
  tophint:"यो आधिकारिक वेबसाइट होइन (एक व्यक्तिद्वारा सञ्चालित)",
  eyebrow:"अझै समय छ",
  title:"आपत्कालीन गर्भनिरोधक औषधि कसरी पाउने",
- subtitle:"जापानमा तीन उपाय छन्: प्रसूति एवं स्त्री रोग क्लिनिक, फार्मेसी, वा अनलाइन परामर्श। रातिको समयमा पनि उपाय छ।",
+ subtitle:"जापानमा तीन उपायबाट पाउन सकिन्छ\n\u30fbप्रसूति एवं स्त्री रोग क्लिनिक\n\u30fbफार्मेसी\n\u30fbअनलाइन परामर्श\n\nरातिको समयमा पनि उपाय छ।\nएक-एक गरी हेरौं।",
  cdlabel:"गर्भनिरोधक प्रयोग नगरी यौन सम्पर्क भएको मिति र समय हाल्नुहोस्",
  cdempty:"मिति र समय हाल्नुभयो भने बाँकी समय देखिन्छ",
  cdprefix:"",
  cdh:"घण्टा", cdm:"मिनेट",
- cdnote:"जति चाँडो खायो त्यति प्रभावकारी हुन्छ। कृपया प्रतीक्षा नगर्नुहोस्।",
+ cdnote:"जति चाँडो खायो, त्यति असर हुन्छ। पछि नसारी अहिले नै अघि बढ्नुहोस्।",
  cdnow:"अहिले खाए लगभग {p} प्रभावकारी हुन सक्छ",
  cdover:"७२ घण्टा नाघिसकेको छ",
  overtitle:"७२ घण्टा नाघेपनि उपाय छ",
- overtext:"फार्मेसीमा किन्न सकिँदैन, तर प्रसूति एवं स्त्री रोग क्लिनिकमा ७२ देखि १२० घण्टाभित्र प्रयोग गर्न सकिने उपायबारे परामर्श लिन सकिन्छ। जापानमा स्वीकृत नभएको औषधि प्रयोग हुन सक्छ र प्रभावकारिता पनि घट्छ, तर परामर्श लिनु सार्थक हुन्छ। कृपया आशा नत्याग्नुहोस्।",
+ overtext:"फार्मेसीबाट किन्न मिल्दैन, तर क्लिनिकमा ७२ देखि १२० घण्टाबीच प्रयोग गर्न मिल्ने उपायबारे कुरा गर्न सकिने हुन्छ। जापानमा स्वीकृत नभएको औषधि प्रयोग हुन सक्छ र असर पनि कम हुन्छ, तर सोध्न लायक छ। कृपया हरेस नखानुहोस्।",
  overbtn:"क्लिनिक खोज्नुहोस्",
  efftitle:"गर्भ रोक्न सकिने अनुमानित दर",
  effh1:"यौन सम्पर्कपछि खाने समय", effh2:"दर",
  eff1:"२४ घण्टाभित्र", eff2:"२४–४८ घण्टा", eff3:"४९–७२ घण्टा",
  effsrc:"स्रोत: WHO Task Force on Postovulatory Methods of Fertility Regulation. Lancet 1998;352:428-433. यो अनुमानित दर हो र शारीरिक अवस्था अनुसार फरक हुन सक्छ।",
  routestitle:"पाउने तीन उपाय",
- routeshint:"कुनै पनि उपाय ठीक छ। आफ्नो अवस्था अनुसार छान्नुहोस्।",
+ routeshint:"जुनसुकै छाने पनि हुन्छ। तपाईंलाई जान सजिलो हुने ठाउँ भए पुग्छ।",
  r1n:"फार्मेसीमा किन्ने", r1p:"लगभग ६,९३० – ७,४८० येन",
- r1d:"डाक्टरको पर्चा चाहिँदैन। यो सबैभन्दा सस्तो र प्रायः सबैभन्दा छिटो उपाय हो। तर सबै फार्मेसीमा पाइँदैन। जानुअघि अनिवार्य रूपमा फोन गर्नुहोस्। औषधि खाने व्यक्ति आफैंले फोन गर्नुपर्छ (फोन गर्न अरूको सहयोग लिन सकिन्छ)।",
+ r1d:"२०२६ को फेब्रुअरीदेखि केही फार्मेसीमा डाक्टरको प्रिस्क्रिप्सनबिना आपत्कालीन गर्भनिरोधक औषधि किन्न मिल्ने भएको छ। अस्पताल नगई सबैभन्दा चाँडो पाउने उपाय हो, तर केही महत्त्वपूर्ण नियम छन्।",
  r1b:"फार्मेसी खोज्नुहोस् (स्वास्थ्य, श्रम र कल्याण मन्त्रालय)",
  r2n:"अनलाइन परामर्श", r2p:"लगभग ५,००० – १५,००० येन",
- r2d:"मोबाइल वा कम्प्युटरबाट डाक्टरको परामर्श लिई फार्मेसीमा औषधि लिनुहोस्। रात, बिहान सबेरै र सार्वजनिक बिदामा पनि सम्भव छ। नजिक फार्मेसी नभएका वा बाहिर निस्कन कठिन भएकाहरूका लागि उपयुक्त। यो 'अनलाइन किनमेल' होइन, 'परामर्श' हो र राज्यले मान्यता दिएको उपाय हो।",
+ r2d:"मोबाइल वा कम्प्युटरबाट अनलाइन डाक्टरको जाँच गराउन सकिन्छ। रातिको समय, बिहान सबेरै, शनिबार-आइतबार र बिदाको दिनमा पनि सेवा दिने क्लिनिक भएकाले तुरुन्तै अघि बढ्न चाहँदा ठूलो सहयोग हुन्छ।",
  r2b:"सेवा दिने फार्मेसी र डाक्टर खोज्नुहोस् (मन्त्रालय)",
- r3tag:"१६ वर्षमुनिका, ७२ घण्टा नाघेका, वा यौन हिंसा भोगेकाहरूका लागि",
  r3n:"क्लिनिकमा जाने", r3p:"लगभग ६,००० – १५,००० येन",
- r3d:"१६ वर्षमुनिकाहरूलाई फार्मेसीले प्रायः क्लिनिक जाने सल्लाह दिन्छ, त्यसैले सुरुदेखै यहाँ आउनु छिटो हुन्छ। यौन हिंसा भोगेको भए खर्च सहयोग र यौन सम्पर्कबाट सर्ने रोगको परीक्षणबारे पनि परामर्श लिन सकिन्छ। ७२ घण्टा नाघेको भए पनि यहाँ आउनुहोस्।",
+ r3d:"प्रसूति एवं स्त्री रोग क्लिनिक, स्त्री रोग क्लिनिक वा महिला क्लिनिकमा गएर डाक्टरको जाँचपछि औषधि पाउने तरिका हो।",
  r3b:"क्लिनिक खोज्नुहोस् (मन्त्रालय)",
- knowtitle:"जान्नुपर्ने कुरा",
- know:[
-  ["आफैंले लिनुपर्छ","औषधि खाने व्यक्ति आफैंले लिनुपर्छ। परिवार, साथी वा साझेदारले किनिदिन मिल्दैन।"],
-  ["उमेरको सीमा छैन","अभिभावक वा साझेदारको अनुमति पनि चाहिँदैन। तर १६ वर्षमुनिका भए फार्मेसीले क्लिनिक जाने सल्लाह दिन सक्छ। यो अस्वीकार होइन — अस्पतालमा पनि त्यही औषधि पाइन्छ।"],
-  ["त्यहीँ खानुपर्छ","फार्मासिस्टको अगाडि एक चक्की खानुपर्छ। घर लिएर जान वा अरूलाई दिन मिल्दैन।"],
-  ["स्वास्थ्य बीमा लागू हुँदैन","पूरै रकम आफैंले तिर्नुपर्छ। नगद बोक्नु सुरक्षित हुन्छ — केही फार्मेसीमा कार्ड चल्दैन।"],
-  ["अनलाइन किनमेलबाट किन्न सकिँदैन","विदेशबाट व्यक्तिगत आयात गर्दा नक्कली औषधि आउने जोखिम हुन्छ, र स्वास्थ्यमा क्षति भए जापानको क्षतिपूर्ति प्रणालीले समेट्दैन। अनलाइन परामर्श भिन्न कुरा हो — त्यो प्रयोग गर्न सकिन्छ।"],
-  ["३ हप्तापछि जाँच गर्नुहोस्","यो १००% प्रभावकारी होइन। खाएको ३ हप्तापछि गर्भ परीक्षण किट प्रयोग गर्नुहोस् वा स्वास्थ्य संस्थामा जाँच गराउनुहोस्।"],
-  ["गोपनीयता सुरक्षित छ","फार्मासिस्ट र डाक्टरको गोपनीयता राख्ने कर्तव्य हुन्छ। परिवार, विद्यालय वा कार्यस्थलमा जानकारी जाँदैन। सहयोग संस्थामा पठाउनुपर्दा पनि तपाईंको अनुमति लिइन्छ।"]
- ],
  consulttitle:"तपाईं एक्लै सहनुपर्दैन",
  consulttext:"निःशुल्क परामर्श दिने सरकारी सेवा छन्। यौन हिंसा भोगेको भए परामर्श र औषधिको खर्च सहयोग पाउन सकिन्छ। कृपया पैसाको कारणले आशा नत्याग्नुहोस्।",
  cb1:"यौन हिंसा सहायता केन्द्र खोज्नुहोस् (क्याबिनेट कार्यालय)",
@@ -1246,47 +2500,139 @@ ne:{
 },
 
 ms:{
+ stepstitle:"Langkah demi langkah",
+ stepshint:"Berikut apa yang sebenarnya berlaku bagi setiap cara.",
+ steps:[
+  ["Ke klinik sakit puan",[
+   "Cari klinik yang boleh anda pergi. Pada waktu malam atau cuti, talian nasihat kecemasan tempatan juga boleh membantu mencarikannya.",
+   "Telefon dan beritahu anda mahu berjumpa doktor berkenaan kontraseptif kecemasan, dan tanya sama ada mereka boleh menerima anda.",
+   "Pergi berjumpa doktor. Anda selalunya akan ditanya tarikh haid terakhir, jadi ingat kembali lebih awal akan memudahkan.",
+   "Selepas pemeriksaan, ubat akan dipreskripsikan. Selalunya anda menelannya di situ, tetapi ini berbeza mengikut fasiliti.",
+   "Buat pembayaran. Insurans kesihatan tidak boleh digunakan. Jika anda mengalami keganasan seksual, ada sistem yang menampung kos melalui dana awam, jadi sila sebut perkara itu juga."
+  ]],
+  ["Beli di farmasi",[
+   "Cari farmasi yang menjual kontraseptif kecemasan melalui senarai Kementerian Kesihatan. Bukan semua farmasi ada.",
+   "Sebelum pergi, telefon untuk memastikan stok ada dan ada ahli farmasi bertugas. Orang yang akan menelan ubat itu sendiri yang menelefon (minta bantuan untuk mendail tidak mengapa).",
+   "Orang yang akan menelan ubat itu sendiri yang pergi. Orang lain tidak boleh membelinya bagi pihak anda.",
+   "Anda akan berbual dengan ahli farmasi di tempat yang tidak didengari orang lain. Anda hanya perlu menjawab apa yang ditanya.",
+   "Anda menelan satu tablet di hadapan ahli farmasi. Ubat tidak boleh dibawa pulang.",
+   "Buat pembayaran. Kos ditanggung sepenuhnya oleh anda. Ada farmasi yang tidak menerima kad, jadi wang tunai lebih selamat."
+  ]],
+  ["Rundingan dalam talian",[
+   "Cari fasiliti yang menawarkannya dan buat temu janji. Kunjungan pertama pun boleh.",
+   "Berjumpa doktor melalui telefon pintar atau komputer.",
+   "Tentukan cara menerima ubat. Jika mengambil di farmasi, pilih tempat yang boleh anda pergi. Jika dihantar ke rumah, pastikan bila ia akan sampai.",
+   "Jika mengambil di farmasi, anda menelannya di hadapan ahli farmasi. Jika dihantar ke rumah, telan sebaik sahaja ia sampai.",
+   "Bayar kos rundingan dan kos ubat."
+  ]]
+ ],
+ checktitle:"Perkara untuk disemak sebelum menelan",
+ checkhint:"Ini perkara yang akan disemak oleh ahli farmasi atau doktor. Walaupun ada yang berkenaan dengan anda, tanyalah dahulu. Jangan berputus asa atas keputusan sendiri.",
+ checknotitle:"Bila ubat ini tidak boleh digunakan",
+ checknonote:"Jika mana-mana perkara berikut berkenaan dengan anda, anda tidak boleh menelan ubat ini. Sila berbincang di klinik sakit puan.",
+ checkno:[
+  "Pernah mengalami reaksi alahan terhadap bahan dalam ubat ini",
+  "Mempunyai penyakit hati",
+  "Sudah mengandung"
+ ],
+ checknote:[
+  "Bagi yang sedang menyusukan bayi — jika anda menelannya, elakkan menyusukan selama 24 jam selepas itu"
+ ],
+ checkasktitle:"Sila beritahu perkara ini dahulu",
+ checkasknote:"Jika mana-mana perkara berikut berkenaan, cukup beritahu ahli farmasi atau doktor.",
+ checkask:[
+  "Sedang dalam rawatan doktor, atau sedang mengambil sebarang ubat",
+  "Pernah mengalami reaksi alahan terhadap ubat",
+  "Mempunyai penyakit jantung atau buah pinggang, atau masalah perut dan usus yang serius",
+  "Mengambil suplemen atau makanan yang mengandungi St. John's wort"
+ ],
+ spectitle:"Tentang ubat ini",
+ spechint:"Terdapat dua jenis kontraseptif kecemasan yang dijual di farmasi di Jepun. Bahan dan dosnya sama.",
+ spec:[
+  ["Nama produk","NorLevo / Resoel 72"],
+  ["Bahan (setiap tablet)","Levonorgestrel 1.5mg (sama bagi kedua-duanya)"],
+  ["Kategori","Ubat yang memerlukan panduan khas ahli farmasi"],
+  ["Harga (termasuk cukai, cadangan)","NorLevo 7,480 yen / Resoel 72 6,930 yen"],
+  ["Cara mengambil","Satu tablet dalam tempoh 72 jam selepas hubungan seks, di hadapan ahli farmasi"],
+  ["Cara ia berfungsi","Melambatkan ovulasi dan menjadikan kehamilan kurang berkemungkinan"],
+  ["Insurans kesihatan","Tidak boleh digunakan (anda bayar sepenuhnya)"]
+ ],
+ specnote:"Harga adalah harga runcit yang dicadangkan dan mungkin berbeza mengikut farmasi. Sumber: Kementerian Kesihatan, Buruh dan Kebajikan; Persatuan Farmasi Jepun; risalah produk.",
+ faqtitle:"Soalan lazim",
+ faq:[
+  ["Perlukah kad pengenalan?","Tiada peraturan yang mewajibkannya. Namun anda mungkin diminta menunjukkannya, contohnya untuk mengesahkan umur. Jika ada, bawa sahaja supaya lebih tenang. Jika tiada, tanya sahaja di situ."],
+  ["Adakah ibu bapa akan tahu?","Tidak kira umur, kebenaran ibu bapa tidak diperlukan. Farmasi juga tidak akan menghubungi rumah anda."],
+  ["Bolehkah membeli jika bawah 16 tahun?","Tiada had umur. Namun di farmasi anda mungkin dinasihatkan pergi ke klinik sakit puan. Itu bukan penolakan — ubat yang sama boleh diperoleh di hospital. Kadangkala terus ke klinik lebih cepat."],
+  ["Bolehkah orang lain membelikannya?","Malangnya tidak boleh. Peraturannya, orang yang akan menelan ubat itu sendiri perlu pergi dan menelannya di hadapan ahli farmasi."],
+  ["Bolehkah dihantar ke rumah?","Ada klinik swasta dengan rundingan dalam talian yang menghantar ubat ke rumah. Ia membantu apabila sukar untuk keluar. Sebelum menggunakannya, semak tiga perkara. Pertama, bila ia akan sampai — sempatkah dalam tempoh 72 jam. Kedua, adakah ia ubat yang diluluskan di Jepun. Ulipristal acetate, yang ditawarkan untuk penggunaan dalam 120 jam, tidak diluluskan di Jepun. Ketiga, ubat yang tidak diluluskan tidak dilindungi sistem bantuan negara jika berlaku masalah kesihatan. Perlu diingat, garis panduan negara menyatakan cara mengambilnya di farmasi dan menelannya di hadapan ahli farmasi."],
+  ["Bolehkah membelinya dalam talian dari kedai ubat?","Tidak boleh. Untuk membeli di farmasi, anda perlu ke kedai dan berbual secara bersemuka dengan ahli farmasi. Ubat yang diimport sendiri dari luar negara berisiko palsu, dan tidak dilindungi sistem bantuan negara jika berlaku kemudaratan kesihatan."],
+  ["Adakah ia menghalang kehamilan 100%?","Malangnya tidak. Kehamilan masih boleh berlaku. Tiga minggu selepas menelannya, sila semak dengan ujian kehamilan atau di fasiliti perubatan."],
+  ["Adakah ada kesan sampingan?","Loya, sakit kepala, sakit perut bawah dan pendarahan luar jangka boleh berlaku. Jika anda muntah dalam tempoh 2 jam selepas menelannya, berbincanglah dengan ahli farmasi atau doktor."],
+  ["Sudah melebihi 72 jam","Anda tidak boleh membelinya di farmasi, tetapi klinik sakit puan kadangkala boleh membincangkan cara yang boleh digunakan antara 72 hingga 120 jam. Tolong jangan berputus asa, cuba tanya."]
+ ],
+ aftertitle:"Tentang kebimbangan selepas menelannya",
+ afterbody1:"Selepas menelannya anda mungkin rasa loya atau sakit kepala buat sementara, tetapi biasanya ia reda dalam beberapa jam hingga sehari. Jika anda muntah dalam tempoh 2 jam selepas menelannya, ubat mungkin belum diserap, jadi berbincanglah dengan doktor atau ahli farmasi dengan segera.",
+ afterbody2:"Selain itu, seawal beberapa hari hingga dalam tempoh tiga minggu, akan datang pendarahan seperti haid yang dipanggil pendarahan tarik diri. Jika selepas tiga minggu masih tiada pendarahan, sila semak dengan ujian kehamilan atau berjumpa doktor sakit puan.",
+ secrett:"Kerahsiaan anda terjaga",
+ secretd:"Ahli farmasi dan doktor terikat dengan kewajipan menjaga rahsia. Maklumat tidak akan disampaikan kepada keluarga, sekolah atau tempat kerja anda. Jika mereka mencadangkan agensi sokongan pun, ia dilakukan selepas mendapat persetujuan anda.",
+ r3d2:"Pada dasarnya, orang yang akan menelan ubat itu boleh berjumpa doktor dan menerima preskripsi tanpa mengira umur. Namun sesetengah fasiliti mungkin meminta surat kebenaran penjaga atau meminta penjaga menemani jika anda belum dewasa, jadi sila telefon dan pastikan dahulu sebelum pergi.",
+ r3meritt:"Kelebihan berjumpa doktor sakit puan",
+ r3meritd1:"Ketenangan yang paling besar ialah dapat berjumpa doktor secara bersemuka dan bertanya di situ juga tentang apa sahaja yang merisaukan anda.",
+ r3meritd2:"Selain cara menelan ubat dan kesan sampingan, jika mahu anda juga boleh berbincang tentang ujian jangkitan kelamin, pemeriksaan sakit puan, dan kaedah pencegahan kehamilan yang lebih pasti selepas ini (seperti pil perancang).",
+ r3meritd3:"Anda tidak perlu ragu sama ada patut pergi untuk hal seperti ini, atau bimbang akan dimarahi. Doktor memeriksa demi menjaga tubuh dan hati anda.",
+ r3recot:"Klinik sakit puan disyorkan bagi anda yang",
+ r3recod:"Jika mana-mana perkara berikut berkenaan dengan anda, terus berjumpa doktor sakit puan biasanya lebih pasti dan lebih lancar berbanding rundingan dalam talian atau membeli di farmasi.",
+ r3reco:[
+  ["Sudah melebihi 72 jam selepas hubungan seks","Ada klinik sakit puan yang menyediakan ubat yang masih boleh berkesan sehingga 120 jam (5 hari), bukan ubat biasa di Jepun yang perlu digunakan dalam 72 jam."],
+  ["Berumur bawah 16 tahun (contohnya pelajar sekolah menengah rendah)","Rundingan dalam talian atau farmasi mungkin menolak atas sebab umur dan mencadangkan anda ke klinik sakit puan. Jika ada klinik berdekatan rumah, terus pergi bertanya kadangkala lebih cepat. Ia rawatan bayaran sendiri tanpa kad insurans kesihatan, dan jika anda tidak mahu keluarga tahu, perkara itu pun boleh dibincangkan."],
+  ["Mengalami hubungan seks tanpa persetujuan atau keganasan seksual","Jika anda dipaksa, atau tidak mampu menolak, itu sama sekali bukan salah anda. Setiap wilayah mempunyai Pusat Sokongan Setempat untuk mangsa jenayah seksual dan keganasan seksual (talian bebas tol seluruh negara #8891). Dengan menelefon ke sana, anda boleh mengetahui tentang sistem yang menjadikan kos ubat percuma (ditanggung dana awam), serta bantuan seperti ditemani ke hospital. Tolong jangan pikul seorang diri, hubungi mereka dahulu."]
+ ],
+ r1pointst:"Tiga perkara penting untuk membeli di farmasi",
+ r1points:[
+  ["1. Cari farmasi yang menjualnya lebih awal","Bukan semua farmasi menyimpannya. Cari farmasi dalam senarai di laman Kementerian Kesihatan, dan sebelum pergi pastikan melalui telefon sama ada stok ada, dan ada ahli farmasi yang boleh melayan jika anda datang sekarang."],
+  ["2. Pergi sendiri (tidak boleh diwakilkan)","Orang yang akan menelan ubat itu sendiri mesti pergi ke farmasi. Pasangan, ibu bapa atau orang lain tidak boleh membelinya bagi pihak anda."],
+  ["3. Telan di hadapan ahli farmasi","Ubat yang dibeli tidak boleh dibawa pulang. Supaya ia ditelan dengan selamat, pasti dan secepat mungkin, anda akan menelannya di ruang yang menjaga privasi dalam farmasi, di hadapan ahli farmasi."]
+ ],
+ r1prept:"Persediaan sebelum pergi",
+ r1prepd1:"Anda mungkin diminta menunjukkan pengenalan diri seperti kad My Number atau kad insurans kesihatan. Ia tidak diwajibkan, tetapi memastikannya lebih awal membuat anda lebih tenang.",
+ r1prepd2:"Semasa membeli, ahli farmasi akan bertanya perkara seperti tarikh dan masa hubungan seks, bila haid terakhir, sejarah alahan, dan ubat yang sedang diambil. Mencatatnya lebih awal memudahkan urusan.",
+ r2ways:"Anda boleh mengambilnya di farmasi yang anda tentukan sendiri, atau menerimanya melalui penghantaran ke rumah.",
+ r2w1t:"1. Mengambilnya di farmasi (cara mengikut garis panduan negara)",
+ r2w1d:"Selepas rundingan dalam talian, doktor mengeluarkan preskripsi dan anda mengambil ubat di farmasi yang ditetapkan. Di farmasi anda mendengar penerangan ahli farmasi dan menelan ubat di situ juga, di hadapan mereka. Inilah cara asas yang ditetapkan dalam garis panduan Kementerian Kesihatan.",
+ r2w2t:"2. Dihantar ke peti surat rumah (perkhidmatan penghantaran klinik bayaran sendiri)",
+ r2w2d:"Sebahagian klinik bayaran sendiri menawarkan perkhidmatan menghantar ubat itu sendiri ke rumah melalui pos atau kurier selepas rundingan. Ia pilihan yang sangat membantu apabila anda benar-benar tidak boleh keluar, atau tiada farmasi berdekatan yang dibuka. Jika cepat, ia boleh sampai ke peti surat pada hari yang sama atau keesokan harinya.",
+ r2cautiont:"Perkara yang perlu diberi perhatian ketika menggunakan perkhidmatan penghantaran",
+ r2cautiond:"Perkhidmatan penghantaran memang mudah, tetapi ada beberapa perkara yang perlu diberi perhatian. Kontraseptif kecemasan perlu ditelan secepat mungkin, dalam tempoh 72 jam selepas hubungan seks (bagi sesetengah ubat, 120 jam). Dengan penghantaran, ada risiko ia sampai lewat dan tidak sempat dalam tempoh tersebut. Ketika menggunakannya, pastikan bila ubat itu benar-benar sampai ke tangan anda (tarikh sampai, bukan tarikh penghantaran). Selain itu, jangan sekali-kali gunakan laman import persendirian dari luar negara kerana ia lambat sampai dan berisiko palsu. Sentiasa pilih perkhidmatan yang membolehkan anda diperiksa oleh doktor di dalam negara.",
  pageTitle:"Cara mendapatkan pil kontraseptif kecemasan di Jepun | 7 bahasa",
  tophint:"Ini bukan laman web rasmi (dikendalikan oleh individu)",
  eyebrow:"MASIH ADA MASA",
  title:"Cara mendapatkan pil kontraseptif kecemasan",
- subtitle:"Di Jepun ada tiga cara: klinik sakit puan, farmasi, atau konsultasi dalam talian. Ada cara walaupun pada waktu malam.",
- cdlabel:"Masukkan tarikh dan masa hubungan seks tanpa perlindungan",
+ subtitle:"Di Jepun ada tiga cara untuk mendapatkannya\n\u30fbklinik sakit puan\n\u30fbfarmasi\n\u30fbrundingan dalam talian\n\nWalaupun lewat malam, ada caranya.\nMari kita lihat satu persatu.",
+ cdlabel:"Cuba masukkan tarikh dan masa hubungan seks tanpa perancang",
  cdempty:"Masukkan tarikh dan masa untuk melihat masa yang tinggal",
  cdprefix:"",
  cdh:"jam", cdm:"minit",
- cdnote:"Semakin cepat diambil, semakin berkesan. Jangan tunggu.",
+ cdnote:"Lebih cepat anda menelannya, lebih baik kesannya. Jangan tangguh, bertindaklah sekarang.",
  cdnow:"Jika diambil sekarang, keberkesanannya kira-kira {p}",
  cdover:"Sudah melebihi 72 jam",
  overtitle:"Walaupun sudah melebihi 72 jam, masih ada cara",
- overtext:"Anda tidak boleh membelinya di farmasi, tetapi klinik sakit puan mungkin boleh membincangkan pilihan untuk tempoh 72 hingga 120 jam. Ia mungkin melibatkan ubat yang belum diluluskan di Jepun dan keberkesanannya lebih rendah, tetapi ia masih berbaloi untuk ditanya. Jangan berputus asa.",
+ overtext:"Anda tidak boleh membelinya di farmasi, tetapi klinik sakit puan kadangkala boleh membincangkan cara yang boleh digunakan antara 72 hingga 120 jam. Ia mungkin melibatkan ubat yang belum diluluskan di Jepun dan kesannya juga berkurang, tetapi ia berbaloi untuk ditanya. Tolong jangan berputus asa.",
  overbtn:"Cari klinik sakit puan",
  efftitle:"Anggaran kadar mencegah kehamilan",
  effh1:"Masa dari seks hingga diambil", effh2:"Kadar",
  eff1:"Dalam 24 jam", eff2:"24–48 jam", eff3:"49–72 jam",
  effsrc:"Sumber: WHO Task Force on Postovulatory Methods of Fertility Regulation. Lancet 1998;352:428-433. Ini adalah anggaran dan berbeza mengikut keadaan badan.",
  routestitle:"Tiga cara untuk mendapatkannya",
- routeshint:"Mana-mana cara pun boleh. Pilih yang sesuai dengan keadaan anda.",
+ routeshint:"Mana-mana pun boleh. Pilih tempat yang paling mudah anda pergi.",
  r1n:"Beli di farmasi", r1p:"kira-kira ¥6,930–7,480",
- r1d:"Tidak perlu preskripsi. Ini cara paling murah dan biasanya paling cepat. Namun, bukan semua farmasi menjualnya. Sentiasa telefon dahulu sebelum pergi. Orang yang akan mengambil ubat mesti membuat panggilan itu sendiri (tetapi orang lain boleh membantu membuat panggilan).",
+ r1d:"Mulai Februari 2026, sesetengah farmasi boleh menjual kontraseptif kecemasan tanpa preskripsi doktor. Ini cara paling cepat tanpa perlu ke hospital, tetapi ada beberapa peraturan penting.",
  r1b:"Cari farmasi (Kementerian Kesihatan, Buruh dan Kebajikan)",
  r2n:"Konsultasi dalam talian", r2p:"kira-kira ¥5,000–15,000",
- r2d:"Berjumpa doktor melalui telefon atau komputer, kemudian ambil ubat di farmasi. Boleh dilakukan pada waktu malam, awal pagi dan hari kelepasan. Sesuai jika tiada farmasi berdekatan atau anda sukar keluar. Ini bukan 'beli-belah dalam talian' tetapi 'konsultasi perubatan', dan dibenarkan oleh kerajaan.",
+ r2d:"Anda boleh berjumpa doktor dalam talian menggunakan telefon pintar atau komputer. Ada klinik yang beroperasi lewat malam, awal pagi, serta hujung minggu dan cuti, jadi ia sangat membantu apabila anda mahu bertindak segera.",
  r2b:"Cari farmasi dan doktor yang menyediakan perkhidmatan ini (Kementerian)",
- r3tag:"Untuk yang bawah 16 tahun, melebihi 72 jam, atau mangsa keganasan seksual",
  r3n:"Pergi ke klinik sakit puan", r3p:"kira-kira ¥6,000–15,000",
- r3d:"Bagi yang bawah 16 tahun, farmasi selalunya akan merujuk anda ke klinik, jadi datang ke sini dari awal lebih cepat. Jika anda mangsa keganasan seksual, anda juga boleh membincangkan bantuan kos dan ujian penyakit kelamin. Jika sudah melebihi 72 jam, datang ke sini juga.",
+ r3d:"Anda berjumpa doktor di klinik sakit puan, klinik wanita atau klinik ladies, dan menerima ubat selepas pemeriksaan doktor.",
  r3b:"Cari klinik sakit puan (Kementerian)",
- knowtitle:"Perkara yang perlu anda tahu",
- know:[
-  ["Anda mesti mengambilnya sendiri","Orang yang akan mengambil ubat mesti mengambilnya sendiri. Keluarga, rakan atau pasangan tidak boleh membelinya untuk anda."],
-  ["Tiada batasan umur","Anda juga tidak memerlukan kebenaran ibu bapa atau pasangan. Namun jika anda bawah 16 tahun, farmasi mungkin merujuk anda ke klinik sakit puan. Itu bukan penolakan — hospital juga memberikan ubat yang sama."],
-  ["Anda mengambilnya di situ","Anda menelan satu tablet di hadapan ahli farmasi. Anda tidak boleh membawanya balik atau memberikannya kepada orang lain."],
-  ["Insurans kesihatan tidak melindunginya","Anda membayar sepenuhnya sendiri. Bawa wang tunai — sesetengah farmasi tidak menerima kad."],
-  ["Tidak boleh dibeli melalui pos atau dalam talian","Mengimport sendiri dari luar negara berisiko mendapat ubat tiruan, dan sistem pampasan Jepun tidak akan melindungi anda jika berlaku kemudaratan. Konsultasi dalam talian adalah berbeza — cara itu boleh digunakan."],
-  ["Periksa semula selepas 3 minggu","Ia tidak 100% berkesan. Tiga minggu selepas mengambilnya, gunakan ujian kehamilan atau berjumpa doktor."],
-  ["Kerahsiaan anda dilindungi","Ahli farmasi dan doktor terikat dengan kerahsiaan. Tiada apa-apa dilaporkan kepada keluarga, sekolah atau tempat kerja anda. Jika mereka merujuk anda kepada perkhidmatan bantuan, mereka akan meminta kebenaran anda terlebih dahulu."]
- ],
  consulttitle:"Anda tidak perlu menghadapinya sendiri",
  consulttext:"Terdapat perkhidmatan bantuan awam yang percuma. Jika anda mangsa keganasan seksual, kos konsultasi dan ubat mungkin ditanggung. Jangan berputus asa kerana wang.",
  cb1:"Cari pusat bantuan keganasan seksual (Pejabat Kabinet)",
@@ -1351,8 +2697,38 @@ function render(){
   txt("t-r1n", g("r1n")); txt("t-r1p", g("r1p")); txt("t-r1d", g("r1d")); txt("t-r1b", g("r1b"));
   txt("t-r2n", g("r2n")); txt("t-r2p", g("r2p")); txt("t-r2d", g("r2d")); txt("t-r2b", g("r2b"));
   txt("t-r3n", g("r3n")); txt("t-r3p", g("r3p")); txt("t-r3d", g("r3d")); txt("t-r3b", g("r3b"));
-  txt("t-r3tag", g("r3tag"));
-  txt("t-knowtitle", g("knowtitle"));
+  txt("t-r3d2", g("r3d2"));
+  txt("t-r3meritt", g("r3meritt"));
+  txt("t-r3meritd1", g("r3meritd1"));
+  txt("t-r3meritd2", g("r3meritd2"));
+  txt("t-r3meritd3", g("r3meritd3"));
+  txt("t-r3recot", g("r3recot"));
+  txt("t-r3recod", g("r3recod"));
+  txt("t-r1pointst", g("r1pointst"));
+  txt("t-r1prept", g("r1prept"));
+  txt("t-r1prepd1", g("r1prepd1"));
+  txt("t-r1prepd2", g("r1prepd2"));
+  txt("t-r2ways", g("r2ways"));
+  txt("t-r2w1t", g("r2w1t")); txt("t-r2w1d", g("r2w1d"));
+  txt("t-r2w2t", g("r2w2t")); txt("t-r2w2d", g("r2w2d"));
+  txt("t-r2cautiont", g("r2cautiont")); txt("t-r2cautiond", g("r2cautiond"));
+  txt("t-aftertitle", g("aftertitle"));
+  txt("t-afterbody1", g("afterbody1"));
+  txt("t-afterbody2", g("afterbody2"));
+  txt("t-secrett", g("secrett"));
+  txt("t-secretd", g("secretd"));
+  txt("t-stepstitle", g("stepstitle"));
+  txt("t-stepshint", g("stepshint"));
+  txt("t-checktitle", g("checktitle"));
+  txt("t-checkhint", g("checkhint"));
+  txt("t-checknotitle", g("checknotitle"));
+  txt("t-checknonote", g("checknonote"));
+  txt("t-checkasktitle", g("checkasktitle"));
+  txt("t-checkasknote", g("checkasknote"));
+  txt("t-spectitle", g("spectitle"));
+  txt("t-spechint", g("spechint"));
+  txt("t-specnote", g("specnote"));
+  txt("t-faqtitle", g("faqtitle"));
   txt("t-consulttitle", g("consulttitle"));
   txt("t-consulttext", g("consulttext"));
   txt("t-cb1", g("cb1")); txt("t-cb2", g("cb2")); txt("t-cb3", g("cb3"));
@@ -1365,14 +2741,60 @@ function render(){
   txt("t-updated", g("updated"));
   txt("exitbtn", g("exit"));
 
-  var box=document.getElementById("knowlist");
-  box.innerHTML="";
-  (g("know")||[]).forEach(function(pair){
-    var w=document.createElement("div"); w.className="item";
-    var h=document.createElement("h3"); h.textContent=pair[0];
-    var p=document.createElement("p"); p.textContent=pair[1];
-    w.appendChild(h); w.appendChild(p); box.appendChild(w);
+  /* [見出し, 本文] の配列から、クリーム色の小ブロックを並べる */
+  [["r3reco","r3reco"],["r1points","r1points"]].forEach(function(pair){
+    var box=document.getElementById(pair[0]);
+    box.innerHTML="";
+    (g(pair[1])||[]).forEach(function(item){
+      var w=document.createElement("div"); w.className="way";
+      var t=document.createElement("p"); t.className="waytitle"; t.textContent=item[0];
+      var b=document.createElement("p"); b.textContent=item[1];
+      w.appendChild(t); w.appendChild(b); box.appendChild(w);
+    });
   });
+
+  /* 購入の流れ: [経路名, [手順, 手順, ...]] の配列から組み立てる */
+  var sbox=document.getElementById("stepslist");
+  sbox.innerHTML="";
+  (g("steps")||[]).forEach(function(grp){
+    var w=document.createElement("div"); w.className="stepgroup";
+    var h=document.createElement("h3"); h.textContent=grp[0];
+    var ol=document.createElement("ol");
+    (grp[1]||[]).forEach(function(t){
+      var li=document.createElement("li"); li.textContent=t; ol.appendChild(li);
+    });
+    w.appendChild(h); w.appendChild(ol); sbox.appendChild(w);
+  });
+
+  /* 服用前チェック: 文字列の配列を2群ぶん */
+  ["checkno","checknote","checkask"].forEach(function(id){
+    var ul=document.getElementById(id);
+    ul.innerHTML="";
+    (g(id)||[]).forEach(function(t){
+      var li=document.createElement("li"); li.textContent=t; ul.appendChild(li);
+    });
+  });
+
+  /* 製品情報: [項目名, 内容] の配列 */
+  var tb=document.getElementById("speclist");
+  tb.innerHTML="";
+  (g("spec")||[]).forEach(function(row){
+    var tr=document.createElement("tr");
+    var th=document.createElement("th"); th.scope="row"; th.textContent=row[0];
+    var td=document.createElement("td"); td.textContent=row[1];
+    tr.appendChild(th); tr.appendChild(td); tb.appendChild(tr);
+  });
+
+  /* よくある質問: [質問, 答え] の配列。details で開閉する */
+  var fb=document.getElementById("faqlist");
+  fb.innerHTML="";
+  (g("faq")||[]).forEach(function(pair){
+    var dt=document.createElement("details");
+    var sm=document.createElement("summary"); sm.textContent=pair[0];
+    var p=document.createElement("p"); p.className="answer"; p.textContent=pair[1];
+    dt.appendChild(sm); dt.appendChild(p); fb.appendChild(dt);
+  });
+
 
   tick();
 }
