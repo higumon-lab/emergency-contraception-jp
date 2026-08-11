@@ -559,14 +559,20 @@ table.eff tr td.v3 {
   -webkit-backdrop-filter: blur(22px) saturate(1.3);
 }
 
+/* 01 / 02 / 03 は経路の目印なので、はっきり見えるようにしています */
 .route .no {
   display: block;
-  margin-bottom: 12px;
-  color: var(--ink-3);
-  font-size: 13px;
+  margin-bottom: 10px;
+  color: var(--accent);
+  background: linear-gradient(100deg, #6534c9 0%, #b02a86 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Outfit", system-ui, sans-serif;
+  font-size: 30px;
   font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0.14em;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
 }
 
@@ -1191,6 +1197,12 @@ footer p {
     background-clip: text;
   }
 
+  .route .no {
+    background: linear-gradient(100deg, #c4a8ff 0%, #ff9ec4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
   h2::before {
     background: linear-gradient(180deg, #c4a8ff 0%, #ff9ec4 100%);
   }
@@ -1663,9 +1675,9 @@ ja:{
  r2n:"オンライン診療", r2p:"約5,000〜15,000円",
  r2d:"スマホやパソコンを使って、オンラインで医師の診察を受けることができます。夜中や早朝、土日祝日でも対応しているクリニックがあるため、すぐに行動したいときの大きな助けになります。",
  r2ways:"本人が指定した薬局で受け取るか、自宅などに郵送され受け取ることができます。",
- r2w1t:"① 薬局に行って受け取る方法（国の指針に沿ったやり方）",
+ r2w1t:"薬局に行って受け取る方法（国の指針に沿ったやり方）",
  r2w1d:"オンライン診療の後、医師が処方箋を出し、指定の薬局へお薬を取りに行く方法です。薬局で薬剤師から説明を受け、その場で（薬剤師の前で）お薬を飲みます。これが厚生労働省の指針で定められた原則的なルールです。",
- r2w2t:"② 自宅のポストなどに届けてもらう方法（自費診療クリニックの郵送サービス）",
+ r2w2t:"自宅のポストなどに届けてもらう方法（自費診療クリニックの郵送サービス）",
  r2w2d:"自費診療を行っている一部のクリニックでは、診察後に「お薬そのもの」を自宅へ郵送・バイク便などで届けてくれるサービスを行っています。「どうしても外に出られない」「近くに開いている薬局がない」といった場合にとても助かる選択肢です。最短で当日や翌日にポストに届くこともあります。",
  r2cautiont:"【郵送サービスを利用するときの注意点】",
  r2cautiond:"とても便利な郵送サービスですが、いくつか気をつけてほしいことがあります。緊急避妊薬は「性交後72時間以内（お薬によっては120時間以内）」に、できるだけ早く飲むことが大切です。郵送の場合、届くまでに時間がかかってタイムリミットに間に合わないリスクがあります。利用する際は、必ず「いつ自分の手元に届くのか（発送日ではなく到着日）」をしっかり確認してください。また、海外からの個人輸入サイトは、届くのが遅く偽物の危険もあるため、絶対に利用しないでください。必ず国内の医師の診察を受けられるサービスを選びましょう。",
@@ -1693,9 +1705,9 @@ ja:{
  stepshint:"それぞれの方法で、実際にすることを順番に並べました。",
  steps:[
   ["産婦人科を受診する",[
-   "行けそうな産婦人科をさがします。夜間や休日は、地域の救急相談窓口でも案内してもらえます。",
+   "自宅や学校、職場などから近く、できるだけ早く受診できる産婦人科を探しましょう。",
    "電話で「緊急避妊のことで受診したい」と伝えて、診てもらえるか聞いてみてください。",
-   "受診します。最後の生理の日を聞かれることが多いので、思い出しておくとスムーズです。",
+   "受診します。最後の生理日と、妊娠の心配がある性交があった日にち・時間を詳しく聞かれるので、すぐに答えられるよう確認しておきましょう。",
    "診察を受けて、お薬が処方されます。その場で飲むことが多いですが、施設によって異なります。",
    "費用を支払います。健康保険は使えません。性暴力の被害にあった場合は公費で負担されることがあるので、そのことも遠慮なく相談してください。"
   ]],
@@ -1788,9 +1800,9 @@ en:{
  stepshint:"Here is what actually happens with each option.",
  steps:[
   ["Visit a clinic",[
-   "Look for a clinic you can get to. At night or on holidays, your local emergency advice line can help you find one.",
+   "Look for a clinic close to your home, school or workplace that can see you as soon as possible.",
    "Call and say you would like to be seen about emergency contraception, and ask whether they can see you.",
-   "Go in. You will often be asked the date of your last period, so it helps to recall it beforehand.",
+   "Go in. You will be asked in detail about the date of your last period and the date and time of the sex you are worried about, so check these beforehand so you can answer straight away.",
    "After the examination the medicine is prescribed. You will often take it there, though this varies by clinic.",
    "Pay. Health insurance does not cover this. If you experienced sexual violence the cost may be covered by public funds, so please feel free to mention it."
   ]],
@@ -1880,9 +1892,9 @@ en:{
  r1prepd1:"You may be asked to show ID such as a My Number card or a health insurance card. It is not required, but it is reassuring to check beforehand.",
  r1prepd2:"The pharmacist will ask things like when you had sex, when your last period was, any allergies, and any medicines you take. A quick note to yourself makes it go smoothly.",
  r2ways:"You can either collect it at a pharmacy you choose, or have it posted to your home.",
- r2w1t:"1. Collect it at a pharmacy (the national guideline)",
+ r2w1t:"Collect it at a pharmacy (the national guideline)",
  r2w1d:"After the online consultation the doctor issues a prescription and you collect the medicine at the pharmacy you chose. The pharmacist explains it, and you take it there, in front of them. This is the standard route set out in the health ministry guideline.",
- r2w2t:"2. Have it posted to your home (private clinics)",
+ r2w2t:"Have it posted to your home (private clinics)",
  r2w2d:"Some private clinics send the medicine itself to your home, by post or courier, after the consultation. It really helps when you cannot go out, or when no pharmacy near you is open. It can arrive the same day or the next day.",
  r2cautiont:"Before using a postal service",
  r2cautiond:"Posting is convenient, but there are a few things to watch. Emergency contraception should be taken as soon as possible, within 72 hours of sex (or 120 hours with some medicines). With post there is a risk it arrives too late. Always check when it will actually reach you — the arrival date, not the dispatch date. And never use overseas private import sites: delivery is slow and counterfeits are a real risk. Always choose a service where you are seen by a doctor in Japan.",
@@ -1942,9 +1954,9 @@ ko:{
  stepshint:"각 방법마다 실제로 하게 되는 일을 순서대로 적었습니다.",
  steps:[
   ["산부인과 진료받기",[
-   "갈 수 있는 산부인과를 찾습니다. 야간이나 휴일에는 지역 응급 상담 창구에서도 안내받을 수 있습니다.",
+   "집이나 학교, 직장 등에서 가깝고 되도록 빨리 진료받을 수 있는 산부인과를 찾아봅시다.",
    "전화로 응급피임 때문에 진료받고 싶다고 전하고, 진료가 가능한지 물어보세요.",
-   "진료를 받습니다. 마지막 생리일을 묻는 경우가 많으니 미리 떠올려 두면 수월합니다.",
+   "진료를 받습니다. 마지막 생리일과, 임신이 걱정되는 성관계가 있었던 날짜와 시간을 자세히 묻기 때문에 바로 답할 수 있도록 미리 확인해 둡시다.",
    "진찰 후 약이 처방됩니다. 그 자리에서 복용하는 경우가 많지만 시설에 따라 다릅니다.",
    "비용을 냅니다. 건강보험은 적용되지 않습니다. 성폭력 피해를 입은 경우 공적 비용으로 부담되는 제도가 있으니 그 점도 편하게 상담해 보세요."
   ]],
@@ -2034,9 +2046,9 @@ ko:{
  r1prepd1:"마이넘버카드나 건강보험증 등 신분증 제시를 요청받는 경우가 있습니다. 필수는 아니지만 미리 확인해 두면 안심입니다.",
  r1prepd2:"구입 시 약사에게서 성관계가 있었던 일시, 마지막 생리가 언제였는지, 알레르기 이력, 복용 중인 약 등을 질문받습니다. 메모해 두면 수월합니다.",
  r2ways:"본인이 지정한 약국에서 받거나, 집 등으로 배송받아 수령할 수 있습니다.",
- r2w1t:"1. 약국에 가서 받는 방법(국가 지침에 따른 방식)",
+ r2w1t:"약국에 가서 받는 방법(국가 지침에 따른 방식)",
  r2w1d:"온라인 진료 후 의사가 처방전을 발행하고, 지정한 약국으로 약을 받으러 가는 방법입니다. 약국에서 약사의 설명을 듣고 그 자리에서(약사 앞에서) 약을 복용합니다. 이것이 후생노동성 지침에 정해진 원칙적인 방식입니다.",
- r2w2t:"2. 집 우편함 등으로 배송받는 방법(자비 진료 클리닉의 배송 서비스)",
+ r2w2t:"집 우편함 등으로 배송받는 방법(자비 진료 클리닉의 배송 서비스)",
  r2w2d:"자비 진료를 하는 일부 클리닉에서는 진료 후 약 자체를 집으로 우편이나 퀵서비스 등으로 보내 주는 서비스를 하고 있습니다. 도저히 외출할 수 없다, 근처에 문을 연 약국이 없다 같은 경우에 큰 도움이 되는 선택지입니다. 빠르면 당일이나 다음 날 우편함에 도착하기도 합니다.",
  r2cautiont:"배송 서비스를 이용할 때의 주의점",
  r2cautiond:"매우 편리한 배송 서비스이지만 몇 가지 주의해 주셨으면 하는 점이 있습니다. 응급피임약은 성관계 후 72시간 이내(약에 따라서는 120시간 이내)에 되도록 빨리 복용하는 것이 중요합니다. 배송의 경우 도착까지 시간이 걸려 기한에 맞추지 못할 위험이 있습니다. 이용할 때는 반드시 언제 내 손에 도착하는지(발송일이 아니라 도착일)를 확실히 확인하세요. 또한 해외 개인 수입 사이트는 도착이 늦고 가짜일 위험도 있으므로 절대 이용하지 마세요. 반드시 국내 의사의 진료를 받을 수 있는 서비스를 고르세요.",
@@ -2096,9 +2108,9 @@ zh:{
  stepshint:"按顺序列出每种方法实际要做的事。",
  steps:[
   ["前往妇产科就诊",[
-   "先找一家你能去的妇产科。夜间或节假日，也可以通过当地的急救咨询窗口获得指引。",
+   "找一家离家、学校或工作地点近，并且能尽快就诊的妇产科。",
    "打电话说明希望就诊紧急避孕，问一下能否接诊。",
-   "前往就诊。常会被问到最后一次月经的日期，事先回想一下会更顺利。",
+   "前往就诊。医生会详细询问最后一次月经的日期，以及担心怀孕的那次性行为的日期和时间，请事先确认好以便立即回答。",
    "经过诊察后医生会开药。多数情况下会当场服用，但各机构做法不同。",
    "支付费用。健康保险不适用。如果遭受了性暴力，有由公费负担的制度，请放心一并咨询。"
   ]],
@@ -2188,9 +2200,9 @@ zh:{
  r1prepd1:"有时会被要求出示个人编号卡或健康保险证等身份证明。虽非必须，但事先确认会更安心。",
  r1prepd2:"购买时药剂师会询问性行为的日期时间、最后一次月经是什么时候、过敏史、正在服用的药物等。事先做个备忘会更顺利。",
  r2ways:"可以在本人指定的药店领取，也可以邮寄到家中等地址领取。",
- r2w1t:"1. 到药店领取（符合国家指南的方式）",
+ r2w1t:"到药店领取（符合国家指南的方式）",
  r2w1d:"在线问诊后由医生开具处方，前往指定药店取药。在药店听取药剂师说明，并当场（在药剂师面前）服药。这是厚生劳动省指南规定的原则性方式。",
- r2w2t:"2. 邮寄到家中信箱等（自费诊疗诊所的邮寄服务）",
+ r2w2t:"邮寄到家中信箱等（自费诊疗诊所的邮寄服务）",
  r2w2d:"部分开展自费诊疗的诊所，会在问诊后通过邮寄、摩托快递等方式把药本身送到家里。在实在无法外出、附近没有营业药店等情况下，这是非常有帮助的选择。快的话当天或次日就会送到信箱。",
  r2cautiont:"使用邮寄服务时的注意事项",
  r2cautiond:"邮寄服务非常方便，但有几点希望你注意。紧急避孕药要在性行为后72小时内（有些药为120小时内）尽早服用，这一点很重要。采用邮寄时，存在因送达耗时而赶不上时限的风险。使用时请务必确认药物何时能到你手上（是送达日而非发货日）。此外，海外个人进口网站送达慢且有假货风险，请绝对不要使用。请务必选择能接受日本国内医生诊察的服务。",
@@ -2250,9 +2262,9 @@ vi:{
  stepshint:"Đây là những việc bạn thực sự sẽ làm với từng cách.",
  steps:[
   ["Đến khám tại phòng khám sản phụ khoa",[
-   "Tìm một phòng khám bạn có thể đến. Ban đêm hoặc ngày lễ, tổng đài tư vấn cấp cứu ở địa phương cũng có thể hướng dẫn cho bạn.",
+   "Hãy tìm một phòng khám gần nhà, trường học hoặc nơi làm việc, và có thể khám cho bạn sớm nhất có thể.",
    "Gọi điện nói rằng bạn muốn khám về tránh thai khẩn cấp, và hỏi xem họ có tiếp nhận không.",
-   "Đi khám. Bạn thường được hỏi ngày kinh cuối, nên nhớ lại trước sẽ nhanh hơn.",
+   "Đi khám. Bạn sẽ được hỏi kỹ về ngày kinh cuối và ngày giờ của lần quan hệ mà bạn lo lắng, nên hãy xác nhận trước để có thể trả lời ngay.",
    "Sau khi khám, bác sĩ sẽ kê thuốc. Thường bạn sẽ uống ngay tại chỗ, nhưng điều này khác nhau tùy cơ sở.",
    "Thanh toán. Bảo hiểm y tế không áp dụng. Nếu bạn bị bạo lực tình dục, có chế độ chi trả bằng ngân sách công, nên hãy cứ trao đổi về điều đó."
   ]],
@@ -2342,9 +2354,9 @@ vi:{
  r1prepd1:"Bạn có thể được yêu cầu xuất trình giấy tờ tùy thân như thẻ My Number hoặc thẻ bảo hiểm y tế. Không bắt buộc, nhưng xác nhận trước sẽ yên tâm hơn.",
  r1prepd2:"Khi mua, dược sĩ sẽ hỏi những điều như thời điểm quan hệ, kỳ kinh cuối là khi nào, tiền sử dị ứng, thuốc đang dùng. Ghi sẵn ra giấy sẽ nhanh hơn.",
  r2ways:"Bạn có thể nhận tại nhà thuốc do mình chỉ định, hoặc nhận qua đường bưu điện gửi về nhà.",
- r2w1t:"1. Nhận tại nhà thuốc (cách theo hướng dẫn của nhà nước)",
+ r2w1t:"Nhận tại nhà thuốc (cách theo hướng dẫn của nhà nước)",
  r2w1d:"Sau khi khám trực tuyến, bác sĩ kê đơn và bạn đến nhà thuốc đã chỉ định để lấy thuốc. Bạn nghe dược sĩ giải thích và uống ngay tại chỗ, trước mặt dược sĩ. Đây là cách nguyên tắc được quy định trong hướng dẫn của Bộ Y tế.",
- r2w2t:"2. Gửi về hộp thư tại nhà (dịch vụ gửi thuốc của phòng khám tự chi trả)",
+ r2w2t:"Gửi về hộp thư tại nhà (dịch vụ gửi thuốc của phòng khám tự chi trả)",
  r2w2d:"Một số phòng khám tự chi trả có dịch vụ gửi chính thuốc về nhà bạn qua bưu điện hoặc chuyển phát nhanh sau khi khám. Đây là lựa chọn rất hữu ích khi bạn không thể ra ngoài, hoặc gần nhà không có nhà thuốc nào đang mở. Nhanh thì có thể tới hộp thư ngay trong ngày hoặc hôm sau.",
  r2cautiont:"Lưu ý khi dùng dịch vụ gửi thuốc",
  r2cautiond:"Dịch vụ gửi thuốc rất tiện, nhưng có vài điều mong bạn lưu ý. Thuốc tránh thai khẩn cấp cần được uống càng sớm càng tốt, trong vòng 72 giờ sau quan hệ (với một số thuốc là 120 giờ). Khi gửi qua bưu điện, có rủi ro thuốc tới muộn và không kịp thời hạn. Khi sử dụng, nhất định phải xác nhận khi nào thuốc thực sự tới tay bạn (là ngày nhận, không phải ngày gửi). Ngoài ra, tuyệt đối không dùng các trang nhập khẩu cá nhân từ nước ngoài, vì thuốc tới chậm và có nguy cơ là hàng giả. Hãy luôn chọn dịch vụ mà bạn được bác sĩ trong nước khám.",
@@ -2404,9 +2416,9 @@ ne:{
  stepshint:"हरेक उपायमा वास्तवमा के गर्नुपर्छ, क्रमैसँग राखिएको छ।",
  steps:[
   ["प्रसूति एवं स्त्री रोग क्लिनिकमा जाने",[
-   "जान सकिने क्लिनिक खोज्नुहोस्। रातिको समय वा बिदाको दिन भए स्थानीय आकस्मिक परामर्श लाइनबाट पनि जानकारी पाइन्छ।",
+   "घर, विद्यालय वा कार्यस्थलबाट नजिक भएको, र सकेसम्म चाँडो जाँच गराउन मिल्ने क्लिनिक खोज्नुहोस्।",
    "फोन गरेर आपत्कालीन गर्भनिरोधका लागि जाँच गराउन चाहेको बताउनुहोस् र हेर्न मिल्छ कि भनी सोध्नुहोस्।",
-   "जाँच गराउनुहोस्। अन्तिम महिनावारी कहिले भएको हो भनी प्रायः सोधिन्छ, त्यसैले पहिल्यै सम्झेर जानु राम्रो हुन्छ।",
+   "जाँच गराउनुहोस्। अन्तिम महिनावारीको मिति र गर्भको चिन्ता भएको यौन सम्पर्क भएको मिति र समय विस्तृत रूपमा सोधिन्छ, त्यसैले तुरुन्तै जवाफ दिन सक्ने गरी पहिल्यै पक्का गर्नुहोस्।",
    "जाँचपछि औषधि लेखिन्छ। धेरैजसो त्यहीँ खुवाइन्छ, तर संस्थाअनुसार फरक हुन सक्छ।",
    "शुल्क तिर्नुहोस्। स्वास्थ्य बिमा लागू हुँदैन। यौन हिंसा भोगेको भए सरकारी खर्चमा हुने व्यवस्था छ, त्यसैले त्यो कुरा पनि निस्फिक्री सोध्नुहोस्।"
   ]],
@@ -2496,9 +2508,9 @@ ne:{
  r1prepd1:"माइ नम्बर कार्ड वा स्वास्थ्य बिमा कार्ड जस्ता परिचयपत्र देखाउन भनिन सक्छ। अनिवार्य होइन, तर पहिल्यै पक्का गर्दा ढुक्क हुन्छ।",
  r1prepd2:"किन्दा फार्मासिस्टले यौन सम्पर्क भएको मिति र समय, अन्तिम महिनावारी कहिले भएको, एलर्जीको इतिहास, खाइरहेको औषधि आदि सोध्छन्। टिपोट गरेर लगे सहज हुन्छ।",
  r2ways:"आफैंले तोकेको फार्मेसीबाट लिन सकिन्छ, वा घरमा पठाइएको औषधि प्राप्त गर्न सकिन्छ।",
- r2w1t:"१. फार्मेसीमा गएर लिने तरिका (राष्ट्रिय निर्देशिकाअनुसार)",
+ r2w1t:"फार्मेसीमा गएर लिने तरिका (राष्ट्रिय निर्देशिकाअनुसार)",
  r2w1d:"अनलाइन परामर्शपछि डाक्टरले प्रिस्क्रिप्सन दिन्छन् र तोकिएको फार्मेसीमा गएर औषधि लिनुहुन्छ। फार्मेसीमा फार्मासिस्टको व्याख्या सुनेर त्यहीँ (फार्मासिस्टकै अगाडि) औषधि खानुहुन्छ। स्वास्थ्य मन्त्रालयको निर्देशिकाले तोकेको सिद्धान्तगत तरिका यही हो।",
- r2w2t:"२. घरको पत्रपेटीमा पठाइदिने तरिका (निजी क्लिनिकको पठाउने सेवा)",
+ r2w2t:"घरको पत्रपेटीमा पठाइदिने तरिका (निजी क्लिनिकको पठाउने सेवा)",
  r2w2d:"निजी खर्चमा सेवा दिने केही क्लिनिकले परामर्शपछि औषधि नै घरमा हुलाक वा कुरियरबाट पठाइदिने सेवा दिन्छन्। कुनै हालतमा बाहिर निस्कन नसक्ने, वा नजिकै खुलेको फार्मेसी नभएको अवस्थामा यो निकै सहयोगी विकल्प हो। छिटो भए सोही दिन वा भोलिपल्ट पत्रपेटीमा आइपुग्न सक्छ।",
  r2cautiont:"पठाउने सेवा प्रयोग गर्दाका सावधानी",
  r2cautiond:"पठाउने सेवा निकै सजिलो भए पनि केही कुरामा ध्यान दिनुहोस्। आपत्कालीन गर्भनिरोधक औषधि यौन सम्पर्कपछि ७२ घण्टाभित्र (कुनै औषधिको हकमा १२० घण्टाभित्र) सकेसम्म चाँडो खानु महत्त्वपूर्ण हुन्छ। पठाइने अवस्थामा आइपुग्न समय लागेर समयसीमा नभ्याउने जोखिम हुन्छ। प्रयोग गर्दा औषधि कहिले आफ्नो हातमा आइपुग्छ (पठाएको मिति होइन, आइपुग्ने मिति) अनिवार्य रूपमा पक्का गर्नुहोस्। साथै विदेशबाट व्यक्तिगत रूपमा मगाउने साइट ढिलो आइपुग्ने र नक्कली हुन सक्ने भएकाले कदापि प्रयोग नगर्नुहोस्। सधैं देशभित्रैका डाक्टरको जाँच पाइने सेवा छान्नुहोस्।",
@@ -2558,9 +2570,9 @@ ms:{
  stepshint:"Berikut apa yang sebenarnya berlaku bagi setiap cara.",
  steps:[
   ["Ke klinik sakit puan",[
-   "Cari klinik yang boleh anda pergi. Pada waktu malam atau cuti, talian nasihat kecemasan tempatan juga boleh membantu mencarikannya.",
+   "Cari klinik yang dekat dengan rumah, sekolah atau tempat kerja anda, dan yang boleh menerima anda secepat mungkin.",
    "Telefon dan beritahu anda mahu berjumpa doktor berkenaan kontraseptif kecemasan, dan tanya sama ada mereka boleh menerima anda.",
-   "Pergi berjumpa doktor. Anda selalunya akan ditanya tarikh haid terakhir, jadi ingat kembali lebih awal akan memudahkan.",
+   "Pergi berjumpa doktor. Anda akan ditanya dengan terperinci tentang tarikh haid terakhir serta tarikh dan masa hubungan seks yang anda bimbangkan, jadi pastikan lebih awal supaya anda boleh menjawab dengan segera.",
    "Selepas pemeriksaan, ubat akan dipreskripsikan. Selalunya anda menelannya di situ, tetapi ini berbeza mengikut fasiliti.",
    "Buat pembayaran. Insurans kesihatan tidak boleh digunakan. Jika anda mengalami keganasan seksual, ada sistem yang menampung kos melalui dana awam, jadi sila sebut perkara itu juga."
   ]],
@@ -2650,9 +2662,9 @@ ms:{
  r1prepd1:"Anda mungkin diminta menunjukkan pengenalan diri seperti kad My Number atau kad insurans kesihatan. Ia tidak diwajibkan, tetapi memastikannya lebih awal membuat anda lebih tenang.",
  r1prepd2:"Semasa membeli, ahli farmasi akan bertanya perkara seperti tarikh dan masa hubungan seks, bila haid terakhir, sejarah alahan, dan ubat yang sedang diambil. Mencatatnya lebih awal memudahkan urusan.",
  r2ways:"Anda boleh mengambilnya di farmasi yang anda tentukan sendiri, atau menerimanya melalui penghantaran ke rumah.",
- r2w1t:"1. Mengambilnya di farmasi (cara mengikut garis panduan negara)",
+ r2w1t:"Mengambilnya di farmasi (cara mengikut garis panduan negara)",
  r2w1d:"Selepas rundingan dalam talian, doktor mengeluarkan preskripsi dan anda mengambil ubat di farmasi yang ditetapkan. Di farmasi anda mendengar penerangan ahli farmasi dan menelan ubat di situ juga, di hadapan mereka. Inilah cara asas yang ditetapkan dalam garis panduan Kementerian Kesihatan.",
- r2w2t:"2. Dihantar ke peti surat rumah (perkhidmatan penghantaran klinik bayaran sendiri)",
+ r2w2t:"Dihantar ke peti surat rumah (perkhidmatan penghantaran klinik bayaran sendiri)",
  r2w2d:"Sebahagian klinik bayaran sendiri menawarkan perkhidmatan menghantar ubat itu sendiri ke rumah melalui pos atau kurier selepas rundingan. Ia pilihan yang sangat membantu apabila anda benar-benar tidak boleh keluar, atau tiada farmasi berdekatan yang dibuka. Jika cepat, ia boleh sampai ke peti surat pada hari yang sama atau keesokan harinya.",
  r2cautiont:"Perkara yang perlu diberi perhatian ketika menggunakan perkhidmatan penghantaran",
  r2cautiond:"Perkhidmatan penghantaran memang mudah, tetapi ada beberapa perkara yang perlu diberi perhatian. Kontraseptif kecemasan perlu ditelan secepat mungkin, dalam tempoh 72 jam selepas hubungan seks (bagi sesetengah ubat, 120 jam). Dengan penghantaran, ada risiko ia sampai lewat dan tidak sempat dalam tempoh tersebut. Ketika menggunakannya, pastikan bila ubat itu benar-benar sampai ke tangan anda (tarikh sampai, bukan tarikh penghantaran). Selain itu, jangan sekali-kali gunakan laman import persendirian dari luar negara kerana ia lambat sampai dan berisiko palsu. Sentiasa pilih perkhidmatan yang membolehkan anda diperiksa oleh doktor di dalam negara.",
