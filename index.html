@@ -39,13 +39,21 @@
   color-scheme: light;
   --wrap-pad: 22px;
 
-  /* マカロンの6色。背景と小さな面にだけ使う */
-  --mint: #c8f7e3;
-  --lavender: #e3daff;
-  --peach: #ffdcca;
-  --rose: #ffd9e8;
-  --butter: #fff2c4;
-  --sky: #d2e8ff;
+  /* マカロンの6色。透明度を調整できるよう rgb 成分でも持たせています。
+     rgb(var(--mint-rgb) / 0.8) のように書くと、下の色が透けます。 */
+  --mint-rgb: 200 247 227;
+  --lavender-rgb: 227 218 255;
+  --peach-rgb: 255 220 202;
+  --rose-rgb: 255 217 232;
+  --butter-rgb: 255 242 196;
+  --sky-rgb: 210 232 255;
+
+  --mint: rgb(var(--mint-rgb));
+  --lavender: rgb(var(--lavender-rgb));
+  --peach: rgb(var(--peach-rgb));
+  --rose: rgb(var(--rose-rgb));
+  --butter: rgb(var(--butter-rgb));
+  --sky: rgb(var(--sky-rgb));
 
   --paper: #fdfcff;
   --surface: rgba(255, 255, 255, 0.74);
@@ -169,8 +177,15 @@ a:not(.btn) {
 }
 
 .hero .label {
-  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.9) 0%, rgb(var(--lavender-rgb) / 0.75) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 6px 16px rgba(101, 52, 201, 0.1);
   color: var(--accent);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
 }
 
 /* 見出しの左に太いオレンジの縦棒（前身サイトと同じ形） */
@@ -491,8 +506,9 @@ table.eff td:last-child {
 }
 
 table.eff tr.hit td {
-  border-color: rgba(111, 87, 166, 0.35);
-  background: var(--lavender);
+  border-color: rgba(101, 52, 201, 0.3);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.7) 0%, rgb(var(--lavender-rgb) / 0.92) 100%);
   color: var(--ink);
 }
 
@@ -574,10 +590,12 @@ table.eff tr td.v3 {
   align-items: center;
   min-height: 32px;
   margin: 0 0 14px;
-  padding: 7px 12px;
-  border: 0;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 999px;
-  background: var(--lavender);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.85) 0%, rgb(var(--lavender-rgb) / 0.85) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
   color: var(--accent);
   font-size: 13px;
   font-weight: 700;
@@ -700,18 +718,29 @@ table.eff tr td.v3 {
   gap: 12px;
 }
 
+/* 淡い色の面は、べた塗りではなく「色つきのガラス」にしています。
+   上から白い光が当たったように見せるため、
+   斜めのグラデーション＋内側の白いハイライト＋下に落ちる影を重ねています。 */
 .way {
-  padding: 18px 20px;
+  --tint: var(--mint-rgb);
+  padding: 20px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-small);
-  background: var(--mint);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.72) 0%, rgb(var(--tint) / 0.88) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 20px rgba(101, 52, 201, 0.08);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
 }
 
 .ways .way:nth-child(2) {
-  background: var(--sky);
+  --tint: var(--sky-rgb);
 }
 
 .ways .way:nth-child(3) {
-  background: var(--butter);
+  --tint: var(--butter-rgb);
 }
 
 .waytitle {
@@ -748,10 +777,17 @@ table.eff tr td.v3 {
 
 .notebox {
   margin: 0 0 18px;
-  padding: 18px 20px;
+  padding: 20px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-left: 4px solid var(--accent);
   border-radius: var(--radius-small);
-  background: var(--rose);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.72) 0%, rgb(var(--rose-rgb) / 0.9) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 20px rgba(101, 52, 201, 0.08);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
 }
 
 .noteboxtitle {
@@ -813,7 +849,9 @@ table.eff tr td.v3 {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: var(--lavender);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.9) 0%, rgb(var(--lavender-rgb) / 0.9) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
   color: var(--accent);
   font-size: 13px;
   font-weight: 700;
@@ -899,7 +937,9 @@ table.eff tr td.v3 {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: var(--lavender);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.9) 0%, rgb(var(--lavender-rgb) / 0.9) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
   color: var(--accent);
   font-size: 12px;
   line-height: 1;
@@ -1072,12 +1112,12 @@ footer p {
   /* ダークでも、淡い色のにじみは残します。面を暗くして文字を明るくします。 */
   :root {
     color-scheme: dark;
-    --mint: #1d3b31;
-    --lavender: #2b2440;
-    --peach: #3d2b26;
-    --rose: #3a2430;
-    --butter: #3a3320;
-    --sky: #1f3242;
+    --mint-rgb: 29 59 49;
+    --lavender-rgb: 47 39 70;
+    --peach-rgb: 61 43 38;
+    --rose-rgb: 58 36 48;
+    --butter-rgb: 58 51 32;
+    --sky-rgb: 31 50 66;
 
     --paper: #141119;
     --surface: rgba(40, 35, 50, 0.66);
@@ -1151,6 +1191,46 @@ footer p {
 
   .btn.sub {
     background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* ライト用に白で書いたガラスの塗りを、暗い地の値に置き換えます。
+     ここを忘れるとカードが白いままになり、明るい文字が読めなくなります。 */
+  .route,
+  .stepgroup,
+  .callout {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .way,
+  .notebox {
+    border-color: rgba(255, 255, 255, 0.1);
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.07) 0%, rgb(var(--tint, var(--lavender-rgb)) / 0.9) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .notebox {
+    --tint: var(--rose-rgb);
+  }
+
+  .hero .label,
+  .route .tag,
+  .stepgroup li::before,
+  .checklist.note li::before {
+    border-color: rgba(255, 255, 255, 0.12);
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.1) 0%, rgb(var(--lavender-rgb) / 0.95) 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    color: var(--accent);
+  }
+
+  table.eff tr.hit td {
+    border-color: rgba(196, 168, 255, 0.4);
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.06) 0%, rgb(var(--lavender-rgb) / 0.95) 100%);
   }
 
   .langbar,
