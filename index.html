@@ -10,6 +10,21 @@
 <meta name="description" content="日本で緊急避妊薬（アフターピル）を手に入れる3つの方法を7言語で案内します。産婦人科、薬局、オンライン診療。72時間の残り時間も確認できます。">
 <meta name="robots" content="index,follow">
 
+<!-- ホーム画面に追加したときに、アプリのように開くための設定。
+     display: standalone なので、そこから開くとアドレスバーが出ません。
+     ブラウザで普通に開いた場合の見え方は変わりません。 -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#6534c9">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- ホーム画面のアイコンの下に出る名前。内容が一目で分からないよう短くしています -->
+<meta name="apple-mobile-web-app-title" content="72h">
+<meta name="application-name" content="72h">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+
 <!-- Webフォント（Google Fonts）
      2026年8月11日、運営者の判断で「外部通信ゼロ」の方針を解除し、
      見た目を優先することにしました。このサイトを開くと Google にも接続が飛びます。
@@ -2966,6 +2981,15 @@ window.addEventListener("hashchange", function(){ setLang(pickLang(), false); })
 setInterval(tick, 30000);
 
 setLang(pickLang(), false);
+
+/* ホーム画面に追加したときにアプリとして動くようにし、
+   電波が弱い場所でも開けるようにします。
+   file:// で直接開いたときは登録できないので、その場合は何もしません。 */
+if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
+}
 </script>
 </body>
 </html>

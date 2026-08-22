@@ -4,3 +4,13 @@
   X-Frame-Options: DENY
   Permissions-Policy: geolocation=(), camera=(), microphone=()
   Cache-Control: public, max-age=600
+
+# ホーム画面に追加するための設定ファイル。
+# nosniff を付けているので、型を明示しないと読まれないことがあります。
+/manifest.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+# アイコンは変わらないので長めに保存させます
+/icons/*
+  Cache-Control: public, max-age=604800
