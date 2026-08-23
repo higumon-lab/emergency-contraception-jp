@@ -7,7 +7,7 @@
    注意: 中身を更新したら CACHE の数字を必ず上げてください。
    上げないと、古い内容が端末に残り続けます。 */
 
-var CACHE = "72h-v1";
+var CACHE = "72h-v2";
 var SHELL = [
   "./",
   "./index.html",
