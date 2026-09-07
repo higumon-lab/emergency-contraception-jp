@@ -992,6 +992,8 @@ table.eff tr td.v3 {
 }
 
 .stepgroup {
+  position: relative;
+  overflow: hidden;
   padding: clamp(22px, 6vw, 30px);
   border: 1px solid rgba(255, 255, 255, 0.95);
   border-radius: var(--radius);
@@ -999,6 +1001,68 @@ table.eff tr td.v3 {
   box-shadow: var(--shadow);
   backdrop-filter: blur(22px) saturate(1.3);
   -webkit-backdrop-filter: blur(22px) saturate(1.3);
+}
+
+/* 手順カードの背景写真。
+   ぼかしたうえで薄く敷き、その上に必ず「かすみ（--scrim）」を重ねます。
+   かすみを外すと文字が写真の濃い部分に乗って読めなくなるので、
+   透明度を上げたいときは opacity ではなく、かすみ側をうすくしてください。
+   写真が読み込めなくても、ただ背景が出ないだけで文章は崩れません。 */
+.stepgroup::before,
+.stepgroup::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.stepgroup::before {
+  /* ぼかしの端がにじんで輪になるので、少し外側まで広げています */
+  inset: -16px;
+  background-image: var(--photo);
+  background-position: var(--photo-pos, center 32%);
+  background-size: cover;
+  opacity: 0.55;
+  filter: blur(2px) saturate(0.9);
+}
+
+.stepgroup::after {
+  inset: 0;
+  background: var(--scrim);
+}
+
+/* 中身を写真より前に出します。これがないと文字が写真の下に隠れます */
+.stepgroup > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 並びは 1 産婦人科 → 2 薬局 → 3 オンライン診療 で固定です
+   （翻訳データ steps の順序。7言語とも同じ順に作られます） */
+.steps .stepgroup:nth-child(1) {
+  --photo: url("images/step-clinic.webp");
+  --photo-pos: 30% 18%;
+}
+
+.steps .stepgroup:nth-child(2) {
+  --photo: url("images/step-pharmacy.webp");
+  --photo-pos: 60% 20%;
+}
+
+.steps .stepgroup:nth-child(3) {
+  --photo: url("images/step-online.webp");
+  --photo-pos: 45% 22%;
+}
+
+/* かすみは右上を薄く、そこから外へ向かって濃くします。
+   写真が右上の角にだけ見え、文章が並ぶ左下は白いままになります。
+   右上の 0.44 が一番うすい所で、そこでも本文は 6.3:1 を保ちます
+   （基準は 4.5:1。数字を下げるときは必ず測り直してください）。 */
+.steps {
+  --scrim: radial-gradient(125% 95% at 100% 0%,
+      rgba(255, 255, 255, 0.44) 0%,
+      rgba(255, 255, 255, 0.78) 42%,
+      rgba(255, 255, 255, 0.93) 72%);
 }
 
 .stepgroup h3 {
@@ -1390,6 +1454,19 @@ footer p {
   .callout {
     border-color: rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* 手順カードの写真。暗い地では、かすみも暗い色にしないと
+     写真の明るい部分に明るい文字が乗ってしまいます */
+  .steps {
+    --scrim: radial-gradient(125% 95% at 100% 0%,
+        rgba(20, 17, 25, 0.58) 0%,
+        rgba(20, 17, 25, 0.86) 42%,
+        rgba(20, 17, 25, 0.95) 72%);
+  }
+
+  .stepgroup::before {
+    opacity: 0.44;
   }
 
   .way,
@@ -1890,7 +1967,7 @@ ja:{
  title:"緊急避妊薬を\n手に入れる方法",
  subtitle:"日本では\n・産婦人科\n・薬局\n・オンライン診療\nの3つの方法で手に入れられます。\n\n休日でも夜遅くても方法はあります。\n諦めないで一緒に確認していきましょう。",
  cdlabel:"避妊せずに性交をした日時を入れてください",
- cdempty:"日時を入れると、72時間まであと何時間か分かります",
+ cdempty:"日時を入れると、72時間まであと何時間あるか分かります",
  cdprefix:"",
  cdh:"時間", cdm:"分",
  cdnote:"早く飲むほど効果が高くなります。あとまわしにせず、いま動いてみてください。",

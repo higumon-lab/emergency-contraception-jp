@@ -7,7 +7,7 @@
    注意: 中身を更新したら CACHE の数字を必ず上げてください。
    上げないと、古い内容が端末に残り続けます。 */
 
-var CACHE = "72h-v5";
+var CACHE = "72h-v6";
 var SHELL = [
   "./",
   "./index.html",
@@ -15,7 +15,10 @@ var SHELL = [
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
-  "./icons/icon-180.png"
+  "./icons/icon-180.png",
+  "./images/step-clinic.webp",
+  "./images/step-pharmacy.webp",
+  "./images/step-online.webp"
 ];
 
 self.addEventListener("install", function (e) {

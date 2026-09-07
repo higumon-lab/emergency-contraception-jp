@@ -14,3 +14,7 @@
 # アイコンは変わらないので長めに保存させます
 /icons/*
   Cache-Control: public, max-age=604800
+
+# 手順カードの背景写真。差し替えないので長めに保存させます
+/images/*
+  Cache-Control: public, max-age=604800
