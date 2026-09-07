@@ -712,6 +712,8 @@ table.eff tr td.v3 {
 }
 
 .route {
+  position: relative;
+  overflow: hidden;
   min-width: 0;
   padding: clamp(22px, 6vw, 30px);
   border: 1px solid rgba(255, 255, 255, 0.95);
@@ -984,99 +986,78 @@ table.eff tr td.v3 {
 
 /* ===== ここから、前身サイトにあった4つの内容を作り直したもの ===== */
 
-/* 購入の流れ: 経路ごとの手順を番号つきで分解して見せる */
-.steps {
-  display: grid;
-  margin-top: 26px;
-  gap: 16px;
-}
-
-.stepgroup {
-  position: relative;
-  overflow: hidden;
-  padding: clamp(22px, 6vw, 30px);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(22px) saturate(1.3);
-  -webkit-backdrop-filter: blur(22px) saturate(1.3);
-}
-
-/* 手順カードの背景写真。
+/* 経路カードの背景写真。
    ぼかしたうえで薄く敷き、その上に必ず「かすみ（--scrim）」を重ねます。
    かすみを外すと文字が写真の濃い部分に乗って読めなくなるので、
    透明度を上げたいときは opacity ではなく、かすみ側をうすくしてください。
    写真が読み込めなくても、ただ背景が出ないだけで文章は崩れません。 */
-.stepgroup::before,
-.stepgroup::after {
+.route::before,
+.route::after {
   content: "";
   position: absolute;
   z-index: 0;
   pointer-events: none;
 }
 
-.stepgroup::before {
+.route::before {
   /* ぼかしの端がにじんで輪になるので、少し外側まで広げています */
   inset: -16px;
   background-image: var(--photo);
   background-position: var(--photo-pos, center 32%);
   background-size: cover;
-  opacity: 0.55;
+  opacity: 0.5;
   filter: blur(2px) saturate(0.9);
 }
 
-.stepgroup::after {
+.route::after {
   inset: 0;
   background: var(--scrim);
 }
 
 /* 中身を写真より前に出します。これがないと文字が写真の下に隠れます */
-.stepgroup > * {
+.route > * {
   position: relative;
   z-index: 1;
 }
 
-/* 並びは 1 産婦人科 → 2 薬局 → 3 オンライン診療 で固定です
-   （翻訳データ steps の順序。7言語とも同じ順に作られます） */
-.steps .stepgroup:nth-child(1) {
+/* 並びは 01 産婦人科 → 02 薬局 → 03 オンライン診療 で固定です */
+.routes .route:nth-child(1) {
   --photo: url("images/step-clinic.webp");
   --photo-pos: 30% 18%;
 }
 
-.steps .stepgroup:nth-child(2) {
+.routes .route:nth-child(2) {
   --photo: url("images/step-pharmacy.webp");
   --photo-pos: 60% 20%;
 }
 
-.steps .stepgroup:nth-child(3) {
+.routes .route:nth-child(3) {
   --photo: url("images/step-online.webp");
   --photo-pos: 45% 22%;
 }
 
 /* かすみは右上を薄く、そこから外へ向かって濃くします。
    写真が右上の角にだけ見え、文章が並ぶ左下は白いままになります。
-   右上の 0.44 が一番うすい所で、そこでも本文は 6.3:1 を保ちます
-   （基準は 4.5:1。数字を下げるときは必ず測り直してください）。 */
-.steps {
+   右上の 0.62 が一番うすい所です。そこでも本文は 9.4:1、
+   紫のリンク色（--accent）は 4.98:1 を保ちます。
+   一番きびしいのは本文ではなく紫の方なので、数字を下げるときは
+   必ず --accent の色で測り直してください（基準は 4.5:1）。 */
+.routes {
   --scrim: radial-gradient(125% 95% at 100% 0%,
-      rgba(255, 255, 255, 0.44) 0%,
-      rgba(255, 255, 255, 0.78) 42%,
-      rgba(255, 255, 255, 0.93) 72%);
+      rgba(255, 255, 255, 0.62) 0%,
+      rgba(255, 255, 255, 0.82) 42%,
+      rgba(255, 255, 255, 0.94) 72%);
 }
 
-.stepgroup h3 {
-  margin-bottom: 16px;
-}
-
-.stepgroup ol {
+/* 経路カードの中の「やること」。番号つきで、縦線でつなぎます */
+.stepsin {
   margin: 0;
   padding: 0;
   list-style: none;
   counter-reset: step;
 }
 
-.stepgroup li {
+.stepsin li {
   position: relative;
   padding: 0 0 18px 40px;
   color: var(--ink-2);
@@ -1085,8 +1066,7 @@ table.eff tr td.v3 {
   counter-increment: step;
 }
 
-/* 手順どうしを縦線でつなぐ（最後の1つには引かない） */
-.stepgroup li::before {
+.stepsin li::before {
   content: counter(step);
   position: absolute;
   top: 0;
@@ -1106,7 +1086,8 @@ table.eff tr td.v3 {
   font-variant-numeric: tabular-nums;
 }
 
-.stepgroup li::after {
+/* 手順どうしを縦線でつなぐ（最後の1つには引かない） */
+.stepsin li::after {
   content: "";
   position: absolute;
   top: 30px;
@@ -1116,12 +1097,68 @@ table.eff tr td.v3 {
   background: var(--line);
 }
 
-.stepgroup li:last-child {
+.stepsin li:last-child {
   padding-bottom: 0;
 }
 
-.stepgroup li:last-child::after {
+.stepsin li:last-child::after {
   display: none;
+}
+
+/* 「もっと詳しく」。長い説明はここに畳んでいます。
+   中身は最初から HTML にあるので、閉じていても読み上げや
+   ページ内検索から見つけられます。 */
+.more {
+  margin-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.more > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0 10px;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  list-style: none;
+  /* 指で押せる大きさ（48px以上）を確保します */
+  min-height: 48px;
+}
+
+.more > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* 開くと下向きに回る三角 */
+.more > summary::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid currentColor;
+  transition: transform 0.15s ease;
+}
+
+.more[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.morebody {
+  padding-top: 6px;
+}
+
+.morebody > p {
+  margin: 0 0 10px;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.morebody > p:last-child {
+  margin-bottom: 0;
 }
 
 /* 服用前チェック: 「してはいけない」と「相談して」の2群 */
@@ -1450,23 +1487,22 @@ footer p {
   /* ライト用に白で書いたガラスの塗りを、暗い地の値に置き換えます。
      ここを忘れるとカードが白いままになり、明るい文字が読めなくなります。 */
   .route,
-  .stepgroup,
   .callout {
     border-color: rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.06);
   }
 
-  /* 手順カードの写真。暗い地では、かすみも暗い色にしないと
+  /* 経路カードの写真。暗い地では、かすみも暗い色にしないと
      写真の明るい部分に明るい文字が乗ってしまいます */
-  .steps {
+  .routes {
     --scrim: radial-gradient(125% 95% at 100% 0%,
-        rgba(20, 17, 25, 0.58) 0%,
-        rgba(20, 17, 25, 0.86) 42%,
-        rgba(20, 17, 25, 0.95) 72%);
+        rgba(20, 17, 25, 0.66) 0%,
+        rgba(20, 17, 25, 0.88) 42%,
+        rgba(20, 17, 25, 0.96) 72%);
   }
 
-  .stepgroup::before {
-    opacity: 0.44;
+  .route::before {
+    opacity: 0.42;
   }
 
   .way,
@@ -1486,7 +1522,7 @@ footer p {
 
   .hero .label,
   .route .tag,
-  .stepgroup li::before,
+  .stepsin li::before,
   .checklist.note li::before {
     border-color: rgba(255, 255, 255, 0.12);
     background:
@@ -1533,7 +1569,7 @@ footer p {
 
   .label,
   .route .tag,
-  .stepgroup li::before {
+  .stepsin li::before {
     background: var(--lavender);
     color: var(--accent);
   }
@@ -1751,10 +1787,17 @@ footer p {
   </div>
 </section>
 
-<!-- ===== 3つの経路 =====
-     表示順: 1 産婦人科 → 2 薬局 → 3 オンライン診療
+<!-- ===== 手に入れる方法（経路＋手順をまとめたもの） =====
+     表示順: 01 産婦人科 → 02 薬局 → 03 オンライン診療
      翻訳キーは r1=薬局 / r2=オンライン診療 / r3=産婦人科 のままです。
-     順番を変えたいときは、下の3つの <div class="route"> ブロックごと入れ替えてください。 -->
+     「やること」の中身は JavaScript が翻訳データ steps から作ります。
+     steps の並びもこの順（0=産婦人科 / 1=薬局 / 2=オンライン診療）です。
+     順番を変えるときは、下の <div class="route"> と steps の両方を
+     そろえて入れ替えてください。
+
+     長い補足は <details class="more"> に畳んでいます。
+     中身は最初から HTML にあるので、閉じていても読み上げソフトや
+     ページ内検索から見つけられます。 -->
 <section class="band tint">
   <div class="inner">
     <h2 id="t-routestitle"></h2>
@@ -1767,17 +1810,26 @@ footer p {
         <span class="no">01</span>
         <div class="hd"><h3 id="t-r3n"></h3><span class="price" id="t-r3p"></span></div>
         <p id="t-r3d"></p>
-        <p id="t-r3d2"></p>
-        <div class="way">
-          <p class="waytitle" id="t-r3meritt"></p>
-          <p id="t-r3meritd1"></p>
-          <p id="t-r3meritd2"></p>
-          <p id="t-r3meritd3"></p>
-        </div>
+
+        <p class="blocktitle js-todo"></p>
+        <ol class="stepsin" id="st1"></ol>
+
         <p class="blocktitle" id="t-r3recot"></p>
         <p id="t-r3recod"></p>
         <!-- 中身は JavaScript が [見出し, 本文] の配列から作ります -->
         <div class="ways" id="r3reco"></div>
+
+        <details class="more">
+          <summary><span class="js-more"></span></summary>
+          <div class="morebody">
+            <p id="t-r3d2"></p>
+            <p class="waytitle" id="t-r3meritt"></p>
+            <p id="t-r3meritd1"></p>
+            <p id="t-r3meritd2"></p>
+            <p id="t-r3meritd3"></p>
+          </div>
+        </details>
+
         <a class="btn" id="t-r3b" rel="noopener noreferrer" target="_blank"
            href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
       </div>
@@ -1786,13 +1838,19 @@ footer p {
         <span class="no">02</span>
         <div class="hd"><h3 id="t-r1n"></h3><span class="price" id="t-r1p"></span></div>
         <p id="t-r1d"></p>
-        <p class="blocktitle" id="t-r1pointst"></p>
-        <div class="ways" id="r1points"></div>
-        <div class="notebox">
-          <p class="noteboxtitle" id="t-r1prept"></p>
-          <p id="t-r1prepd1"></p>
-          <p id="t-r1prepd2"></p>
-        </div>
+
+        <p class="blocktitle js-todo"></p>
+        <ol class="stepsin" id="st2"></ol>
+
+        <details class="more">
+          <summary><span class="js-more"></span></summary>
+          <div class="morebody">
+            <p class="waytitle" id="t-r1prept"></p>
+            <p id="t-r1prepd1"></p>
+            <p id="t-r1prepd2"></p>
+          </div>
+        </details>
+
         <a class="btn sub" id="t-r1b" rel="noopener noreferrer" target="_blank"
            href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00005.html"></a>
       </div>
@@ -1801,35 +1859,31 @@ footer p {
         <span class="no">03</span>
         <div class="hd"><h3 id="t-r2n"></h3><span class="price" id="t-r2p"></span></div>
         <p id="t-r2d"></p>
-        <p id="t-r2ways"></p>
-        <div class="ways">
-          <div class="way">
-            <p class="waytitle" id="t-r2w1t"></p>
-            <p id="t-r2w1d"></p>
-          </div>
-          <div class="way">
-            <p class="waytitle" id="t-r2w2t"></p>
-            <p id="t-r2w2d"></p>
-          </div>
-        </div>
+
+        <p class="blocktitle js-todo"></p>
+        <ol class="stepsin" id="st3"></ol>
+
+        <!-- 郵送の注意は安全に関わるので、畳まず出したままにしています -->
         <div class="notebox">
           <p class="noteboxtitle" id="t-r2cautiont"></p>
           <p id="t-r2cautiond"></p>
         </div>
+
+        <details class="more">
+          <summary><span class="js-more"></span></summary>
+          <div class="morebody">
+            <p id="t-r2ways"></p>
+            <p class="waytitle" id="t-r2w1t"></p>
+            <p id="t-r2w1d"></p>
+            <p class="waytitle" id="t-r2w2t"></p>
+            <p id="t-r2w2d"></p>
+          </div>
+        </details>
+
         <a class="btn sub" id="t-r2b" rel="noopener noreferrer" target="_blank"
            href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00004.html"></a>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ===== 購入の流れ =====
-     3経路それぞれの手順。中身は JavaScript が生成します（翻訳キー steps）。 -->
-<section class="band">
-  <div class="inner">
-    <h2 id="t-stepstitle"></h2>
-    <p class="lead" id="t-stepshint"></p>
-    <div class="steps" id="stepslist"></div>
   </div>
 </section>
 
@@ -1956,6 +2010,8 @@ var LANGS = [
 var T = {
 
 ja:{
+ todo:"やること",
+ more:"もっと詳しく",
  cdcap:"72時間まで、あと",
  acheckt:"飲んだ後の確認",
  acheck1:"避妊に成功していると、服用後3週間以内に消退出血が起こることがほとんどです。消退出血とは、緊急避妊薬によって高まった女性ホルモンが減少することで子宮内膜が剥がれ落ち、生理と同じように出血することです。",
@@ -2004,12 +2060,6 @@ ja:{
  routeshint:"どれを選んでもかまいません。あなたが行きやすいところで大丈夫です。",
  r1n:"薬局で買う", r1p:"約6,930〜7,480円",
  r1d:"2026年2月から、一部の薬局で医師の処方箋なしに緊急避妊薬を買えるようになりました。病院に行かずに一番早く手に入る方法ですが、いくつか大切なルールがあります。",
- r1pointst:"【薬局で買うための3つのポイント】",
- r1points:[
-  ["① 取り扱いのある薬局を事前に探すこと","すべての薬局に置いてあるわけではありません。厚生労働省のホームページに載っている「販売可能な薬局」を探し、行く前に必ず電話で「在庫があるか」「今から行って対応できる薬剤師がいるか」を確かめてください。"],
-  ["② 本人が行くこと（代理はNG）","必ず「お薬を飲むご本人」が薬局へ行ってください。パートナーや親など、代理の人が買うことはできません。"],
-  ["③ 薬剤師の前で飲むこと（面前服用）","買ったお薬を家に持ち帰ることはできません。安全に確実にできるだけ早く服用してもらうために、薬局内のプライバシーが守られた場所で、薬剤師の目の前でお薬を飲みます。"]
- ],
  r1prept:"【行く前の準備】",
  r1prepd1:"マイナンバーカードや健康保険証などの「身分証明書」の提示を求められる場合があります。必須ではないですが、事前に確認しておくと安心です。",
  r1prepd2:"購入の際には薬剤師から「性行為があった日時」「最後の生理がいつだったか」「アレルギー歴」「服用中の薬」など聞かれます。メモをしておくとスムーズです。",
@@ -2043,8 +2093,6 @@ ja:{
   ["同意のない性行為や、性暴力の被害にあった方","無理やりされたり、断れなかったりした場合は、決してあなたのせいではありません。各都道府県にある「性犯罪・性暴力被害者のためのワンストップ支援センター（全国共通無料ダイヤル：#8891）」に電話すると、緊急避妊薬の費用が無料（公費負担）になる制度や、病院への付き添いなどのサポートを受けられます。一人で抱え込まず、まずは相談してください。"]
  ],
  r3b:"産婦人科をさがす（厚生労働省）",
- stepstitle:"手に入れるまでの流れ",
- stepshint:"それぞれの方法で、実際にすることを順番に並べました。",
  steps:[
   ["産婦人科を受診する",[
    "自宅や学校、職場などから近く、できるだけ早く受診できる産婦人科を探しましょう。",
@@ -2134,6 +2182,8 @@ ja:{
 },
 
 en:{
+ todo:"What to do",
+ more:"More detail",
  whattitle:"What kind of medicine is it?",
  whatbody1:"The morning-after pill (emergency contraception) is medicine you take after sex where contraception failed, as an emergency measure, to lower the chance of pregnancy. Mainly through the action of a progestogen hormone, it can delay ovulation and make it harder for a fertilised egg to implant.",
  howtitle:"How does it work?",
@@ -2159,8 +2209,6 @@ en:{
  acheck1:"When the medicine has worked, withdrawal bleeding almost always occurs within three weeks of taking it. Withdrawal bleeding is when the female hormones raised by the emergency contraceptive fall again, the lining of the womb comes away, and you bleed just as you would in a period.",
  acheck2:"However, unexpected bleeding can also occur as a side effect after taking it. To be sure that pregnancy has been prevented, take a pregnancy test three weeks after taking the medicine, or see a clinic.",
  acheck3:"Even if the pregnancy test is negative, if your period still does not come after that, please be sure to see a clinic.",
- stepstitle:"Step by step",
- stepshint:"Here is what actually happens with each option.",
  steps:[
   ["Visit a clinic",[
    "Look for a clinic close to your home, school or workplace that can see you as soon as possible.",
@@ -2246,12 +2294,6 @@ en:{
   ["You are under 16 (at junior high, for example)","Online services and pharmacies may decline because of your age and suggest a clinic. If there is a clinic near you, going to ask directly can be faster. It is paid privately, without your health insurance card, and if you would rather your family did not know, you can talk about that too."],
   ["You did not consent, or you experienced sexual violence","If you were forced, or could not say no, it is never your fault. Every prefecture has a one-stop support centre for victims of sexual crime and violence (national freephone #8891). They can tell you about public funding that makes the medicine free, and can go with you to hospital. Please do not carry this alone."]
  ],
- r1pointst:"Three things to know",
- r1points:[
-  ["1. Find a pharmacy that stocks it, in advance","Not every pharmacy carries it. Look for a pharmacy on the health ministry list, and before you go, call to check that it is in stock and that a pharmacist is there to help you now."],
-  ["2. Go yourself (nobody else can)","The person who will take the medicine has to go. A partner, a parent or anyone else cannot buy it for you."],
-  ["3. Take it in front of the pharmacist","You cannot take the medicine home. So that it is taken safely and as soon as possible, you take it in a private area of the pharmacy, in front of the pharmacist."]
- ],
  r1prept:"Before you go",
  r1prepd1:"You may be asked to show ID such as a My Number card or a health insurance card. It is not required, but it is reassuring to check beforehand.",
  r1prepd2:"The pharmacist will ask things like when you had sex, when your last period was, any allergies, and any medicines you take. A quick note to yourself makes it go smoothly.",
@@ -2309,6 +2351,8 @@ en:{
 },
 
 ko:{
+ todo:"할 일",
+ more:"자세히 보기",
  whattitle:"사후피임약은 어떤 약인가요?",
  whatbody1:"사후피임약(응급피임약)은 피임에 실패한 성관계 후, 응급 수단으로 복용해 임신 가능성을 낮추는 약입니다. 주로 황체호르몬의 작용으로 배란을 늦추거나, 수정란의 착상을 막는 효과를 기대할 수 있습니다.",
  howtitle:"어떻게 작용하나요?",
@@ -2334,8 +2378,6 @@ ko:{
  acheck1:"피임에 성공한 경우, 복용 후 3주 이내에 소퇴출혈이 일어나는 것이 대부분입니다. 소퇴출혈이란 응급피임약으로 높아졌던 여성호르몬이 줄어들면서 자궁내막이 떨어져 나와, 생리와 마찬가지로 출혈하는 것을 말합니다.",
  acheck2:"다만 복용 후에는 부작용으로 부정출혈이 일어날 가능성도 있습니다. 확실히 피임이 되었는지 확인하려면, 복용으로부터 3주 뒤에 임신테스트기로 검사하거나 산부인과를 방문하세요.",
  acheck3:"임신테스트기에서 음성이 나왔더라도 그 뒤로 생리가 오지 않는다면, 반드시 산부인과를 방문해 주세요.",
- stepstitle:"손에 넣기까지의 흐름",
- stepshint:"각 방법마다 실제로 하게 되는 일을 순서대로 적었습니다.",
  steps:[
   ["산부인과 진료받기",[
    "집이나 학교, 직장 등에서 가깝고 되도록 빨리 진료받을 수 있는 산부인과를 찾아봅시다.",
@@ -2421,12 +2463,6 @@ ko:{
   ["16세 미만(중학생 등)인 분","온라인 진료나 약국에서는 나이를 이유로 대응을 거절당하고 산부인과 진료를 권유받는 경우가 있습니다. 집 근처에 진료받을 수 있는 산부인과가 있다면 직접 상담하러 가는 편이 빠른 경우도 있습니다. 건강보험증을 쓰지 않는 자비 진료이지만, 가족에게 알리고 싶지 않은 등의 바람이 있다면 그것도 함께 상담해 보세요."],
   ["동의 없는 성관계나 성폭력 피해를 입은 분","강제로 당했거나 거절할 수 없었던 경우는 결코 당신의 잘못이 아닙니다. 각 도도부현에 있는 성범죄·성폭력 피해자를 위한 원스톱 지원센터(전국 공통 무료 다이얼 #8891)에 전화하면, 응급피임약 비용이 무료(공적 부담)가 되는 제도나 병원 동행 등의 지원을 받을 수 있습니다. 혼자 끌어안지 말고 우선 상담해 주세요."]
  ],
- r1pointst:"약국에서 사기 위한 세 가지 포인트",
- r1points:[
-  ["1. 취급하는 약국을 미리 찾아 둘 것","모든 약국에 있는 것은 아닙니다. 후생노동성 홈페이지에 실린 판매 가능한 약국을 찾고, 가기 전에 반드시 전화로 재고가 있는지, 지금 가면 대응할 수 있는 약사가 있는지 확인하세요."],
-  ["2. 본인이 갈 것(대리 불가)","반드시 약을 복용할 본인이 약국에 가세요. 파트너나 부모 등 대리인이 살 수는 없습니다."],
-  ["3. 약사 앞에서 복용할 것(면전 복용)","산 약을 집으로 가져갈 수는 없습니다. 안전하고 확실하게 되도록 빨리 복용하도록, 약국 안의 프라이버시가 지켜지는 장소에서 약사가 보는 앞에서 약을 복용합니다."]
- ],
  r1prept:"가기 전 준비",
  r1prepd1:"마이넘버카드나 건강보험증 등 신분증 제시를 요청받는 경우가 있습니다. 필수는 아니지만 미리 확인해 두면 안심입니다.",
  r1prepd2:"구입 시 약사에게서 성관계가 있었던 일시, 마지막 생리가 언제였는지, 알레르기 이력, 복용 중인 약 등을 질문받습니다. 메모해 두면 수월합니다.",
@@ -2484,6 +2520,8 @@ ko:{
 },
 
 zh:{
+ todo:"具体步骤",
+ more:"了解更多",
  whattitle:"紧急避孕药是什么样的药？",
  whatbody1:"紧急避孕药是在避孕失败的性行为之后，作为紧急手段服用、以降低怀孕概率的药物。主要通过黄体激素的作用，可望延迟排卵，或阻止受精卵着床。",
  howtitle:"它是怎么起作用的？",
@@ -2509,8 +2547,6 @@ zh:{
  acheck1:"如果避孕成功，服药后三周以内几乎都会出现撤退性出血。撤退性出血是指因紧急避孕药而升高的女性激素下降，子宫内膜随之脱落，像月经一样出血。",
  acheck2:"不过，服药后也可能因副作用而出现不规则出血。为了确认是否确实避孕成功，请在服药三周后用验孕棒检查，或到妇产科就诊。",
  acheck3:"即使验孕棒显示阴性，若之后月经仍未到来，请务必到妇产科就诊。",
- stepstitle:"获取的流程",
- stepshint:"按顺序列出每种方法实际要做的事。",
  steps:[
   ["前往妇产科就诊",[
    "找一家离家、学校或工作地点近，并且能尽快就诊的妇产科。",
@@ -2596,12 +2632,6 @@ zh:{
   ["未满16岁（如初中生）的人","在线问诊或药店可能以年龄为由拒绝对应，并建议去妇产科就诊。如果家附近有能就诊的妇产科，直接去咨询有时更快。这是不使用健康保险证的自费诊疗，如果有不想让家人知道等的想法，也可以一并商量。"],
   ["遭受非自愿性行为或性暴力的人","被强迫、或无法拒绝，这绝不是你的错。拨打各都道府县设有的性犯罪·性暴力受害者一站式支援中心（全国统一免费电话 #8891），可以了解让紧急避孕药费用免费（公费负担）的制度，也能获得陪同就医等支持。请不要独自承受，先联系咨询。"]
  ],
- r1pointst:"在药店购买的三个要点",
- r1points:[
-  ["1. 事先找好有售的药店","并非所有药店都有。请查找厚生劳动省网站上列出的可销售药店，出发前务必打电话确认是否有库存、现在过去是否有能对应的药剂师。"],
-  ["2. 本人前往（不可代办）","请务必由要服药的本人前往药店。伴侣或父母等他人不能代买。"],
-  ["3. 在药剂师面前服用（面前服用）","买到的药不能带回家。为了安全、确实、尽快服用，会在药店内保护隐私的地方，在药剂师注视下服药。"]
- ],
  r1prept:"出发前的准备",
  r1prepd1:"有时会被要求出示个人编号卡或健康保险证等身份证明。虽非必须，但事先确认会更安心。",
  r1prepd2:"购买时药剂师会询问性行为的日期时间、最后一次月经是什么时候、过敏史、正在服用的药物等。事先做个备忘会更顺利。",
@@ -2659,6 +2689,8 @@ zh:{
 },
 
 vi:{
+ todo:"Các bước cần làm",
+ more:"Xem thêm chi tiết",
  whattitle:"Thuốc này là thuốc gì?",
  whatbody1:"Thuốc tránh thai khẩn cấp là thuốc uống sau lần quan hệ mà việc tránh thai thất bại, như một biện pháp khẩn cấp để giảm khả năng mang thai. Chủ yếu nhờ tác dụng của hormone progestogen, thuốc có thể làm chậm rụng trứng và khiến trứng đã thụ tinh khó làm tổ hơn.",
  howtitle:"Thuốc hoạt động thế nào?",
@@ -2684,8 +2716,6 @@ vi:{
  acheck1:"Khi thuốc đã có tác dụng, hầu như trong vòng ba tuần sau khi uống sẽ có hiện tượng ra máu do ngừng thuốc. Đó là khi nội tiết tố nữ đã tăng lên vì thuốc tránh thai khẩn cấp giảm xuống, lớp niêm mạc tử cung bong ra và bạn ra máu giống như kỳ kinh.",
  acheck2:"Tuy nhiên, sau khi uống cũng có thể ra máu bất thường do tác dụng phụ. Để chắc chắn đã tránh thai thành công, hãy thử que thử thai sau khi uống ba tuần, hoặc đi khám tại phòng khám sản phụ khoa.",
  acheck3:"Ngay cả khi que thử thai cho kết quả âm tính, nếu sau đó kinh nguyệt vẫn không đến, nhất định hãy đi khám sản phụ khoa.",
- stepstitle:"Các bước thực hiện",
- stepshint:"Đây là những việc bạn thực sự sẽ làm với từng cách.",
  steps:[
   ["Đến khám tại phòng khám sản phụ khoa",[
    "Hãy tìm một phòng khám gần nhà, trường học hoặc nơi làm việc, và có thể khám cho bạn sớm nhất có thể.",
@@ -2771,12 +2801,6 @@ vi:{
   ["Người dưới 16 tuổi (ví dụ học sinh cấp hai)","Khám trực tuyến hoặc nhà thuốc có thể từ chối vì lý do tuổi và khuyên bạn đến phòng khám sản phụ khoa. Nếu gần nhà có phòng khám, đến hỏi trực tiếp đôi khi nhanh hơn. Đây là khám tự chi trả, không dùng thẻ bảo hiểm y tế, và nếu bạn không muốn gia đình biết thì cũng có thể trao đổi luôn điều đó."],
   ["Người bị quan hệ không có sự đồng thuận hoặc bị bạo lực tình dục","Nếu bạn bị ép buộc, hoặc không thể từ chối, đó hoàn toàn không phải lỗi của bạn. Mỗi tỉnh thành đều có Trung tâm hỗ trợ một cửa dành cho nạn nhân của tội phạm tình dục và bạo lực tình dục (số miễn phí toàn quốc #8891). Gọi tới đó, bạn sẽ được biết về chế độ chi trả bằng ngân sách công giúp miễn phí tiền thuốc, và được hỗ trợ như đi cùng đến bệnh viện. Xin đừng ôm một mình, hãy liên hệ trước đã."]
  ],
- r1pointst:"Ba điểm quan trọng khi mua ở nhà thuốc",
- r1points:[
-  ["1. Tìm trước nhà thuốc có bán","Không phải nhà thuốc nào cũng có. Hãy tìm nhà thuốc trong danh sách trên trang của Bộ Y tế, và trước khi đi nhất định gọi điện xác nhận còn thuốc không, và bây giờ đến thì có dược sĩ tiếp nhận không."],
-  ["2. Chính bạn phải đi (không nhờ người khác)","Nhất định người sẽ uống thuốc phải đến nhà thuốc. Bạn đời, bố mẹ hay người khác không thể mua thay."],
-  ["3. Uống trước mặt dược sĩ","Bạn không thể mang thuốc đã mua về nhà. Để việc uống thuốc diễn ra an toàn, chắc chắn và sớm nhất có thể, bạn sẽ uống ở nơi kín đáo trong nhà thuốc, ngay trước mặt dược sĩ."]
- ],
  r1prept:"Chuẩn bị trước khi đi",
  r1prepd1:"Bạn có thể được yêu cầu xuất trình giấy tờ tùy thân như thẻ My Number hoặc thẻ bảo hiểm y tế. Không bắt buộc, nhưng xác nhận trước sẽ yên tâm hơn.",
  r1prepd2:"Khi mua, dược sĩ sẽ hỏi những điều như thời điểm quan hệ, kỳ kinh cuối là khi nào, tiền sử dị ứng, thuốc đang dùng. Ghi sẵn ra giấy sẽ nhanh hơn.",
@@ -2834,6 +2858,8 @@ vi:{
 },
 
 ne:{
+ todo:"के गर्ने",
+ more:"थप विवरण",
  whattitle:"यो कस्तो औषधि हो?",
  whatbody1:"आपत्कालीन गर्भनिरोधक औषधि भनेको गर्भनिरोध असफल भएको यौन सम्पर्कपछि, आपत्कालीन उपायका रूपमा खाएर गर्भ रहने सम्भावना घटाउने औषधि हो। मुख्यतया प्रोजेस्टोजेन हर्मोनको कामले अण्डा निस्कने प्रक्रिया ढिलो बनाउन र निषेचित अण्डा पाठेघरमा बस्न गाह्रो बनाउन सक्छ।",
  howtitle:"यसले कसरी काम गर्छ?",
@@ -2859,8 +2885,6 @@ ne:{
  acheck1:"गर्भनिरोध सफल भएको अवस्थामा, औषधि खाएको तीन हप्ताभित्र प्रायः विदड्रल ब्लिडिङ हुन्छ। विदड्रल ब्लिडिङ भनेको आपत्कालीन गर्भनिरोधक औषधिले बढाएको महिला हर्मोन घट्दा पाठेघरको भित्री तह खुस्किएर, महिनावारीजस्तै रक्तस्राव हुनु हो।",
  acheck2:"तर औषधि खाएपछि साइड इफेक्टका कारण अनियमित रक्तस्राव पनि हुन सक्छ। गर्भनिरोध पक्का भयो कि भएन भनी निश्चित गर्न, औषधि खाएको तीन हप्तापछि गर्भ परीक्षण किटले जाँच्नुहोस् वा क्लिनिकमा जानुहोस्।",
  acheck3:"गर्भ परीक्षण किटमा नेगेटिभ आए पनि त्यसपछि महिनावारी नआएमा, अनिवार्य रूपमा क्लिनिकमा जानुहोस्।",
- stepstitle:"पाउनेसम्मको प्रक्रिया",
- stepshint:"हरेक उपायमा वास्तवमा के गर्नुपर्छ, क्रमैसँग राखिएको छ।",
  steps:[
   ["प्रसूति एवं स्त्री रोग क्लिनिकमा जाने",[
    "घर, विद्यालय वा कार्यस्थलबाट नजिक भएको, र सकेसम्म चाँडो जाँच गराउन मिल्ने क्लिनिक खोज्नुहोस्।",
@@ -2946,12 +2970,6 @@ ne:{
   ["१६ वर्षमुनिका (जस्तै माध्यमिक तहका विद्यार्थी)","अनलाइन परामर्श वा फार्मेसीले उमेरका कारण सेवा दिन नमानी क्लिनिक जान सुझाव दिन सक्छन्। घर नजिकै क्लिनिक भए सिधै गएर सोध्दा छिटो हुन सक्छ। स्वास्थ्य बिमा कार्ड नचल्ने निजी खर्चको जाँच हो, तर परिवारलाई थाहा नहोस् भन्ने चाहना भए त्यो पनि सँगै भन्न सकिन्छ।"],
   ["सहमतिबिनाको यौन सम्पर्क वा यौन हिंसा भोगेका","जबरजस्ती भएको वा अस्वीकार गर्न नसकेको अवस्था कहिल्यै तपाईंको गल्ती होइन। हरेक प्रान्तमा रहेको यौन अपराध तथा यौन हिंसा पीडितका लागि वन-स्टप सहयोग केन्द्र (देशभर निःशुल्क नम्बर #8891) मा फोन गर्दा, आपत्कालीन गर्भनिरोधक औषधिको खर्च निःशुल्क (सरकारी खर्च) हुने व्यवस्था र अस्पतालसम्म साथ जाने जस्ता सहयोग पाइन्छ। एक्लै नबोकी पहिले सम्पर्क गर्नुहोस्।"]
  ],
- r1pointst:"फार्मेसीबाट किन्नका तीन कुरा",
- r1points:[
-  ["१. राख्ने फार्मेसी पहिल्यै खोज्ने","सबै फार्मेसीमा हुँदैन। स्वास्थ्य मन्त्रालयको वेबसाइटमा भएको बिक्री गर्न मिल्ने फार्मेसीको सूचीबाट खोज्नुहोस्, र जानुअघि अनिवार्य फोन गरेर औषधि छ कि छैन, अहिले गए सेवा दिन सक्ने फार्मासिस्ट छन् कि भनी पक्का गर्नुहोस्।"],
-  ["२. आफैं जाने (अरूले मिल्दैन)","अनिवार्य रूपमा औषधि खाने व्यक्ति आफैं फार्मेसी जानुहोस्। साथी, आमाबुबा वा अरू कसैले किनिदिन मिल्दैन।"],
-  ["३. फार्मासिस्टको अगाडि खाने","किनेको औषधि घर लैजान मिल्दैन। सुरक्षित र पक्का रूपमा सकेसम्म चाँडो खुवाउन, फार्मेसीभित्र गोपनीयता हुने ठाउँमा फार्मासिस्टकै अगाडि औषधि खुवाइन्छ।"]
- ],
  r1prept:"जानुअघिको तयारी",
  r1prepd1:"माइ नम्बर कार्ड वा स्वास्थ्य बिमा कार्ड जस्ता परिचयपत्र देखाउन भनिन सक्छ। अनिवार्य होइन, तर पहिल्यै पक्का गर्दा ढुक्क हुन्छ।",
  r1prepd2:"किन्दा फार्मासिस्टले यौन सम्पर्क भएको मिति र समय, अन्तिम महिनावारी कहिले भएको, एलर्जीको इतिहास, खाइरहेको औषधि आदि सोध्छन्। टिपोट गरेर लगे सहज हुन्छ।",
@@ -3009,6 +3027,8 @@ ne:{
 },
 
 ms:{
+ todo:"Apa yang perlu dibuat",
+ more:"Butiran lanjut",
  whattitle:"Ubat ini ubat apa?",
  whatbody1:"Pil kontraseptif kecemasan ialah ubat yang ditelan selepas hubungan seks yang perancangannya gagal, sebagai langkah kecemasan untuk menurunkan kemungkinan hamil. Terutamanya melalui tindakan hormon progestogen, ia boleh melambatkan ovulasi dan menyukarkan telur yang telah disenyawakan daripada melekat pada rahim.",
  howtitle:"Bagaimana ia berfungsi?",
@@ -3034,8 +3054,6 @@ ms:{
  acheck1:"Apabila ubat berkesan, pendarahan tarik diri hampir selalu berlaku dalam tempoh tiga minggu selepas menelannya. Pendarahan tarik diri ialah apabila hormon wanita yang meningkat akibat kontraseptif kecemasan menurun semula, lapisan rahim terlerai, dan berlaku pendarahan seperti haid.",
  acheck2:"Namun, selepas menelannya juga boleh berlaku pendarahan luar jangka akibat kesan sampingan. Untuk memastikan kehamilan benar-benar dicegah, buat ujian kehamilan tiga minggu selepas menelannya, atau berjumpa doktor sakit puan.",
  acheck3:"Walaupun ujian kehamilan menunjukkan keputusan negatif, jika haid anda masih tidak datang selepas itu, sila pastikan anda berjumpa doktor sakit puan.",
- stepstitle:"Langkah demi langkah",
- stepshint:"Berikut apa yang sebenarnya berlaku bagi setiap cara.",
  steps:[
   ["Ke klinik sakit puan",[
    "Cari klinik yang dekat dengan rumah, sekolah atau tempat kerja anda, dan yang boleh menerima anda secepat mungkin.",
@@ -3120,12 +3138,6 @@ ms:{
   ["Sudah melebihi 72 jam selepas hubungan seks","Ada klinik sakit puan yang menyediakan ubat yang masih boleh berkesan sehingga 120 jam (5 hari), bukan ubat biasa di Jepun yang perlu digunakan dalam 72 jam."],
   ["Berumur bawah 16 tahun (contohnya pelajar sekolah menengah rendah)","Rundingan dalam talian atau farmasi mungkin menolak atas sebab umur dan mencadangkan anda ke klinik sakit puan. Jika ada klinik berdekatan rumah, terus pergi bertanya kadangkala lebih cepat. Ia rawatan bayaran sendiri tanpa kad insurans kesihatan, dan jika anda tidak mahu keluarga tahu, perkara itu pun boleh dibincangkan."],
   ["Mengalami hubungan seks tanpa persetujuan atau keganasan seksual","Jika anda dipaksa, atau tidak mampu menolak, itu sama sekali bukan salah anda. Setiap wilayah mempunyai Pusat Sokongan Setempat untuk mangsa jenayah seksual dan keganasan seksual (talian bebas tol seluruh negara #8891). Dengan menelefon ke sana, anda boleh mengetahui tentang sistem yang menjadikan kos ubat percuma (ditanggung dana awam), serta bantuan seperti ditemani ke hospital. Tolong jangan pikul seorang diri, hubungi mereka dahulu."]
- ],
- r1pointst:"Tiga perkara penting untuk membeli di farmasi",
- r1points:[
-  ["1. Cari farmasi yang menjualnya lebih awal","Bukan semua farmasi menyimpannya. Cari farmasi dalam senarai di laman Kementerian Kesihatan, dan sebelum pergi pastikan melalui telefon sama ada stok ada, dan ada ahli farmasi yang boleh melayan jika anda datang sekarang."],
-  ["2. Pergi sendiri (tidak boleh diwakilkan)","Orang yang akan menelan ubat itu sendiri mesti pergi ke farmasi. Pasangan, ibu bapa atau orang lain tidak boleh membelinya bagi pihak anda."],
-  ["3. Telan di hadapan ahli farmasi","Ubat yang dibeli tidak boleh dibawa pulang. Supaya ia ditelan dengan selamat, pasti dan secepat mungkin, anda akan menelannya di ruang yang menjaga privasi dalam farmasi, di hadapan ahli farmasi."]
  ],
  r1prept:"Persediaan sebelum pergi",
  r1prepd1:"Anda mungkin diminta menunjukkan pengenalan diri seperti kad My Number atau kad insurans kesihatan. Ia tidak diwajibkan, tetapi memastikannya lebih awal membuat anda lebih tenang.",
@@ -3265,7 +3277,6 @@ function render(){
   txt("t-r3meritd3", g("r3meritd3"));
   txt("t-r3recot", g("r3recot"));
   txt("t-r3recod", g("r3recod"));
-  txt("t-r1pointst", g("r1pointst"));
   txt("t-r1prept", g("r1prept"));
   txt("t-r1prepd1", g("r1prepd1"));
   txt("t-r1prepd2", g("r1prepd2"));
@@ -3281,8 +3292,6 @@ function render(){
   txt("t-afterbody1", g("afterbody1"));
   txt("t-secrett", g("secrett"));
   txt("t-secretd", g("secretd"));
-  txt("t-stepstitle", g("stepstitle"));
-  txt("t-stepshint", g("stepshint"));
   txt("t-checktitle", g("checktitle"));
   txt("t-checkhint", g("checkhint"));
   txt("t-checknotitle", g("checknotitle"));
@@ -3306,29 +3315,31 @@ function render(){
   txt("exitbtn", g("exit"));
 
   /* [見出し, 本文] の配列から、クリーム色の小ブロックを並べる */
-  [["r3reco","r3reco"],["r1points","r1points"]].forEach(function(pair){
-    var box=document.getElementById(pair[0]);
-    box.innerHTML="";
-    (g(pair[1])||[]).forEach(function(item){
-      var w=document.createElement("div"); w.className="way";
-      var t=document.createElement("p"); t.className="waytitle"; t.textContent=item[0];
-      var b=document.createElement("p"); b.textContent=item[1];
-      w.appendChild(t); w.appendChild(b); box.appendChild(w);
-    });
+  var recobox=document.getElementById("r3reco");
+  recobox.innerHTML="";
+  (g("r3reco")||[]).forEach(function(item){
+    var w=document.createElement("div"); w.className="way";
+    var t=document.createElement("p"); t.className="waytitle"; t.textContent=item[0];
+    var b=document.createElement("p"); b.textContent=item[1];
+    w.appendChild(t); w.appendChild(b); recobox.appendChild(w);
   });
 
-  /* 購入の流れ: [経路名, [手順, 手順, ...]] の配列から組み立てる */
-  var sbox=document.getElementById("stepslist");
-  sbox.innerHTML="";
-  (g("steps")||[]).forEach(function(grp){
-    var w=document.createElement("div"); w.className="stepgroup";
-    var h=document.createElement("h3"); h.textContent=grp[0];
-    var ol=document.createElement("ol");
+  /* やること: 翻訳データ steps の [経路名, [手順, ...]] から、
+     経路カードの中の番号つきリストを作ります。
+     並びは 0=産婦人科(st1) / 1=薬局(st2) / 2=オンライン診療(st3) で固定です。 */
+  ["st1","st2","st3"].forEach(function(id,i){
+    var ol=document.getElementById(id);
+    var grp=(g("steps")||[])[i];
+    ol.innerHTML="";
+    if(!grp) return;
     (grp[1]||[]).forEach(function(t){
       var li=document.createElement("li"); li.textContent=t; ol.appendChild(li);
     });
-    w.appendChild(h); w.appendChild(ol); sbox.appendChild(w);
   });
+
+  /* 3枚のカードで同じ文言を使うところは、class でまとめて入れます */
+  document.querySelectorAll(".js-todo").forEach(function(e){ e.textContent=g("todo"); });
+  document.querySelectorAll(".js-more").forEach(function(e){ e.textContent=g("more"); });
 
   /* 服用前チェック: 文字列の配列を2群ぶん */
   ["checkno","checknote","checkask"].forEach(function(id){
