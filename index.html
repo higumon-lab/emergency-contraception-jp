@@ -1201,45 +1201,73 @@ table.eff tr td.v3 {
    中身は最初から HTML にあるので、閉じていても読み上げや
    ページ内検索から見つけられます。 */
 .more {
-  margin-top: 22px;
-  border-top: 1px solid var(--line);
+  margin-top: 24px;
 }
 
+/* 押せる場所だと分かるように、丸い枠のボタンの見た目にしています */
 .more > summary {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 16px 0 10px;
+  gap: 10px;
+  /* 指で押せる大きさ（48px以上）を確保します */
+  min-height: 52px;
+  padding: 13px 20px;
+  border: 1.5px solid rgba(101, 52, 201, 0.3);
+  border-radius: 999px;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.92) 0%, rgb(var(--lavender-rgb) / 0.9) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 4px 14px rgba(101, 52, 201, 0.12);
   color: var(--accent);
   cursor: pointer;
   font-size: 15px;
   font-weight: 700;
+  letter-spacing: 0.01em;
   list-style: none;
-  /* 指で押せる大きさ（48px以上）を確保します */
-  min-height: 48px;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .more > summary::-webkit-details-marker {
   display: none;
 }
 
-/* 開くと下向きに回る三角 */
+.more > summary:hover {
+  border-color: rgba(101, 52, 201, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 6px 18px rgba(101, 52, 201, 0.2);
+}
+
+/* 三角は右端に置いて、閉じているときは右向き（▶）、
+   開くと下向き（▼）にします。
+   transform: rotate() は使いません。擬似要素にかけると
+   getComputedStyle で読み戻せず、検証ができないためです。
+   辺の指定を入れ替えるやり方なら、数値で確かめられます。 */
 .more > summary::before {
   content: "";
+  order: 2;
+  margin-left: auto;
   width: 0;
   height: 0;
   border-top: 5px solid transparent;
+  border-right: 0 solid transparent;
   border-bottom: 5px solid transparent;
   border-left: 7px solid currentColor;
-  transition: transform 0.15s ease;
 }
 
 .more[open] > summary::before {
-  transform: rotate(90deg);
+  border-top: 7px solid currentColor;
+  border-right: 5px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 5px solid transparent;
 }
 
+/* 開いた中身が、上のボタンの続きだと分かるように縦線でつなぎます */
 .morebody {
-  padding-top: 6px;
+  margin-top: 14px;
+  padding: 2px 2px 2px 16px;
+  border-left: 2px solid rgba(101, 52, 201, 0.25);
 }
 
 .morebody > p {
@@ -1584,6 +1612,14 @@ footer p {
     background: rgba(255, 255, 255, 0.06);
   }
 
+  .more > summary:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .morebody {
+    border-left-color: rgba(196, 168, 255, 0.3);
+  }
+
   /* カードの中の見出しの飾り。暗い地では濃い紫が沈みます */
   .inner .blocktitle::before,
   .inner .waytitle::before,
@@ -1625,6 +1661,7 @@ footer p {
 
   .hero .label,
   .route .tag,
+  .more > summary,
   .stepsin li::before,
   .checklist.note li::before {
     border-color: rgba(255, 255, 255, 0.12);
@@ -2125,7 +2162,7 @@ ja:{
  eyebrow:"まだ、間に合う",
  title:"緊急避妊薬を\n手に入れる方法",
  subtitle:"日本では\n・産婦人科\n・薬局\n・オンライン診療\nの3つの方法で手に入れられます。\n\n休日でも夜遅くても方法はあります。\n諦めないで一緒に確認していきましょう。",
- cdlabel:"避妊せずに性交をした日時を入れてください",
+ cdlabel:"妊娠が心配な性交渉があった日時を入れてください",
  cdempty:"日時を入れると、72時間まであと何時間あるか分かります",
  cdprefix:"",
  cdh:"時間", cdm:"分",
@@ -2412,7 +2449,7 @@ en:{
  eyebrow:"THERE IS STILL TIME",
  title:"How to get emergency contraception in Japan",
  subtitle:"In Japan there are three ways to get it\n\u30fba clinic\n\u30fba pharmacy\n\u30fban online consultation\n\nThere is a way even on holidays and late at night.\nDo not give up — let us check them together, one by one.",
- cdlabel:"Enter the date and time you had sex without contraception",
+ cdlabel:"Enter the date and time of the sex you are worried about",
  cdempty:"Enter the date and time to see how much of the 72 hours is left",
  cdprefix:"",
  cdh:"h", cdm:"m",
@@ -2581,7 +2618,7 @@ ko:{
  eyebrow:"아직 늦지 않았습니다",
  title:"응급피임약을 구하는 방법",
  subtitle:"일본에서는 세 가지 방법으로 구할 수 있습니다\n\u30fb산부인과\n\u30fb약국\n\u30fb온라인 진료\n\n휴일에도 밤늦은 시간에도 방법은 있습니다.\n포기하지 말고 함께 하나씩 확인해 봅시다.",
- cdlabel:"피임하지 않고 성관계를 한 날짜와 시간을 입력하세요",
+ cdlabel:"임신이 걱정되는 성관계가 있었던 날짜와 시간을 입력하세요",
  cdempty:"날짜와 시간을 입력하면 72시간까지 몇 시간 남았는지 알 수 있습니다",
  cdprefix:"",
  cdh:"시간", cdm:"분",
@@ -2750,7 +2787,7 @@ zh:{
  eyebrow:"现在还来得及",
  title:"获取紧急避孕药的方法",
  subtitle:"在日本可以通过三种方法获取\n\u30fb妇产科\n\u30fb药店\n\u30fb在线问诊\n\n就算是假日或深夜，也有办法。\n别放弃，我们一起一个一个确认。",
- cdlabel:"请输入未采取避孕措施的性行为的日期和时间",
+ cdlabel:"请输入让您担心怀孕的性行为的日期和时间",
  cdempty:"输入日期和时间，就能知道距离72小时还剩多久",
  cdprefix:"",
  cdh:"小时", cdm:"分钟",
@@ -2919,7 +2956,7 @@ vi:{
  eyebrow:"VẪN CÒN KỊP",
  title:"Cách lấy thuốc tránh thai khẩn cấp",
  subtitle:"Tại Nhật Bản có ba cách để lấy thuốc\n\u30fbphòng khám sản phụ khoa\n\u30fbnhà thuốc\n\u30fbkhám trực tuyến\n\nNgay cả ngày lễ hay đêm khuya vẫn có cách.\nĐừng bỏ cuộc, chúng ta cùng kiểm tra từng cách một.",
- cdlabel:"Hãy nhập ngày và giờ quan hệ tình dục không dùng biện pháp tránh thai",
+ cdlabel:"Hãy nhập ngày và giờ quan hệ tình dục mà bạn lo có thể dẫn đến mang thai",
  cdempty:"Nhập ngày và giờ để biết còn bao lâu nữa là hết 72 giờ",
  cdprefix:"",
  cdh:"giờ", cdm:"phút",
@@ -3088,7 +3125,7 @@ ne:{
  eyebrow:"अझै समय छ",
  title:"आपत्कालीन गर्भनिरोधक औषधि कसरी पाउने",
  subtitle:"जापानमा तीन उपायबाट पाउन सकिन्छ\n\u30fbप्रसूति एवं स्त्री रोग क्लिनिक\n\u30fbफार्मेसी\n\u30fbअनलाइन परामर्श\n\nबिदाको दिन वा रातिको समयमा पनि उपाय छ।\nहरेस नखाई सँगै एक-एक गरी हेरौं।",
- cdlabel:"गर्भनिरोधक प्रयोग नगरी यौन सम्पर्क भएको मिति र समय हाल्नुहोस्",
+ cdlabel:"गर्भ रहने चिन्ता भएको यौन सम्पर्क भएको मिति र समय हाल्नुहोस्",
  cdempty:"मिति र समय हाल्नुभयो भने ७२ घण्टा पुग्न कति समय बाँकी छ थाहा हुन्छ",
  cdprefix:"",
  cdh:"घण्टा", cdm:"मिनेट",
@@ -3257,7 +3294,7 @@ ms:{
  eyebrow:"MASIH ADA MASA",
  title:"Cara mendapatkan pil kontraseptif kecemasan",
  subtitle:"Di Jepun ada tiga cara untuk mendapatkannya\n\u30fbklinik sakit puan\n\u30fbfarmasi\n\u30fbrundingan dalam talian\n\nWalaupun pada hari cuti atau lewat malam, ada caranya.\nJangan berputus asa — mari kita semak satu persatu bersama.",
- cdlabel:"Masukkan tarikh dan masa hubungan seks tanpa perancang",
+ cdlabel:"Masukkan tarikh dan masa hubungan seks yang anda bimbang boleh menyebabkan kehamilan",
  cdempty:"Masukkan tarikh dan masa untuk tahu berapa lama lagi sebelum cukup 72 jam",
  cdprefix:"",
  cdh:"jam", cdm:"minit",
