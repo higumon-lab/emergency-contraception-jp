@@ -418,6 +418,154 @@ small {
   outline-offset: 2px;
 }
 
+/* どんなお薬か ─ しくみの3枚 */
+.howcards {
+  display: grid;
+  margin-top: 18px;
+  gap: 14px;
+}
+
+.howcard {
+  --tint: var(--mint-rgb);
+  padding: 20px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-small);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.72) 0%, rgb(var(--tint) / 0.88) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 20px rgba(101, 52, 201, 0.08);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+}
+
+.howcards .howcard:nth-child(2) {
+  --tint: var(--sky-rgb);
+}
+
+.howcards .howcard:nth-child(3) {
+  --tint: var(--butter-rgb);
+}
+
+.howicon {
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 10px;
+  color: var(--accent);
+}
+
+.hcard-t {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.hcard-d {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* 時間の目安の棒 */
+.tl {
+  margin-top: 18px;
+}
+
+.tl-bar {
+  position: relative;
+  height: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(var(--lavender-rgb) / 0.85);
+}
+
+.tl-fill {
+  position: absolute;
+  inset: 0 40% 0 0;
+  display: block;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6534c9 0%, #b02a86 100%);
+}
+
+.tl-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.tl-ticks span {
+  width: 2px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--line-strong);
+}
+
+.tl-labels {
+  display: grid;
+  margin-top: 8px;
+  gap: 6px;
+}
+
+.tl-labels p {
+  margin: 0;
+  padding-left: 16px;
+  position: relative;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.tl-labels p::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+}
+
+.tl-labels .tl-a::before {
+  background: linear-gradient(100deg, #6534c9 0%, #b02a86 100%);
+}
+
+.tl-labels .tl-b::before {
+  background: rgb(var(--lavender-rgb));
+  border: 1px solid var(--line-strong);
+}
+
+/* こんなときに検討します */
+.cases {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.cases li {
+  position: relative;
+  padding: 14px 0 14px 26px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.cases li::before {
+  content: "";
+  position: absolute;
+  top: 1.05em;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(100deg, #6534c9 0%, #b02a86 100%);
+}
+
 /* カウントダウンの上に置く小さなラベル。
    残り時間が出ているときだけ表示します（未入力・72時間超のときは隠す）。 */
 .cdcap {
@@ -1245,7 +1393,8 @@ footer p {
   }
 
   .way,
-  .notebox {
+  .notebox,
+  .howcard {
     border-color: rgba(255, 255, 255, 0.1);
     background:
       linear-gradient(150deg, rgba(255, 255, 255, 0.07) 0%, rgb(var(--tint, var(--lavender-rgb)) / 0.9) 100%);
@@ -1273,6 +1422,18 @@ footer p {
     border-color: rgba(196, 168, 255, 0.4);
     background:
       linear-gradient(150deg, rgba(255, 255, 255, 0.06) 0%, rgb(var(--lavender-rgb) / 0.95) 100%);
+  }
+
+  /* 「どんなお薬か」で足した飾り。暗い地では明るい紫〜桃に置き換えます */
+  .tl-fill,
+  .tl-labels .tl-a::before,
+  .cases li::before {
+    background: linear-gradient(100deg, #c4a8ff 0%, #ff9ec4 100%);
+  }
+
+  .tl-labels .tl-b::before {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 
   .langbar,
@@ -1423,6 +1584,75 @@ footer p {
       <a class="btn" id="t-overbtn" rel="noopener noreferrer" target="_blank"
          href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
     </div>
+  </div>
+</section>
+
+<!-- ===== どんなお薬か =====
+     しくみの説明は文字だけだと固くなるので、簡単な絵を添えています。
+     絵の中に文字は入れていません（7言語ぶんの差し替えができなくなるため）。
+     文言はすべて翻訳データ側にあります。 -->
+<section class="band tint">
+  <div class="inner">
+    <h2 id="t-whattitle"></h2>
+    <p class="lead" id="t-whatbody1"></p>
+
+    <p class="blocktitle" id="t-howtitle"></p>
+    <div class="howcards" id="howcards">
+      <div class="howcard">
+        <svg class="howicon" viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+          <circle cx="28" cy="32" r="11" fill="none" stroke="currentColor" stroke-width="2.6"/>
+          <circle cx="28" cy="32" r="4" fill="currentColor"/>
+          <path d="M13 21a19 19 0 0 1 30 0" fill="none" stroke="currentColor"
+                stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M43 21l-5.5-1.5M43 21l-1.5 5.5" fill="none" stroke="currentColor"
+                stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="hcard-t"></p>
+        <p class="hcard-d"></p>
+      </div>
+      <div class="howcard">
+        <svg class="howicon" viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+          <circle cx="38" cy="28" r="10" fill="none" stroke="currentColor" stroke-width="2.6"/>
+          <circle cx="12" cy="28" r="3.5" fill="currentColor"/>
+          <path d="M5 28q3-4 6 0t6 0" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M24 15v26" fill="none" stroke="currentColor"
+                stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+        <p class="hcard-t"></p>
+        <p class="hcard-d"></p>
+      </div>
+      <div class="howcard">
+        <svg class="howicon" viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+          <path d="M11 43q17-26 34 0" fill="none" stroke="currentColor"
+                stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="28" cy="16" r="5" fill="currentColor" opacity="0.45"/>
+          <path d="M22 26l12 0" fill="none" stroke="currentColor" stroke-width="2.4"
+                stroke-linecap="round" stroke-dasharray="3 4"/>
+        </svg>
+        <p class="hcard-t"></p>
+        <p class="hcard-d"></p>
+      </div>
+    </div>
+
+    <p id="t-whatbody2" style="margin-top:26px"></p>
+
+    <!-- 時間の目安。棒の濃い部分が72時間まで、薄い部分が120時間までです -->
+    <div class="tl" aria-hidden="true">
+      <div class="tl-bar"><i class="tl-fill"></i></div>
+      <div class="tl-ticks"><span></span><span></span><span></span></div>
+    </div>
+    <div class="tl-labels">
+      <p class="tl-a"><span id="t-tlseg1"></span></p>
+      <p class="tl-b"><span id="t-tlseg2"></span></p>
+    </div>
+
+    <div class="notebox" style="margin-top:22px">
+      <p id="t-whatnote"></p>
+    </div>
+
+    <p class="blocktitle" style="margin-top:30px" id="t-casetitle"></p>
+    <ul class="cases" id="caselist"></ul>
   </div>
 </section>
 
@@ -1669,6 +1899,26 @@ ja:{
  overtitle:"72時間を過ぎていても、方法があります",
  overtext:"薬局では買えませんが、産婦人科では72時間から120時間の間に使える方法を相談できることがあります。日本で承認されていない薬を使うことがあり、効果も下がりますが、相談してみる価値はあります。どうかあきらめないでください。",
  overbtn:"産婦人科をさがす",
+ whattitle:"アフターピルってどんなお薬？",
+ whatbody1:"アフターピル（緊急避妊薬）は、避妊に失敗した性行為のあと、緊急の手段として飲むことで妊娠の確率を下げるお薬です。主に黄体ホルモンのはたらきによって、排卵を遅らせたり、受精卵の着床を防いだりする効果が期待できます。",
+ howtitle:"どうやって効くの？",
+ how:[
+  ["排卵を遅らせる","卵子が出てくるタイミングをずらして、精子と出会いにくくします。"],
+  ["受精を妨げる","精子が卵子にたどりつきにくい状態をつくります。"],
+  ["着床を防ぐ","受精卵が子宮に着くことを起こりにくくします。"]
+ ],
+ whatbody2:"性行為から飲むまでの時間が短いほど、避妊の成功率は高くなります。一般的には72時間（3日）以内に飲むことがすすめられていますが、それを過ぎてしまった場合でも、120時間（5日）以内なら効果が期待できるお薬もあります。どうかあきらめないでください。",
+ tlseg1:"72時間（3日）以内 ─ 薬局・産婦人科・オンライン診療で手に入ります",
+ tlseg2:"72〜120時間（5日）─ 産婦人科で相談できるお薬があります",
+ whatnote:"ただし、100%妊娠を防げるわけではありません。飲んだあとの確認も大切です。",
+ casetitle:"こんなときに検討します",
+ cases:[
+  "コンドームが途中で破れてしまった、外れてしまった",
+  "低用量ピルを飲み忘れた状態で性行為をしてしまった",
+  "膣外射精（外出し）など、確実でない方法で不安になった",
+  "同意のない性行為（性被害）にあってしまった",
+  "パートナーが避妊具をつけてくれなかった"
+ ],
  efftitle:"妊娠を防げる割合の目安",
  effh1:"性交から飲むまでの時間", effh2:"割合",
  eff1:"24時間以内", eff2:"24〜48時間", eff3:"49〜72時間",
@@ -1807,6 +2057,26 @@ ja:{
 },
 
 en:{
+ whattitle:"What kind of medicine is it?",
+ whatbody1:"The morning-after pill (emergency contraception) is medicine you take after sex where contraception failed, as an emergency measure, to lower the chance of pregnancy. Mainly through the action of a progestogen hormone, it can delay ovulation and make it harder for a fertilised egg to implant.",
+ howtitle:"How does it work?",
+ how:[
+  ["It delays ovulation","It shifts the timing of the egg being released, so it is less likely to meet sperm."],
+  ["It hinders fertilisation","It makes it harder for sperm to reach the egg."],
+  ["It prevents implantation","It makes it less likely for a fertilised egg to settle in the womb."]
+ ],
+ whatbody2:"The shorter the time between sex and taking it, the higher the chance it works. Taking it within 72 hours (3 days) is generally recommended, but even if that has passed, there are medicines that can still work within 120 hours (5 days). Please do not give up.",
+ tlseg1:"Within 72 hours (3 days) — available at a pharmacy, a clinic, or through an online consultation",
+ tlseg2:"72 to 120 hours (5 days) — there are medicines you can ask a clinic about",
+ whatnote:"That said, it does not prevent pregnancy 100%. Checking afterwards matters too.",
+ casetitle:"When people consider it",
+ cases:[
+  "A condom tore or came off during sex",
+  "You had sex after missing your daily contraceptive pill",
+  "You are worried because withdrawal or another uncertain method was used",
+  "You experienced sex without your consent",
+  "Your partner would not use contraception"
+ ],
  cdcap:"Time left to take it",
  acheckt:"Checking afterwards",
  acheck1:"When the medicine has worked, withdrawal bleeding almost always occurs within three weeks of taking it. Withdrawal bleeding is when the female hormones raised by the emergency contraceptive fall again, the lining of the womb comes away, and you bleed just as you would in a period.",
@@ -1962,6 +2232,26 @@ en:{
 },
 
 ko:{
+ whattitle:"사후피임약은 어떤 약인가요?",
+ whatbody1:"사후피임약(응급피임약)은 피임에 실패한 성관계 후, 응급 수단으로 복용해 임신 가능성을 낮추는 약입니다. 주로 황체호르몬의 작용으로 배란을 늦추거나, 수정란의 착상을 막는 효과를 기대할 수 있습니다.",
+ howtitle:"어떻게 작용하나요?",
+ how:[
+  ["배란을 늦춥니다","난자가 나오는 시기를 늦춰 정자와 만나기 어렵게 합니다."],
+  ["수정을 방해합니다","정자가 난자에 도달하기 어려운 상태를 만듭니다."],
+  ["착상을 막습니다","수정란이 자궁에 자리 잡는 일이 일어나기 어렵게 합니다."]
+ ],
+ whatbody2:"성관계로부터 복용까지의 시간이 짧을수록 피임 성공률이 높아집니다. 일반적으로 72시간(3일) 이내의 복용이 권장되지만, 그 시간이 지났더라도 120시간(5일) 이내라면 효과를 기대할 수 있는 약도 있습니다. 부디 포기하지 마세요.",
+ tlseg1:"72시간(3일) 이내 ─ 약국, 산부인과, 온라인 진료로 구할 수 있습니다",
+ tlseg2:"72~120시간(5일) ─ 산부인과에서 상담할 수 있는 약이 있습니다",
+ whatnote:"다만 100% 임신을 막을 수 있는 것은 아닙니다. 복용한 뒤의 확인도 중요합니다.",
+ casetitle:"이럴 때 고려합니다",
+ cases:[
+  "콘돔이 도중에 찢어지거나 벗겨졌다",
+  "경구피임약을 잊고 먹지 않은 상태에서 성관계를 했다",
+  "질외사정 등 확실하지 않은 방법이라 불안하다",
+  "동의 없는 성관계(성폭력 피해)를 당했다",
+  "파트너가 피임을 해 주지 않았다"
+ ],
  cdcap:"복용까지 남은 시간",
  acheckt:"복용한 뒤의 확인",
  acheck1:"피임에 성공한 경우, 복용 후 3주 이내에 소퇴출혈이 일어나는 것이 대부분입니다. 소퇴출혈이란 응급피임약으로 높아졌던 여성호르몬이 줄어들면서 자궁내막이 떨어져 나와, 생리와 마찬가지로 출혈하는 것을 말합니다.",
@@ -2117,6 +2407,26 @@ ko:{
 },
 
 zh:{
+ whattitle:"紧急避孕药是什么样的药？",
+ whatbody1:"紧急避孕药是在避孕失败的性行为之后，作为紧急手段服用、以降低怀孕概率的药物。主要通过黄体激素的作用，可望延迟排卵，或阻止受精卵着床。",
+ howtitle:"它是怎么起作用的？",
+ how:[
+  ["延迟排卵","错开卵子排出的时间，使其不易与精子相遇。"],
+  ["阻碍受精","让精子更难到达卵子。"],
+  ["阻止着床","让受精卵不易在子宫内着床。"]
+ ],
+ whatbody2:"从性行为到服药的时间越短，避孕成功率越高。一般建议在72小时（3天）以内服用；即使超过了，也有在120小时（5天）以内仍可望有效的药物。请不要放弃。",
+ tlseg1:"72小时（3天）以内 ─ 可在药店、妇产科、在线问诊获取",
+ tlseg2:"72～120小时（5天）─ 有可以到妇产科咨询的药物",
+ whatnote:"不过，它并不能100%防止怀孕。服药之后的确认同样重要。",
+ casetitle:"这些情况下可以考虑",
+ cases:[
+  "避孕套中途破裂或脱落",
+  "在漏服短效避孕药的情况下发生了性行为",
+  "使用了体外射精等不可靠的方法而感到不安",
+  "遭受了非自愿的性行为（性侵害）",
+  "伴侣没有采取避孕措施"
+ ],
  cdcap:"距离服用的剩余时间",
  acheckt:"服药后的确认",
  acheck1:"如果避孕成功，服药后三周以内几乎都会出现撤退性出血。撤退性出血是指因紧急避孕药而升高的女性激素下降，子宫内膜随之脱落，像月经一样出血。",
@@ -2272,6 +2582,26 @@ zh:{
 },
 
 vi:{
+ whattitle:"Thuốc này là thuốc gì?",
+ whatbody1:"Thuốc tránh thai khẩn cấp là thuốc uống sau lần quan hệ mà việc tránh thai thất bại, như một biện pháp khẩn cấp để giảm khả năng mang thai. Chủ yếu nhờ tác dụng của hormone progestogen, thuốc có thể làm chậm rụng trứng và khiến trứng đã thụ tinh khó làm tổ hơn.",
+ howtitle:"Thuốc hoạt động thế nào?",
+ how:[
+  ["Làm chậm rụng trứng","Dời thời điểm trứng rụng, khiến trứng khó gặp tinh trùng hơn."],
+  ["Cản trở thụ tinh","Tạo ra tình trạng khiến tinh trùng khó đến được với trứng."],
+  ["Ngăn làm tổ","Khiến trứng đã thụ tinh khó bám vào tử cung hơn."]
+ ],
+ whatbody2:"Thời gian từ lúc quan hệ đến lúc uống càng ngắn thì khả năng tránh thai thành công càng cao. Thông thường nên uống trong vòng 72 giờ (3 ngày), nhưng ngay cả khi đã quá thời gian đó, vẫn có loại thuốc có thể hiệu quả trong vòng 120 giờ (5 ngày). Xin đừng bỏ cuộc.",
+ tlseg1:"Trong vòng 72 giờ (3 ngày) ─ có thể lấy ở nhà thuốc, phòng khám hoặc qua khám trực tuyến",
+ tlseg2:"72 đến 120 giờ (5 ngày) ─ có loại thuốc bạn có thể hỏi phòng khám",
+ whatnote:"Tuy vậy, thuốc không ngăn được thai 100%. Việc kiểm tra sau khi uống cũng rất quan trọng.",
+ casetitle:"Những lúc nên cân nhắc",
+ cases:[
+  "Bao cao su bị rách hoặc tuột giữa chừng",
+  "Bạn quan hệ trong lúc quên uống thuốc tránh thai hằng ngày",
+  "Bạn lo lắng vì đã dùng cách không chắc chắn như xuất tinh ngoài",
+  "Bạn bị quan hệ mà không có sự đồng thuận (bị bạo lực tình dục)",
+  "Bạn tình không chịu dùng biện pháp tránh thai"
+ ],
  cdcap:"Thời gian còn lại để uống",
  acheckt:"Kiểm tra sau khi uống",
  acheck1:"Khi thuốc đã có tác dụng, hầu như trong vòng ba tuần sau khi uống sẽ có hiện tượng ra máu do ngừng thuốc. Đó là khi nội tiết tố nữ đã tăng lên vì thuốc tránh thai khẩn cấp giảm xuống, lớp niêm mạc tử cung bong ra và bạn ra máu giống như kỳ kinh.",
@@ -2427,6 +2757,26 @@ vi:{
 },
 
 ne:{
+ whattitle:"यो कस्तो औषधि हो?",
+ whatbody1:"आपत्कालीन गर्भनिरोधक औषधि भनेको गर्भनिरोध असफल भएको यौन सम्पर्कपछि, आपत्कालीन उपायका रूपमा खाएर गर्भ रहने सम्भावना घटाउने औषधि हो। मुख्यतया प्रोजेस्टोजेन हर्मोनको कामले अण्डा निस्कने प्रक्रिया ढिलो बनाउन र निषेचित अण्डा पाठेघरमा बस्न गाह्रो बनाउन सक्छ।",
+ howtitle:"यसले कसरी काम गर्छ?",
+ how:[
+  ["अण्डा निस्कने समय ढिलो बनाउँछ","अण्डा निस्कने समय सारेर शुक्रकीटसँग भेट हुन गाह्रो बनाउँछ।"],
+  ["निषेचन रोक्छ","शुक्रकीट अण्डासम्म पुग्न गाह्रो हुने अवस्था बनाउँछ।"],
+  ["पाठेघरमा बस्न दिँदैन","निषेचित अण्डा पाठेघरमा बस्ने कुरा हुन गाह्रो बनाउँछ।"]
+ ],
+ whatbody2:"यौन सम्पर्कदेखि औषधि खानेसम्मको समय जति छोटो भयो, गर्भनिरोध सफल हुने सम्भावना त्यति बढी हुन्छ। सामान्यतया ७२ घण्टा (३ दिन) भित्र खान सुझाव दिइन्छ, तर त्यो समय नाघे पनि १२० घण्टा (५ दिन) भित्र असर हुन सक्ने औषधि पनि छन्। कृपया हरेस नखानुहोस्।",
+ tlseg1:"७२ घण्टा (३ दिन) भित्र ─ फार्मेसी, क्लिनिक वा अनलाइन परामर्शबाट पाइन्छ",
+ tlseg2:"७२ देखि १२० घण्टा (५ दिन) ─ क्लिनिकमा सोध्न मिल्ने औषधि छन्",
+ whatnote:"तर यसले १००% गर्भ रोक्दैन। खाएपछिको जाँच पनि उत्तिकै महत्त्वपूर्ण छ।",
+ casetitle:"यस्तो बेला विचार गरिन्छ",
+ cases:[
+  "कन्डम बीचैमा च्यातियो वा फुस्कियो",
+  "नियमित खाने गर्भनिरोधक चक्की छुटेको अवस्थामा यौन सम्पर्क भयो",
+  "बाहिर स्खलन जस्ता पक्का नहुने उपायका कारण चिन्ता लाग्यो",
+  "सहमतिबिनाको यौन सम्पर्क (यौन हिंसा) भोग्नुभयो",
+  "साथीले गर्भनिरोधक प्रयोग गर्न मान्नुभएन"
+ ],
  cdcap:"खानका लागि बाँकी समय",
  acheckt:"खाएपछिको जाँच",
  acheck1:"गर्भनिरोध सफल भएको अवस्थामा, औषधि खाएको तीन हप्ताभित्र प्रायः विदड्रल ब्लिडिङ हुन्छ। विदड्रल ब्लिडिङ भनेको आपत्कालीन गर्भनिरोधक औषधिले बढाएको महिला हर्मोन घट्दा पाठेघरको भित्री तह खुस्किएर, महिनावारीजस्तै रक्तस्राव हुनु हो।",
@@ -2582,6 +2932,26 @@ ne:{
 },
 
 ms:{
+ whattitle:"Ubat ini ubat apa?",
+ whatbody1:"Pil kontraseptif kecemasan ialah ubat yang ditelan selepas hubungan seks yang perancangannya gagal, sebagai langkah kecemasan untuk menurunkan kemungkinan hamil. Terutamanya melalui tindakan hormon progestogen, ia boleh melambatkan ovulasi dan menyukarkan telur yang telah disenyawakan daripada melekat pada rahim.",
+ howtitle:"Bagaimana ia berfungsi?",
+ how:[
+  ["Melambatkan ovulasi","Ia mengalihkan masa telur dilepaskan supaya lebih sukar bertemu sperma."],
+  ["Menghalang persenyawaan","Ia menyukarkan sperma sampai kepada telur."],
+  ["Menghalang implantasi","Ia menyukarkan telur yang disenyawakan daripada melekat pada rahim."]
+ ],
+ whatbody2:"Semakin singkat masa antara hubungan seks dan menelan ubat, semakin tinggi kemungkinan ia berkesan. Biasanya disarankan menelannya dalam tempoh 72 jam (3 hari), tetapi walaupun tempoh itu sudah berlalu, ada ubat yang masih boleh berkesan dalam tempoh 120 jam (5 hari). Tolong jangan berputus asa.",
+ tlseg1:"Dalam tempoh 72 jam (3 hari) ─ boleh diperoleh di farmasi, klinik, atau melalui rundingan dalam talian",
+ tlseg2:"72 hingga 120 jam (5 hari) ─ ada ubat yang boleh anda tanyakan di klinik",
+ whatnote:"Namun begitu, ia tidak menghalang kehamilan 100%. Semakan selepas menelannya juga penting.",
+ casetitle:"Bila orang mempertimbangkannya",
+ cases:[
+  "Kondom koyak atau terlucut semasa hubungan seks",
+  "Anda berhubung seks selepas terlupa menelan pil perancang harian",
+  "Anda bimbang kerana kaedah yang tidak pasti seperti pancutan luar digunakan",
+  "Anda mengalami hubungan seks tanpa persetujuan anda",
+  "Pasangan anda enggan menggunakan perancang"
+ ],
  cdcap:"Masa berbaki untuk menelannya",
  acheckt:"Semakan selepas menelannya",
  acheck1:"Apabila ubat berkesan, pendarahan tarik diri hampir selalu berlaku dalam tempoh tiga minggu selepas menelannya. Pendarahan tarik diri ialah apabila hormon wanita yang meningkat akibat kontraseptif kecemasan menurun semula, lapisan rahim terlerai, dan berlaku pendarahan seperti haid.",
@@ -2776,6 +3146,32 @@ function render(){
   txt("t-overtitle", g("overtitle"));
   txt("t-overtext", g("overtext"));
   txt("t-overbtn", g("overbtn"));
+  txt("t-whattitle", g("whattitle"));
+  txt("t-whatbody1", g("whatbody1"));
+  txt("t-howtitle", g("howtitle"));
+  txt("t-whatbody2", g("whatbody2"));
+  txt("t-tlseg1", g("tlseg1"));
+  txt("t-tlseg2", g("tlseg2"));
+  txt("t-whatnote", g("whatnote"));
+  txt("t-casetitle", g("casetitle"));
+
+  /* しくみの3枚。絵は固定で、文字だけ差し替えます */
+  var hc = document.querySelectorAll("#howcards .howcard");
+  (g("how") || []).forEach(function (pair, i) {
+    if (!hc[i]) return;
+    hc[i].querySelector(".hcard-t").textContent = pair[0];
+    hc[i].querySelector(".hcard-d").textContent = pair[1];
+  });
+
+  /* こんなときに検討します */
+  var cl = document.getElementById("caselist");
+  cl.innerHTML = "";
+  (g("cases") || []).forEach(function (t) {
+    var li = document.createElement("li");
+    li.textContent = t;
+    cl.appendChild(li);
+  });
+
   txt("t-efftitle", g("efftitle"));
   txt("t-effh1", g("effh1")); txt("t-effh2", g("effh2"));
   txt("t-eff1", g("eff1")); txt("t-eff2", g("eff2")); txt("t-eff3", g("eff3"));
