@@ -1587,6 +1587,24 @@ footer p {
   </div>
 </section>
 
+<!-- ===== 効果 ===== -->
+<section class="band">
+  <div class="inner">
+    <h2 id="t-efftitle"></h2>
+    <table class="eff">
+      <thead><tr><th id="t-effh1"></th><th id="t-effh2"></th></tr></thead>
+      <tbody>
+        <!-- この3つの <tr> にクラスを足さないでください。
+             JavaScript が className を丸ごと書き換えて該当行を示すため、消えます。 -->
+        <tr id="row1"><td id="t-eff1"></td><td class="v1">95%</td></tr>
+        <tr id="row2"><td id="t-eff2"></td><td class="v2">85%</td></tr>
+        <tr id="row3"><td id="t-eff3"></td><td class="v3">58%</td></tr>
+      </tbody>
+    </table>
+    <small id="t-effsrc"></small>
+  </div>
+</section>
+
 <!-- ===== どんなお薬か =====
      しくみの説明は文字だけだと固くなるので、簡単な絵を添えています。
      絵の中に文字は入れていません（7言語ぶんの差し替えができなくなるため）。
@@ -1653,24 +1671,6 @@ footer p {
 
     <p class="blocktitle" style="margin-top:30px" id="t-casetitle"></p>
     <ul class="cases" id="caselist"></ul>
-  </div>
-</section>
-
-<!-- ===== 効果 ===== -->
-<section class="band">
-  <div class="inner">
-    <h2 id="t-efftitle"></h2>
-    <table class="eff">
-      <thead><tr><th id="t-effh1"></th><th id="t-effh2"></th></tr></thead>
-      <tbody>
-        <!-- この3つの <tr> にクラスを足さないでください。
-             JavaScript が className を丸ごと書き換えて該当行を示すため、消えます。 -->
-        <tr id="row1"><td id="t-eff1"></td><td class="v1">95%</td></tr>
-        <tr id="row2"><td id="t-eff2"></td><td class="v2">85%</td></tr>
-        <tr id="row3"><td id="t-eff3"></td><td class="v3">58%</td></tr>
-      </tbody>
-    </table>
-    <small id="t-effsrc"></small>
   </div>
 </section>
 
@@ -1879,7 +1879,7 @@ var LANGS = [
 var T = {
 
 ja:{
- cdcap:"飲むまでの残り時間",
+ cdcap:"72時間まで、あと",
  acheckt:"飲んだ後の確認",
  acheck1:"避妊に成功していると、服用後3週間以内に消退出血が起こることがほとんどです。消退出血とは、緊急避妊薬によって高まった女性ホルモンが減少することで子宮内膜が剥がれ落ち、生理と同じように出血することです。",
  acheck2:"ただし、服用後には副作用により不正出血が起こる可能性もあります。確実に避妊できているか確かめるためには、服用から3週間後に妊娠検査薬で調べるか、産婦人科を受診しましょう。",
@@ -1890,7 +1890,7 @@ ja:{
  title:"緊急避妊薬を\n手に入れる方法",
  subtitle:"日本では\n・産婦人科\n・薬局\n・オンライン診療\nの3つの方法で手に入れられます。\n\n休日でも夜遅くても方法はあります。\n諦めないで一緒に確認していきましょう。",
  cdlabel:"避妊せずに性交をした日時を入れてください",
- cdempty:"日時を入れると、残り時間が出ます",
+ cdempty:"日時を入れると、72時間まであと何時間か分かります",
  cdprefix:"",
  cdh:"時間", cdm:"分",
  cdnote:"早く飲むほど効果が高くなります。あとまわしにせず、いま動いてみてください。",
@@ -2077,7 +2077,7 @@ en:{
   "You experienced sex without your consent",
   "Your partner would not use contraception"
  ],
- cdcap:"Time left to take it",
+ cdcap:"Left of the 72 hours",
  acheckt:"Checking afterwards",
  acheck1:"When the medicine has worked, withdrawal bleeding almost always occurs within three weeks of taking it. Withdrawal bleeding is when the female hormones raised by the emergency contraceptive fall again, the lining of the womb comes away, and you bleed just as you would in a period.",
  acheck2:"However, unexpected bleeding can also occur as a side effect after taking it. To be sure that pregnancy has been prevented, take a pregnancy test three weeks after taking the medicine, or see a clinic.",
@@ -2191,7 +2191,7 @@ en:{
  title:"How to get emergency contraception in Japan",
  subtitle:"In Japan there are three ways to get it\n\u30fba clinic\n\u30fba pharmacy\n\u30fban online consultation\n\nThere is a way even on holidays and late at night.\nDo not give up — let us check them together, one by one.",
  cdlabel:"Enter the date and time you had sex without contraception",
- cdempty:"Enter the date and time to see how long you have left",
+ cdempty:"Enter the date and time to see how much of the 72 hours is left",
  cdprefix:"",
  cdh:"h", cdm:"m",
  cdnote:"The sooner you take it, the better it works. Please act now rather than later.",
@@ -2252,7 +2252,7 @@ ko:{
   "동의 없는 성관계(성폭력 피해)를 당했다",
   "파트너가 피임을 해 주지 않았다"
  ],
- cdcap:"복용까지 남은 시간",
+ cdcap:"72시간까지 남은 시간",
  acheckt:"복용한 뒤의 확인",
  acheck1:"피임에 성공한 경우, 복용 후 3주 이내에 소퇴출혈이 일어나는 것이 대부분입니다. 소퇴출혈이란 응급피임약으로 높아졌던 여성호르몬이 줄어들면서 자궁내막이 떨어져 나와, 생리와 마찬가지로 출혈하는 것을 말합니다.",
  acheck2:"다만 복용 후에는 부작용으로 부정출혈이 일어날 가능성도 있습니다. 확실히 피임이 되었는지 확인하려면, 복용으로부터 3주 뒤에 임신테스트기로 검사하거나 산부인과를 방문하세요.",
@@ -2366,7 +2366,7 @@ ko:{
  title:"응급피임약을 구하는 방법",
  subtitle:"일본에서는 세 가지 방법으로 구할 수 있습니다\n\u30fb산부인과\n\u30fb약국\n\u30fb온라인 진료\n\n휴일에도 밤늦은 시간에도 방법은 있습니다.\n포기하지 말고 함께 하나씩 확인해 봅시다.",
  cdlabel:"피임하지 않고 성관계를 한 날짜와 시간을 입력하세요",
- cdempty:"날짜와 시간을 입력하면 남은 시간이 표시됩니다",
+ cdempty:"날짜와 시간을 입력하면 72시간까지 몇 시간 남았는지 알 수 있습니다",
  cdprefix:"",
  cdh:"시간", cdm:"분",
  cdnote:"빨리 복용할수록 효과가 높아집니다. 미루지 말고 지금 움직여 보세요.",
@@ -2427,7 +2427,7 @@ zh:{
   "遭受了非自愿的性行为（性侵害）",
   "伴侣没有采取避孕措施"
  ],
- cdcap:"距离服用的剩余时间",
+ cdcap:"距离72小时还剩",
  acheckt:"服药后的确认",
  acheck1:"如果避孕成功，服药后三周以内几乎都会出现撤退性出血。撤退性出血是指因紧急避孕药而升高的女性激素下降，子宫内膜随之脱落，像月经一样出血。",
  acheck2:"不过，服药后也可能因副作用而出现不规则出血。为了确认是否确实避孕成功，请在服药三周后用验孕棒检查，或到妇产科就诊。",
@@ -2541,7 +2541,7 @@ zh:{
  title:"获取紧急避孕药的方法",
  subtitle:"在日本可以通过三种方法获取\n\u30fb妇产科\n\u30fb药店\n\u30fb在线问诊\n\n就算是假日或深夜，也有办法。\n别放弃，我们一起一个一个确认。",
  cdlabel:"请输入未采取避孕措施的性行为的日期和时间",
- cdempty:"输入日期和时间后会显示剩余时间",
+ cdempty:"输入日期和时间，就能知道距离72小时还剩多久",
  cdprefix:"",
  cdh:"小时", cdm:"分钟",
  cdnote:"越早服用效果越好。不要往后拖，现在就行动起来。",
@@ -2602,7 +2602,7 @@ vi:{
   "Bạn bị quan hệ mà không có sự đồng thuận (bị bạo lực tình dục)",
   "Bạn tình không chịu dùng biện pháp tránh thai"
  ],
- cdcap:"Thời gian còn lại để uống",
+ cdcap:"Còn lại trong 72 giờ",
  acheckt:"Kiểm tra sau khi uống",
  acheck1:"Khi thuốc đã có tác dụng, hầu như trong vòng ba tuần sau khi uống sẽ có hiện tượng ra máu do ngừng thuốc. Đó là khi nội tiết tố nữ đã tăng lên vì thuốc tránh thai khẩn cấp giảm xuống, lớp niêm mạc tử cung bong ra và bạn ra máu giống như kỳ kinh.",
  acheck2:"Tuy nhiên, sau khi uống cũng có thể ra máu bất thường do tác dụng phụ. Để chắc chắn đã tránh thai thành công, hãy thử que thử thai sau khi uống ba tuần, hoặc đi khám tại phòng khám sản phụ khoa.",
@@ -2716,7 +2716,7 @@ vi:{
  title:"Cách lấy thuốc tránh thai khẩn cấp",
  subtitle:"Tại Nhật Bản có ba cách để lấy thuốc\n\u30fbphòng khám sản phụ khoa\n\u30fbnhà thuốc\n\u30fbkhám trực tuyến\n\nNgay cả ngày lễ hay đêm khuya vẫn có cách.\nĐừng bỏ cuộc, chúng ta cùng kiểm tra từng cách một.",
  cdlabel:"Hãy nhập ngày và giờ quan hệ tình dục không dùng biện pháp tránh thai",
- cdempty:"Nhập ngày và giờ để xem thời gian còn lại",
+ cdempty:"Nhập ngày và giờ để biết còn bao lâu nữa là hết 72 giờ",
  cdprefix:"",
  cdh:"giờ", cdm:"phút",
  cdnote:"Uống càng sớm thì hiệu quả càng cao. Đừng để đến sau, hãy hành động ngay bây giờ.",
@@ -2777,7 +2777,7 @@ ne:{
   "सहमतिबिनाको यौन सम्पर्क (यौन हिंसा) भोग्नुभयो",
   "साथीले गर्भनिरोधक प्रयोग गर्न मान्नुभएन"
  ],
- cdcap:"खानका लागि बाँकी समय",
+ cdcap:"७२ घण्टा पुग्न बाँकी",
  acheckt:"खाएपछिको जाँच",
  acheck1:"गर्भनिरोध सफल भएको अवस्थामा, औषधि खाएको तीन हप्ताभित्र प्रायः विदड्रल ब्लिडिङ हुन्छ। विदड्रल ब्लिडिङ भनेको आपत्कालीन गर्भनिरोधक औषधिले बढाएको महिला हर्मोन घट्दा पाठेघरको भित्री तह खुस्किएर, महिनावारीजस्तै रक्तस्राव हुनु हो।",
  acheck2:"तर औषधि खाएपछि साइड इफेक्टका कारण अनियमित रक्तस्राव पनि हुन सक्छ। गर्भनिरोध पक्का भयो कि भएन भनी निश्चित गर्न, औषधि खाएको तीन हप्तापछि गर्भ परीक्षण किटले जाँच्नुहोस् वा क्लिनिकमा जानुहोस्।",
@@ -2891,7 +2891,7 @@ ne:{
  title:"आपत्कालीन गर्भनिरोधक औषधि कसरी पाउने",
  subtitle:"जापानमा तीन उपायबाट पाउन सकिन्छ\n\u30fbप्रसूति एवं स्त्री रोग क्लिनिक\n\u30fbफार्मेसी\n\u30fbअनलाइन परामर्श\n\nबिदाको दिन वा रातिको समयमा पनि उपाय छ।\nहरेस नखाई सँगै एक-एक गरी हेरौं।",
  cdlabel:"गर्भनिरोधक प्रयोग नगरी यौन सम्पर्क भएको मिति र समय हाल्नुहोस्",
- cdempty:"मिति र समय हाल्नुभयो भने बाँकी समय देखिन्छ",
+ cdempty:"मिति र समय हाल्नुभयो भने ७२ घण्टा पुग्न कति समय बाँकी छ थाहा हुन्छ",
  cdprefix:"",
  cdh:"घण्टा", cdm:"मिनेट",
  cdnote:"जति चाँडो खायो, त्यति असर हुन्छ। पछि नसारी अहिले नै अघि बढ्नुहोस्।",
@@ -2952,7 +2952,7 @@ ms:{
   "Anda mengalami hubungan seks tanpa persetujuan anda",
   "Pasangan anda enggan menggunakan perancang"
  ],
- cdcap:"Masa berbaki untuk menelannya",
+ cdcap:"Baki daripada 72 jam",
  acheckt:"Semakan selepas menelannya",
  acheck1:"Apabila ubat berkesan, pendarahan tarik diri hampir selalu berlaku dalam tempoh tiga minggu selepas menelannya. Pendarahan tarik diri ialah apabila hormon wanita yang meningkat akibat kontraseptif kecemasan menurun semula, lapisan rahim terlerai, dan berlaku pendarahan seperti haid.",
  acheck2:"Namun, selepas menelannya juga boleh berlaku pendarahan luar jangka akibat kesan sampingan. Untuk memastikan kehamilan benar-benar dicegah, buat ujian kehamilan tiga minggu selepas menelannya, atau berjumpa doktor sakit puan.",
@@ -3066,7 +3066,7 @@ ms:{
  title:"Cara mendapatkan pil kontraseptif kecemasan",
  subtitle:"Di Jepun ada tiga cara untuk mendapatkannya\n\u30fbklinik sakit puan\n\u30fbfarmasi\n\u30fbrundingan dalam talian\n\nWalaupun pada hari cuti atau lewat malam, ada caranya.\nJangan berputus asa — mari kita semak satu persatu bersama.",
  cdlabel:"Masukkan tarikh dan masa hubungan seks tanpa perancang",
- cdempty:"Masukkan tarikh dan masa untuk melihat masa yang tinggal",
+ cdempty:"Masukkan tarikh dan masa untuk tahu berapa lama lagi sebelum cukup 72 jam",
  cdprefix:"",
  cdh:"jam", cdm:"minit",
  cdnote:"Lebih cepat anda menelannya, lebih baik kesannya. Jangan tangguh, bertindaklah sekarang.",
