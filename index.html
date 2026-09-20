@@ -1216,17 +1216,54 @@ table.eff tr td.v3 {
   margin-bottom: 0;
 }
 
-/* 飲んだ後の確認: 2つの調べ方を並べ、間に「または」を置く */
-.acways {
-  display: grid;
-  margin-top: 4px;
-  gap: 8px;
+/* 飲んだ後の確認 */
+.aclead {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.75;
 }
 
-.acway {
+/* ①② の番号。文字で持つと縦棒の飾りと二重になるので、連番で出します */
+.band {
+  counter-reset: acstep;
+}
+
+.acstep {
+  position: relative;
+  margin: 32px 0 14px;
+  padding-left: 38px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+  counter-increment: acstep;
+}
+
+.acstep::before {
+  content: counter(acstep);
+  position: absolute;
+  top: 0.02em;
+  left: 0;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6534c9 0%, #b02a86 100%);
+  color: #fff;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 2つの調べ方は1つの枠にまとめ、間を「または」で区切ります。
+   別々の箱にすると押せるボタンに見えてしまうためです。 */
+.acbox {
   --tint: var(--mint-rgb);
-  margin: 0;
-  padding: 16px 20px;
+  padding: 18px 20px;
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-small);
   background:
@@ -1234,47 +1271,64 @@ table.eff tr td.v3 {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
     0 8px 20px rgba(101, 52, 201, 0.08);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+}
+
+.acopt {
+  margin: 0;
   color: var(--ink);
   font-size: 16px;
   font-weight: 700;
   line-height: 1.7;
-  text-align: center;
 }
 
-.acways .acway:last-child {
-  --tint: var(--sky-rgb);
+.acsub {
+  margin: 7px 0 0;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.75;
 }
 
 .acor {
-  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 15px 0;
   color: var(--ink-3);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  text-align: center;
 }
 
-.acnote {
-  margin: 12px 0 0;
-  color: var(--ink-3);
-  font-size: 14px;
-  line-height: 1.8;
+.acor::before,
+.acor::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line-strong);
 }
 
-/* 検査結果の表。spec の見た目を borrow しつつ、見出し行を足します */
+/* 検査結果の表。spec の見た目を借りつつ、見出し行を足します */
 .actable {
-  margin-top: 4px;
+  margin-top: 6px;
+}
+
+.actable th,
+.actable td {
+  padding: 15px 0;
 }
 
 .actable thead th {
   width: auto;
-  padding: 0 14px 10px 0;
+  padding: 0 16px 10px 0;
   border-bottom: 1px solid var(--line-strong);
   color: var(--ink);
-  font-size: 14px;
+  font-size: 13.5px;
 }
 
 .actable tbody th {
-  width: 42%;
+  width: 40%;
+  padding-right: 18px;
   color: var(--ink);
   font-size: 15px;
 }
@@ -1613,11 +1667,13 @@ footer p {
   /* カードの中の見出しの飾り。暗い地では濃い紫が沈みます */
   .inner .blocktitle::before,
   .inner .waytitle::before,
-  .inner .noteboxtitle::before {
+  .inner .noteboxtitle::before,
+  .acstep::before {
     background: linear-gradient(135deg, #c4a8ff 0%, #ff9ec4 100%);
   }
 
-  .inner .noteboxtitle::before {
+  .inner .noteboxtitle::before,
+  .acstep::before {
     color: #1b1622;
   }
 
@@ -1637,7 +1693,7 @@ footer p {
   .way,
   .notebox,
   .howcard,
-  .acway {
+  .acbox {
     border-color: rgba(255, 255, 255, 0.1);
     background:
       linear-gradient(150deg, rgba(255, 255, 255, 0.07) 0%, rgb(var(--tint, var(--lavender-rgb)) / 0.9) 100%);
@@ -2034,18 +2090,19 @@ footer p {
 <section class="band">
   <div class="inner">
     <h2 id="t-acheckt"></h2>
-    <p class="lead" id="t-aclead"></p>
-    <p id="t-acheck1"></p>
+    <p class="aclead" id="t-aclead"></p>
+    <p class="lead" id="t-acheck1"></p>
 
-    <p class="blocktitle" id="t-ac1t"></p>
-    <div class="acways">
-      <p class="acway" id="t-ac1a"></p>
-      <p class="acor" id="t-ac1or"></p>
-      <p class="acway" id="t-ac1b"></p>
+    <!-- ①② は翻訳文には入れず、CSS の連番で丸い印として出しています -->
+    <p class="acstep" id="t-ac1t"></p>
+    <div class="acbox">
+      <p class="acopt" id="t-ac1a"></p>
+      <p class="acsub" id="t-ac1note"></p>
+      <p class="acor"><span id="t-ac1or"></span></p>
+      <p class="acopt" id="t-ac1b"></p>
     </div>
-    <p class="acnote" id="t-ac1note"></p>
 
-    <p class="blocktitle" id="t-ac2t"></p>
+    <p class="acstep" id="t-ac2t"></p>
     <table class="spec actable">
       <thead><tr><th id="t-acth1"></th><th id="t-acth2"></th></tr></thead>
       <!-- 中身は JavaScript が [結果, どうすればいい] の配列から作ります -->
@@ -2155,12 +2212,12 @@ ja:{
  cdcap:"72時間まで、あと",
  acheckt:"飲んだ後は、3週間後に妊娠の確認を",
  aclead:"出血があっても、避妊できたとは限りません。",
- ac1t:"① 服用から3週間後に確認する",
+ ac1t:"服用から3週間後に確認する",
  ac1a:"妊娠検査薬で調べる",
  ac1or:"または",
  ac1b:"産婦人科を受診する",
  ac1note:"妊娠検査薬は、説明書に従って使用してください。",
- ac2t:"② 検査結果に合わせて行動する",
+ ac2t:"検査結果に合わせて行動する",
  acth1:"検査結果・その後の状態",
  acth2:"どうすればいい？",
  ac3t:"飲んだ後に出血があったら？",
@@ -2362,12 +2419,12 @@ en:{
  cdcap:"Left of the 72 hours",
  acheckt:"Check for pregnancy 3 weeks later",
  aclead:"Bleeding does not mean the medicine worked.",
- ac1t:"① Check 3 weeks after taking it",
+ ac1t:"Check 3 weeks after taking it",
  ac1a:"Use a pregnancy test",
  ac1or:"or",
  ac1b:"See a gynaecologist",
  ac1note:"Use the pregnancy test exactly as its instructions say.",
- ac2t:"② Act on the result",
+ ac2t:"Act on the result",
  acth1:"Result and what happened next",
  acth2:"What to do",
  ac3t:"What if you bleed after taking it?",
@@ -2546,12 +2603,12 @@ ko:{
  cdcap:"72시간까지 남은 시간",
  acheckt:"복용 후에는 3주 뒤에 임신 확인을",
  aclead:"출혈이 있어도 피임이 되었다고 단정할 수 없습니다.",
- ac1t:"① 복용 후 3주 뒤에 확인하기",
+ ac1t:"복용 후 3주 뒤에 확인하기",
  ac1a:"임신테스트기로 검사하기",
  ac1or:"또는",
  ac1b:"산부인과 진료받기",
  ac1note:"임신테스트기는 설명서에 따라 사용하세요.",
- ac2t:"② 검사 결과에 맞춰 행동하기",
+ ac2t:"검사 결과에 맞춰 행동하기",
  acth1:"검사 결과와 이후 상태",
  acth2:"어떻게 해야 하나요?",
  ac3t:"복용 후에 출혈이 있으면?",
@@ -2730,12 +2787,12 @@ zh:{
  cdcap:"距离72小时还剩",
  acheckt:"服药后请在3周后确认是否怀孕",
  aclead:"即使出血，也不代表一定避孕成功。",
- ac1t:"① 服药3周后确认",
+ ac1t:"服药3周后确认",
  ac1a:"用验孕棒检测",
  ac1or:"或者",
  ac1b:"前往妇产科就诊",
  ac1note:"验孕棒请按照说明书使用。",
- ac2t:"② 根据检测结果行动",
+ ac2t:"根据检测结果行动",
  acth1:"检测结果与之后的状态",
  acth2:"该怎么做？",
  ac3t:"服药后出血了怎么办？",
@@ -2914,12 +2971,12 @@ vi:{
  cdcap:"Còn lại trong 72 giờ",
  acheckt:"Sau khi uống, hãy kiểm tra thai sau 3 tuần",
  aclead:"Có chảy máu cũng không có nghĩa là đã tránh thai thành công.",
- ac1t:"① Kiểm tra sau 3 tuần kể từ khi uống",
+ ac1t:"Kiểm tra sau 3 tuần kể từ khi uống",
  ac1a:"Thử bằng que thử thai",
  ac1or:"hoặc",
  ac1b:"Đi khám sản phụ khoa",
  ac1note:"Hãy dùng que thử thai đúng theo hướng dẫn đi kèm.",
- ac2t:"② Hành động theo kết quả",
+ ac2t:"Hành động theo kết quả",
  acth1:"Kết quả và tình trạng sau đó",
  acth2:"Bạn nên làm gì?",
  ac3t:"Nếu chảy máu sau khi uống thì sao?",
@@ -3098,12 +3155,12 @@ ne:{
  cdcap:"७२ घण्टा पुग्न बाँकी",
  acheckt:"खाएको ३ हप्तापछि गर्भ छ कि छैन जाँच्नुहोस्",
  aclead:"रगत बगे पनि गर्भ रोकियो भन्ने पक्का हुँदैन।",
- ac1t:"① खाएको ३ हप्तापछि जाँच्ने",
+ ac1t:"खाएको ३ हप्तापछि जाँच्ने",
  ac1a:"गर्भ परीक्षण किटले जाँच्ने",
  ac1or:"वा",
  ac1b:"स्त्रीरोग विशेषज्ञकहाँ जाने",
  ac1note:"गर्भ परीक्षण किट निर्देशनअनुसार प्रयोग गर्नुहोस्।",
- ac2t:"② नतिजाअनुसार काम गर्ने",
+ ac2t:"नतिजाअनुसार काम गर्ने",
  acth1:"नतिजा र त्यसपछिको अवस्था",
  acth2:"के गर्ने?",
  ac3t:"खाएपछि रगत बगेमा?",
@@ -3282,12 +3339,12 @@ ms:{
  cdcap:"Baki daripada 72 jam",
  acheckt:"Selepas menelannya, semak kehamilan 3 minggu kemudian",
  aclead:"Pendarahan tidak bermakna anda pasti tidak hamil.",
- ac1t:"① Semak 3 minggu selepas menelannya",
+ ac1t:"Semak 3 minggu selepas menelannya",
  ac1a:"Guna ujian kehamilan",
  ac1or:"atau",
  ac1b:"Berjumpa doktor sakit puan",
  ac1note:"Gunakan ujian kehamilan mengikut arahan yang disertakan.",
- ac2t:"② Bertindak mengikut keputusan",
+ ac2t:"Bertindak mengikut keputusan",
  acth1:"Keputusan dan keadaan selepas itu",
  acth2:"Apa yang perlu dibuat",
  ac3t:"Bagaimana jika berdarah selepas menelannya?",
