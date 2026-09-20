@@ -39,8 +39,6 @@
 <meta property="og:description" content="日本で緊急避妊薬を手に入れる3つの方法を7言語で案内します。産婦人科、薬局、オンライン診療。">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#FBF8F5">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23FBF8F5'/><circle cx='16' cy='16' r='8' fill='none' stroke='%231C1C1A' stroke-width='1.4'/><ellipse cx='16' cy='16' rx='8' ry='3.4' fill='none' stroke='%23E0A9A0' stroke-width='1.4'/></svg>">
 
 <style>
 /* ── 配色 ──────────────────────────────────────────────
@@ -2153,7 +2151,9 @@ footer p {
     <h2 id="t-consulttitle"></h2>
     <div class="callout">
       <p id="t-consulttext"></p>
-      <a class="btn" id="t-cb1" rel="noopener noreferrer" target="_blank"
+      <!-- 電話が一番早く、費用の公費負担にもつながるので先頭に置いています -->
+      <a class="btn" id="t-cb0" href="tel:%238891"></a>
+      <a class="btn sub" id="t-cb1" rel="noopener noreferrer" target="_blank"
          href="https://www.gender.go.jp/policy/no_violence/seibouryoku/consult.html"></a>
       <a class="btn sub" id="t-cb2" href="tel:%238103"></a>
       <a class="btn sub" id="t-cb3" rel="noopener noreferrer" target="_blank"
@@ -2380,7 +2380,8 @@ ja:{
  ],
  consulttitle:"一人で抱えなくて大丈夫です",
  consulttext:"無料で相談できる公的な窓口があります。性暴力の被害にあった場合は、診察や薬の費用の支援を受けられる場合があります。費用を理由にあきらめないでください。",
- cb1:"性暴力の相談窓口をさがす（内閣府）",
+ cb0:"性暴力被害の相談 #8891 に電話する",
+ cdfuture:"これから先の日時が入っています", cb1:"性暴力の相談窓口をさがす（内閣府）",
  cb2:"警察の性犯罪被害相談 #8103 に電話する",
  cb3:"予期しない妊娠の相談（こども家庭庁）",
  abouttitle:"このサイトについて",
@@ -2390,7 +2391,7 @@ ja:{
  trnote:"日本語以外の翻訳には機械翻訳を含みます。誤りがある可能性があります。重要な判断は、公式サイトの情報か、薬剤師・医師への確認にもとづいて行ってください。",
  sources:"出典: 厚生労働省「緊急避妊薬の調剤・販売について」、日本薬剤師会、ノルレボ／レソエル72 添付文書、第一三共ヘルスケアおよびアリナミン製薬のニュースリリース。",
  tm:"「ノルレボ」は第一三共ヘルスケア株式会社、「レソエル」は富士製薬工業株式会社の登録商標です。本サイトはこれらの企業とは無関係です。",
- updated:"最終更新: 2026年7月30日",
+ updated:"最終更新: 2026年9月20日",
  exit:"画面を閉じる"
 },
 
@@ -2564,7 +2565,8 @@ en:{
  r3b:"Find an OB-GYN clinic (Ministry of Health)",
  consulttitle:"You do not have to face this alone",
  consulttext:"Free public support services are available. If you have experienced sexual violence, the cost of the consultation and the medicine may be covered. Please do not give up because of money.",
- cb1:"Find a sexual violence support centre (Cabinet Office)",
+ cb0:"Call #8891 for sexual violence support",
+ cdfuture:"That date and time is in the future", cb1:"Find a sexual violence support centre (Cabinet Office)",
  cb2:"Call the police sexual crime helpline #8103",
  cb3:"Support for unplanned pregnancy (Children and Families Agency)",
  abouttitle:"About this site",
@@ -2574,7 +2576,7 @@ en:{
  trnote:"Translations other than Japanese may include machine translation and may contain errors. For important decisions, rely on the official sources or ask a pharmacist or doctor.",
  sources:"Sources: Ministry of Health, Labour and Welfare; Japan Pharmaceutical Association; package inserts for Norlevo and Resoel 72; press releases from Daiichi Sankyo Healthcare and Alinamin Pharmaceutical.",
  tm:"\"Norlevo\" is a registered trademark of Daiichi Sankyo Healthcare Co., Ltd. \"Resoel\" is a registered trademark of Fuji Pharma Co., Ltd. This site is not affiliated with these companies.",
- updated:"Last updated: 30 July 2026",
+ updated:"Last updated: 20 September 2026",
  exit:"Close this page"
 },
 
@@ -2748,7 +2750,8 @@ ko:{
  r3b:"산부인과 찾기 (후생노동성)",
  consulttitle:"혼자 감당하지 않아도 괜찮습니다",
  consulttext:"무료로 상담할 수 있는 공적 창구가 있습니다. 성폭력 피해를 입은 경우에는 진료나 약의 비용을 지원받을 수 있는 경우가 있습니다. 비용 때문에 포기하지 마세요.",
- cb1:"성폭력 상담 창구 찾기 (내각부)",
+ cb0:"성폭력 피해 상담 #8891 로 전화하기",
+ cdfuture:"미래의 날짜와 시간이 입력되어 있습니다", cb1:"성폭력 상담 창구 찾기 (내각부)",
  cb2:"경찰 성범죄 피해 상담 #8103 전화하기",
  cb3:"예기치 않은 임신 상담 (어린이가정청)",
  abouttitle:"이 사이트에 대하여",
@@ -2758,7 +2761,7 @@ ko:{
  trnote:"일본어 이외의 번역에는 기계 번역이 포함되어 있으며 오류가 있을 수 있습니다. 중요한 판단은 공식 사이트의 정보나 약사·의사에게 확인한 내용을 바탕으로 해 주세요.",
  sources:"출처: 후생노동성, 일본약사회, 노르레보·레소엘72 첨부문서, 다이이찌산쿄헬스케어 및 아리나민제약 뉴스 릴리스.",
  tm:"'노르레보'는 다이이찌산쿄헬스케어 주식회사, '레소엘'은 후지제약공업 주식회사의 등록상표입니다. 본 사이트는 이들 기업과 무관합니다.",
- updated:"최종 업데이트: 2026년 7월 30일",
+ updated:"최종 업데이트: 2026년 9월 20일",
  exit:"화면 닫기"
 },
 
@@ -2932,7 +2935,8 @@ zh:{
  r3b:"查找妇产科（厚生劳动省）",
  consulttitle:"您不必独自承受",
  consulttext:"有可以免费咨询的公共窗口。如果遭受了性暴力，问诊和药品的费用有可能获得支援。请不要因为费用而放弃。",
- cb1:"查找性暴力咨询窗口（内阁府）",
+ cb0:"拨打性暴力受害咨询专线 #8891",
+ cdfuture:"输入的是未来的日期和时间", cb1:"查找性暴力咨询窗口（内阁府）",
  cb2:"致电警察性犯罪受害咨询电话 #8103",
  cb3:"意外怀孕咨询（儿童家庭厅）",
  abouttitle:"关于本网站",
@@ -2942,7 +2946,7 @@ zh:{
  trnote:"日语以外的翻译包含机器翻译，可能存在错误。重要判断请依据官方网站的信息，或向药剂师、医生确认。",
  sources:"出处：厚生劳动省、日本药剂师会、诺雷波及Resoel 72说明书、第一三共健康护理及合利他命制药的新闻稿。",
  tm:"「Norlevo（诺雷波）」是第一三共健康护理株式会社的注册商标，「Resoel」是富士制药工业株式会社的注册商标。本网站与这些企业无关。",
- updated:"最后更新：2026年7月30日",
+ updated:"最后更新：2026年9月20日",
  exit:"关闭页面"
 },
 
@@ -3116,7 +3120,8 @@ vi:{
  r3b:"Tìm phòng khám sản phụ khoa (Bộ Y tế)",
  consulttitle:"Bạn không phải một mình đối mặt với điều này",
  consulttext:"Có các cơ quan công có thể tư vấn miễn phí. Nếu bạn là nạn nhân của bạo lực tình dục, chi phí khám và thuốc có thể được hỗ trợ. Xin đừng bỏ cuộc vì tiền.",
- cb1:"Tìm trung tâm hỗ trợ nạn nhân bạo lực tình dục (Văn phòng Nội các)",
+ cb0:"Gọi #8891 để được hỗ trợ về bạo lực tình dục",
+ cdfuture:"Ngày giờ bạn nhập nằm ở tương lai", cb1:"Tìm trung tâm hỗ trợ nạn nhân bạo lực tình dục (Văn phòng Nội các)",
  cb2:"Gọi đường dây tư vấn tội phạm tình dục của cảnh sát #8103",
  cb3:"Tư vấn về mang thai ngoài ý muốn (Cơ quan Trẻ em và Gia đình)",
  abouttitle:"Về trang web này",
@@ -3126,7 +3131,7 @@ vi:{
  trnote:"Các bản dịch ngoài tiếng Nhật có bao gồm dịch máy và có thể có sai sót. Với những quyết định quan trọng, hãy dựa vào nguồn chính thức hoặc hỏi dược sĩ, bác sĩ.",
  sources:"Nguồn: Bộ Y tế, Lao động và Phúc lợi; Hội Dược sĩ Nhật Bản; tờ hướng dẫn sử dụng Norlevo và Resoel 72; thông cáo báo chí của Daiichi Sankyo Healthcare và Alinamin Pharmaceutical.",
  tm:"'Norlevo' là thương hiệu đã đăng ký của Daiichi Sankyo Healthcare Co., Ltd. 'Resoel' là thương hiệu đã đăng ký của Fuji Pharma Co., Ltd. Trang web này không liên kết với các công ty này.",
- updated:"Cập nhật lần cuối: 30 tháng 7 năm 2026",
+ updated:"Cập nhật lần cuối: 20 tháng 9 năm 2026",
  exit:"Đóng trang này"
 },
 
@@ -3300,7 +3305,8 @@ ne:{
  r3b:"क्लिनिक खोज्नुहोस् (मन्त्रालय)",
  consulttitle:"तपाईं एक्लै सहनुपर्दैन",
  consulttext:"निःशुल्क परामर्श दिने सरकारी सेवा छन्। यौन हिंसा भोगेको भए परामर्श र औषधिको खर्च सहयोग पाउन सकिन्छ। कृपया पैसाको कारणले आशा नत्याग्नुहोस्।",
- cb1:"यौन हिंसा सहायता केन्द्र खोज्नुहोस् (क्याबिनेट कार्यालय)",
+ cb0:"यौन हिंसा सहायताका लागि #8891 मा फोन गर्नुहोस्",
+ cdfuture:"भविष्यको मिति र समय हालिएको छ", cb1:"यौन हिंसा सहायता केन्द्र खोज्नुहोस् (क्याबिनेट कार्यालय)",
  cb2:"प्रहरीको यौन अपराध परामर्श #8103 मा फोन गर्नुहोस्",
  cb3:"अनपेक्षित गर्भावस्थाबारे परामर्श (बालबालिका र परिवार एजेन्सी)",
  abouttitle:"यो साइटबारे",
@@ -3310,7 +3316,7 @@ ne:{
  trnote:"जापानी बाहेकका अनुवादमा मेसिन अनुवाद समावेश छ र त्रुटि हुन सक्छ। महत्त्वपूर्ण निर्णयका लागि आधिकारिक स्रोत वा फार्मासिस्ट/डाक्टरसँग पुष्टि गर्नुहोस्।",
  sources:"स्रोत: स्वास्थ्य, श्रम र कल्याण मन्त्रालय; जापान फार्मास्युटिकल एसोसिएसन; Norlevo र Resoel 72 को प्याकेज इन्सर्ट; Daiichi Sankyo Healthcare र Alinamin Pharmaceutical का प्रेस विज्ञप्ति।",
  tm:"'Norlevo' Daiichi Sankyo Healthcare Co., Ltd. को दर्ता ट्रेडमार्क हो। 'Resoel' Fuji Pharma Co., Ltd. को दर्ता ट्रेडमार्क हो। यो साइट यी कम्पनीहरूसँग सम्बन्धित छैन।",
- updated:"अन्तिम अद्यावधिक: ३० जुलाई २०२६",
+ updated:"अन्तिम अद्यावधिक: २० सेप्टेम्बर २०२६",
  exit:"यो पृष्ठ बन्द गर्नुहोस्"
 },
 
@@ -3484,7 +3490,8 @@ ms:{
  r3b:"Cari klinik sakit puan (Kementerian)",
  consulttitle:"Anda tidak perlu menghadapinya sendiri",
  consulttext:"Terdapat perkhidmatan bantuan awam yang percuma. Jika anda mangsa keganasan seksual, kos konsultasi dan ubat mungkin ditanggung. Jangan berputus asa kerana wang.",
- cb1:"Cari pusat bantuan keganasan seksual (Pejabat Kabinet)",
+ cb0:"Hubungi #8891 untuk bantuan keganasan seksual",
+ cdfuture:"Tarikh dan masa itu masih akan datang", cb1:"Cari pusat bantuan keganasan seksual (Pejabat Kabinet)",
  cb2:"Hubungi talian bantuan jenayah seksual polis #8103",
  cb3:"Bantuan untuk kehamilan tidak dirancang (Agensi Kanak-kanak dan Keluarga)",
  abouttitle:"Mengenai laman ini",
@@ -3494,7 +3501,7 @@ ms:{
  trnote:"Terjemahan selain bahasa Jepun termasuk terjemahan mesin dan mungkin mengandungi kesilapan. Untuk keputusan penting, rujuk sumber rasmi atau tanya ahli farmasi atau doktor.",
  sources:"Sumber: Kementerian Kesihatan, Buruh dan Kebajikan; Persatuan Farmaseutikal Jepun; sisipan pakej Norlevo dan Resoel 72; siaran akhbar Daiichi Sankyo Healthcare dan Alinamin Pharmaceutical.",
  tm:"'Norlevo' ialah tanda dagangan berdaftar Daiichi Sankyo Healthcare Co., Ltd. 'Resoel' ialah tanda dagangan berdaftar Fuji Pharma Co., Ltd. Laman ini tidak bergabung dengan syarikat-syarikat ini.",
- updated:"Kemas kini terakhir: 30 Julai 2026",
+ updated:"Kemas kini terakhir: 20 September 2026",
  exit:"Tutup halaman ini"
 }
 
@@ -3607,6 +3614,7 @@ function render(){
   txt("t-faqtitle", g("faqtitle"));
   txt("t-consulttitle", g("consulttitle"));
   txt("t-consulttext", g("consulttext"));
+  txt("t-cb0", g("cb0"));
   txt("t-cb1", g("cb1")); txt("t-cb2", g("cb2")); txt("t-cb3", g("cb3"));
   txt("t-abouttitle", g("abouttitle"));
   txt("t-aboutbody", g("aboutbody"));
@@ -3744,6 +3752,19 @@ function tick(){
   }
   var start = new Date(v).getTime();
   if(isNaN(start)){ cap.hidden = true; num.innerHTML="—"; note.textContent=g("cdempty"); return; }
+
+  /* これから先の日時。年や月を打ち間違えると起こります。
+     そのまま計算すると「72時間まであと76時間」のような表示になるので、
+     ここで止めて入れ直してもらいます。 */
+  if(start > Date.now()){
+    cap.hidden = true;
+    num.textContent = g("cdfuture");
+    num.style.fontSize = "26px";
+    note.textContent = g("cdempty");
+    bar.style.width = "0";
+    over.hidden = true;
+    return;
+  }
 
   var elapsedH = (Date.now()-start)/3600000;
   var leftMs = start + LIMIT_H*3600000 - Date.now();
