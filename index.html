@@ -1108,7 +1108,7 @@ table.eff tr td.v3 {
 /* ===== カードの中の見出しを目立たせる =====
 
    詳細度の落とし穴に注意してください。
-   本文には `.route p` (0,1,1) と `.morebody > p` (0,2,0) が効いています。
+   本文には `.route p` (0,1,1) と `.extra > p` (0,2,0) が効いています。
    `.blocktitle` `.waytitle` `.noteboxtitle` は (0,1,0) しかないため、
    そのままでは色も大きさも本文に負けます。実際、2026年9月7日まで
    これらの見出しは本文とまったく同じ色で表示されていました。
@@ -1200,85 +1200,83 @@ table.eff tr td.v3 {
 /* 「もっと詳しく」。長い説明はここに畳んでいます。
    中身は最初から HTML にあるので、閉じていても読み上げや
    ページ内検索から見つけられます。 */
-.more {
+/* 経路カードの補足。本文の続きとして、間を空けて置くだけにしています */
+.extra {
   margin-top: 24px;
 }
 
-/* 押せる場所だと分かるように、丸い枠のボタンの見た目にしています */
-.more > summary {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  /* 指で押せる大きさ（48px以上）を確保します */
-  min-height: 52px;
-  padding: 13px 20px;
-  border: 1.5px solid rgba(101, 52, 201, 0.3);
-  border-radius: 999px;
-  background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.92) 0%, rgb(var(--lavender-rgb) / 0.9) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 4px 14px rgba(101, 52, 201, 0.12);
-  color: var(--accent);
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  list-style: none;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
-}
-
-.more > summary::-webkit-details-marker {
-  display: none;
-}
-
-.more > summary:hover {
-  border-color: rgba(101, 52, 201, 0.55);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 6px 18px rgba(101, 52, 201, 0.2);
-}
-
-/* 三角は右端に置いて、閉じているときは右向き（▶）、
-   開くと下向き（▼）にします。
-   transform: rotate() は使いません。擬似要素にかけると
-   getComputedStyle で読み戻せず、検証ができないためです。
-   辺の指定を入れ替えるやり方なら、数値で確かめられます。 */
-.more > summary::before {
-  content: "";
-  order: 2;
-  margin-left: auto;
-  width: 0;
-  height: 0;
-  border-top: 5px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 7px solid currentColor;
-}
-
-.more[open] > summary::before {
-  border-top: 7px solid currentColor;
-  border-right: 5px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 5px solid transparent;
-}
-
-/* 開いた中身が、上のボタンの続きだと分かるように縦線でつなぎます */
-.morebody {
-  margin-top: 14px;
-  padding: 2px 2px 2px 16px;
-  border-left: 2px solid rgba(101, 52, 201, 0.25);
-}
-
-.morebody > p {
+.extra > p {
   margin: 0 0 10px;
   color: var(--ink-2);
   font-size: 15px;
   line-height: 1.85;
 }
 
-.morebody > p:last-child {
+.extra > p:last-child {
   margin-bottom: 0;
+}
+
+/* 飲んだ後の確認: 2つの調べ方を並べ、間に「または」を置く */
+.acways {
+  display: grid;
+  margin-top: 4px;
+  gap: 8px;
+}
+
+.acway {
+  --tint: var(--mint-rgb);
+  margin: 0;
+  padding: 16px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-small);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.72) 0%, rgb(var(--tint) / 0.88) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 20px rgba(101, 52, 201, 0.08);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.acways .acway:last-child {
+  --tint: var(--sky-rgb);
+}
+
+.acor {
+  margin: 0;
+  color: var(--ink-3);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.acnote {
+  margin: 12px 0 0;
+  color: var(--ink-3);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* 検査結果の表。spec の見た目を borrow しつつ、見出し行を足します */
+.actable {
+  margin-top: 4px;
+}
+
+.actable thead th {
+  width: auto;
+  padding: 0 14px 10px 0;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.actable tbody th {
+  width: 42%;
+  color: var(--ink);
+  font-size: 15px;
 }
 
 /* 服用前チェック: 「してはいけない」と「相談して」の2群 */
@@ -1612,14 +1610,6 @@ footer p {
     background: rgba(255, 255, 255, 0.06);
   }
 
-  .more > summary:hover {
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-
-  .morebody {
-    border-left-color: rgba(196, 168, 255, 0.3);
-  }
-
   /* カードの中の見出しの飾り。暗い地では濃い紫が沈みます */
   .inner .blocktitle::before,
   .inner .waytitle::before,
@@ -1646,7 +1636,8 @@ footer p {
 
   .way,
   .notebox,
-  .howcard {
+  .howcard,
+  .acway {
     border-color: rgba(255, 255, 255, 0.1);
     background:
       linear-gradient(150deg, rgba(255, 255, 255, 0.07) 0%, rgb(var(--tint, var(--lavender-rgb)) / 0.9) 100%);
@@ -1661,7 +1652,6 @@ footer p {
 
   .hero .label,
   .route .tag,
-  .more > summary,
   .stepsin li::before,
   .checklist.note li::before {
     border-color: rgba(255, 255, 255, 0.12);
@@ -1934,10 +1924,7 @@ footer p {
      steps の並びもこの順（0=産婦人科 / 1=薬局 / 2=オンライン診療）です。
      順番を変えるときは、下の <div class="route"> と steps の両方を
      そろえて入れ替えてください。
-
-     長い補足は <details class="more"> に畳んでいます。
-     中身は最初から HTML にあるので、閉じていても読み上げソフトや
-     ページ内検索から見つけられます。 -->
+ -->
 <section class="band tint">
   <div class="inner">
     <h2 id="t-routestitle"></h2>
@@ -1959,16 +1946,13 @@ footer p {
         <!-- 中身は JavaScript が [見出し, 本文] の配列から作ります -->
         <div class="ways" id="r3reco"></div>
 
-        <details class="more">
-          <summary><span class="js-more"></span></summary>
-          <div class="morebody">
-            <p id="t-r3d2"></p>
-            <p class="waytitle" id="t-r3meritt"></p>
-            <p id="t-r3meritd1"></p>
-            <p id="t-r3meritd2"></p>
-            <p id="t-r3meritd3"></p>
-          </div>
-        </details>
+        <div class="extra">
+          <p id="t-r3d2"></p>
+          <p class="waytitle" id="t-r3meritt"></p>
+          <p id="t-r3meritd1"></p>
+          <p id="t-r3meritd2"></p>
+          <p id="t-r3meritd3"></p>
+        </div>
 
         <a class="btn" id="t-r3b" rel="noopener noreferrer" target="_blank"
            href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000186912_00002.html"></a>
@@ -1982,14 +1966,11 @@ footer p {
         <p class="blocktitle js-todo"></p>
         <ol class="stepsin" id="st2"></ol>
 
-        <details class="more">
-          <summary><span class="js-more"></span></summary>
-          <div class="morebody">
-            <p class="waytitle" id="t-r1prept"></p>
-            <p id="t-r1prepd1"></p>
-            <p id="t-r1prepd2"></p>
-          </div>
-        </details>
+        <div class="extra">
+          <p class="waytitle" id="t-r1prept"></p>
+          <p id="t-r1prepd1"></p>
+          <p id="t-r1prepd2"></p>
+        </div>
 
         <a class="btn sub" id="t-r1b" rel="noopener noreferrer" target="_blank"
            href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00005.html"></a>
@@ -2009,16 +1990,13 @@ footer p {
           <p id="t-r2cautiond"></p>
         </div>
 
-        <details class="more">
-          <summary><span class="js-more"></span></summary>
-          <div class="morebody">
-            <p id="t-r2ways"></p>
-            <p class="waytitle" id="t-r2w1t"></p>
-            <p id="t-r2w1d"></p>
-            <p class="waytitle" id="t-r2w2t"></p>
-            <p id="t-r2w2d"></p>
-          </div>
-        </details>
+        <div class="extra">
+          <p id="t-r2ways"></p>
+          <p class="waytitle" id="t-r2w1t"></p>
+          <p id="t-r2w1d"></p>
+          <p class="waytitle" id="t-r2w2t"></p>
+          <p id="t-r2w2d"></p>
+        </div>
 
         <a class="btn sub" id="t-r2b" rel="noopener noreferrer" target="_blank"
            href="https://www.mhlw.go.jp/stf/kinnkyuuhininnyaku_00004.html"></a>
@@ -2050,13 +2028,36 @@ footer p {
   </div>
 </section>
 
-<!-- ===== 飲んだ後の確認 ===== -->
+<!-- ===== 飲んだ後の確認 =====
+     「出血したから大丈夫」と自己判断されるのが一番こわいので、
+     結論（3週間後に確認）を見出しと最後の注意の両方に置いています。 -->
 <section class="band">
   <div class="inner">
     <h2 id="t-acheckt"></h2>
+    <p class="lead" id="t-aclead"></p>
     <p id="t-acheck1"></p>
+
+    <p class="blocktitle" id="t-ac1t"></p>
+    <div class="acways">
+      <p class="acway" id="t-ac1a"></p>
+      <p class="acor" id="t-ac1or"></p>
+      <p class="acway" id="t-ac1b"></p>
+    </div>
+    <p class="acnote" id="t-ac1note"></p>
+
+    <p class="blocktitle" id="t-ac2t"></p>
+    <table class="spec actable">
+      <thead><tr><th id="t-acth1"></th><th id="t-acth2"></th></tr></thead>
+      <!-- 中身は JavaScript が [結果, どうすればいい] の配列から作ります -->
+      <tbody id="acrows"></tbody>
+    </table>
+
+    <p class="blocktitle" id="t-ac3t"></p>
     <p id="t-acheck2"></p>
     <p id="t-acheck3"></p>
+    <div class="notebox">
+      <p id="t-ac3end"></p>
+    </div>
   </div>
 </section>
 
@@ -2151,12 +2152,27 @@ var T = {
 
 ja:{
  todo:"やること",
- more:"もっと詳しく",
  cdcap:"72時間まで、あと",
- acheckt:"飲んだ後の確認",
- acheck1:"避妊に成功していると、服用後3週間以内に消退出血が起こることがほとんどです。消退出血とは、緊急避妊薬によって高まった女性ホルモンが減少することで子宮内膜が剥がれ落ち、生理と同じように出血することです。",
- acheck2:"ただし、服用後には副作用により不正出血が起こる可能性もあります。確実に避妊できているか確かめるためには、服用から3週間後に妊娠検査薬で調べるか、産婦人科を受診しましょう。",
- acheck3:"妊娠検査薬で陰性だったとしてもその後も生理がこないようであれば、必ず産婦人科を受診してください。",
+ acheckt:"飲んだ後は、3週間後に妊娠の確認を",
+ aclead:"出血があっても、避妊できたとは限りません。",
+ ac1t:"① 服用から3週間後に確認する",
+ ac1a:"妊娠検査薬で調べる",
+ ac1or:"または",
+ ac1b:"産婦人科を受診する",
+ ac1note:"妊娠検査薬は、説明書に従って使用してください。",
+ ac2t:"② 検査結果に合わせて行動する",
+ acth1:"検査結果・その後の状態",
+ acth2:"どうすればいい？",
+ ac3t:"飲んだ後に出血があったら？",
+ ac3end:"「出血したから大丈夫」と判断せず、3週間後に確認しましょう。",
+ acrows:[
+  ["陽性だった","産婦人科を受診してください。"],
+  ["陰性でも、生理がこない","産婦人科を受診してください。"],
+  ["判定がわからない","説明書を確認し、再検査するか産婦人科に相談してください。"]
+ ],
+ acheck1:"出血の有無にかかわらず、次の方法で確認しましょう。",
+ acheck2:"薬の影響で、生理のような出血が起こることがあります。ホルモンの変化による出血を「消退出血」といいます。",
+ acheck3:"ただし、生理や薬の影響による出血、妊娠初期の出血などを、見た目だけで判断することはできません。",
  pageTitle:"緊急避妊薬を手に入れる方法 | 7言語ガイド",
  tophint:"このサイトは公式サイトではありません（個人が運営しています）",
  eyebrow:"まだ、間に合う",
@@ -2323,7 +2339,6 @@ ja:{
 
 en:{
  todo:"What to do",
- more:"More detail",
  whattitle:"What is emergency contraception?",
  whatbody1:"Taking it within 72 hours of sex that has left you worried about pregnancy can help prevent pregnancy as an emergency measure. (It is not guaranteed to be 100% effective.)",
  howtitle:"How does it work?",
@@ -2345,10 +2360,26 @@ en:{
   "Your partner would not use contraception"
  ],
  cdcap:"Left of the 72 hours",
- acheckt:"Checking afterwards",
- acheck1:"When the medicine has worked, withdrawal bleeding almost always occurs within three weeks of taking it. Withdrawal bleeding is when the female hormones raised by the emergency contraceptive fall again, the lining of the womb comes away, and you bleed just as you would in a period.",
- acheck2:"However, unexpected bleeding can also occur as a side effect after taking it. To be sure that pregnancy has been prevented, take a pregnancy test three weeks after taking the medicine, or see a clinic.",
- acheck3:"Even if the pregnancy test is negative, if your period still does not come after that, please be sure to see a clinic.",
+ acheckt:"Check for pregnancy 3 weeks later",
+ aclead:"Bleeding does not mean the medicine worked.",
+ ac1t:"① Check 3 weeks after taking it",
+ ac1a:"Use a pregnancy test",
+ ac1or:"or",
+ ac1b:"See a gynaecologist",
+ ac1note:"Use the pregnancy test exactly as its instructions say.",
+ ac2t:"② Act on the result",
+ acth1:"Result and what happened next",
+ acth2:"What to do",
+ ac3t:"What if you bleed after taking it?",
+ ac3end:"Do not decide “I bled, so I must be fine.” Check 3 weeks later.",
+ acrows:[
+  ["It was positive","Please see a gynaecologist."],
+  ["Negative, but your period has not come","Please see a gynaecologist."],
+  ["You cannot tell the result","Check the instructions, then test again or ask a gynaecologist."]
+ ],
+ acheck1:"Whether or not you bleed, check in one of these ways.",
+ acheck2:"The medicine can cause bleeding that looks like a period. Bleeding caused by the change in hormones is called withdrawal bleeding.",
+ acheck3:"But you cannot tell a period, bleeding from the medicine, and bleeding in early pregnancy apart just by looking at them.",
  steps:[
   ["Visit a clinic",[
    "Look for a clinic close to your home, school or workplace that can see you as soon as possible.",
@@ -2492,7 +2523,6 @@ en:{
 
 ko:{
  todo:"할 일",
- more:"자세히 보기",
  whattitle:"긴급피임약은 어떤 약인가요?",
  whatbody1:"임신이 걱정되는 성관계 후 72시간 이내에 복용하면, 긴급하게 임신을 막는 효과가 있습니다. (100% 효과를 보장하는 것은 아닙니다)",
  howtitle:"어떻게 작용하나요?",
@@ -2514,10 +2544,26 @@ ko:{
   "파트너가 피임을 해 주지 않았다"
  ],
  cdcap:"72시간까지 남은 시간",
- acheckt:"복용한 뒤의 확인",
- acheck1:"피임에 성공한 경우, 복용 후 3주 이내에 소퇴출혈이 일어나는 것이 대부분입니다. 소퇴출혈이란 응급피임약으로 높아졌던 여성호르몬이 줄어들면서 자궁내막이 떨어져 나와, 생리와 마찬가지로 출혈하는 것을 말합니다.",
- acheck2:"다만 복용 후에는 부작용으로 부정출혈이 일어날 가능성도 있습니다. 확실히 피임이 되었는지 확인하려면, 복용으로부터 3주 뒤에 임신테스트기로 검사하거나 산부인과를 방문하세요.",
- acheck3:"임신테스트기에서 음성이 나왔더라도 그 뒤로 생리가 오지 않는다면, 반드시 산부인과를 방문해 주세요.",
+ acheckt:"복용 후에는 3주 뒤에 임신 확인을",
+ aclead:"출혈이 있어도 피임이 되었다고 단정할 수 없습니다.",
+ ac1t:"① 복용 후 3주 뒤에 확인하기",
+ ac1a:"임신테스트기로 검사하기",
+ ac1or:"또는",
+ ac1b:"산부인과 진료받기",
+ ac1note:"임신테스트기는 설명서에 따라 사용하세요.",
+ ac2t:"② 검사 결과에 맞춰 행동하기",
+ acth1:"검사 결과와 이후 상태",
+ acth2:"어떻게 해야 하나요?",
+ ac3t:"복용 후에 출혈이 있으면?",
+ ac3end:"‘출혈했으니 괜찮다’고 판단하지 말고, 3주 뒤에 확인합시다.",
+ acrows:[
+  ["양성이었다","산부인과를 방문하세요."],
+  ["음성인데 생리가 오지 않는다","산부인과를 방문하세요."],
+  ["판정을 알 수 없다","설명서를 확인하고 다시 검사하거나 산부인과에 상담하세요."]
+ ],
+ acheck1:"출혈이 있든 없든, 다음 방법으로 확인합시다.",
+ acheck2:"약의 영향으로 생리 같은 출혈이 일어날 수 있습니다. 호르몬 변화로 인한 출혈을 ‘소퇴성 출혈’이라고 합니다.",
+ acheck3:"다만 생리, 약에 의한 출혈, 임신 초기의 출혈 등을 겉모습만으로 구분할 수는 없습니다.",
  steps:[
   ["산부인과 진료받기",[
    "집이나 학교, 직장 등에서 가깝고 되도록 빨리 진료받을 수 있는 산부인과를 찾아봅시다.",
@@ -2661,7 +2707,6 @@ ko:{
 
 zh:{
  todo:"具体步骤",
- more:"了解更多",
  whattitle:"紧急避孕药是什么样的药？",
  whatbody1:"在担心怀孕的性行为后72小时内服用，可以起到紧急防止怀孕的作用。（并不保证100%有效）",
  howtitle:"它是怎么起作用的？",
@@ -2683,10 +2728,26 @@ zh:{
   "伴侣没有采取避孕措施"
  ],
  cdcap:"距离72小时还剩",
- acheckt:"服药后的确认",
- acheck1:"如果避孕成功，服药后三周以内几乎都会出现撤退性出血。撤退性出血是指因紧急避孕药而升高的女性激素下降，子宫内膜随之脱落，像月经一样出血。",
- acheck2:"不过，服药后也可能因副作用而出现不规则出血。为了确认是否确实避孕成功，请在服药三周后用验孕棒检查，或到妇产科就诊。",
- acheck3:"即使验孕棒显示阴性，若之后月经仍未到来，请务必到妇产科就诊。",
+ acheckt:"服药后请在3周后确认是否怀孕",
+ aclead:"即使出血，也不代表一定避孕成功。",
+ ac1t:"① 服药3周后确认",
+ ac1a:"用验孕棒检测",
+ ac1or:"或者",
+ ac1b:"前往妇产科就诊",
+ ac1note:"验孕棒请按照说明书使用。",
+ ac2t:"② 根据检测结果行动",
+ acth1:"检测结果与之后的状态",
+ acth2:"该怎么做？",
+ ac3t:"服药后出血了怎么办？",
+ ac3end:"不要因为“出血了所以没事”就自行判断，请在3周后确认。",
+ acrows:[
+  ["结果为阳性","请前往妇产科就诊。"],
+  ["结果为阴性，但月经没来","请前往妇产科就诊。"],
+  ["无法判断结果","请确认说明书，重新检测或咨询妇产科。"]
+ ],
+ acheck1:"无论是否出血，都请用以下方法确认。",
+ acheck2:"受药物影响，可能会出现类似月经的出血。因激素变化引起的出血称为“撤退性出血”。",
+ acheck3:"但是，月经、药物引起的出血、怀孕初期的出血等，仅凭外观无法区分。",
  steps:[
   ["前往妇产科就诊",[
    "找一家离家、学校或工作地点近，并且能尽快就诊的妇产科。",
@@ -2830,7 +2891,6 @@ zh:{
 
 vi:{
  todo:"Các bước cần làm",
- more:"Xem thêm chi tiết",
  whattitle:"Thuốc tránh thai khẩn cấp là thuốc gì?",
  whatbody1:"Uống thuốc trong vòng 72 giờ sau lần quan hệ tình dục khiến bạn lo mang thai có tác dụng ngăn ngừa mang thai khẩn cấp. (Thuốc không đảm bảo hiệu quả 100%)",
  howtitle:"Thuốc hoạt động thế nào?",
@@ -2852,10 +2912,26 @@ vi:{
   "Bạn tình không chịu dùng biện pháp tránh thai"
  ],
  cdcap:"Còn lại trong 72 giờ",
- acheckt:"Kiểm tra sau khi uống",
- acheck1:"Khi thuốc đã có tác dụng, hầu như trong vòng ba tuần sau khi uống sẽ có hiện tượng ra máu do ngừng thuốc. Đó là khi nội tiết tố nữ đã tăng lên vì thuốc tránh thai khẩn cấp giảm xuống, lớp niêm mạc tử cung bong ra và bạn ra máu giống như kỳ kinh.",
- acheck2:"Tuy nhiên, sau khi uống cũng có thể ra máu bất thường do tác dụng phụ. Để chắc chắn đã tránh thai thành công, hãy thử que thử thai sau khi uống ba tuần, hoặc đi khám tại phòng khám sản phụ khoa.",
- acheck3:"Ngay cả khi que thử thai cho kết quả âm tính, nếu sau đó kinh nguyệt vẫn không đến, nhất định hãy đi khám sản phụ khoa.",
+ acheckt:"Sau khi uống, hãy kiểm tra thai sau 3 tuần",
+ aclead:"Có chảy máu cũng không có nghĩa là đã tránh thai thành công.",
+ ac1t:"① Kiểm tra sau 3 tuần kể từ khi uống",
+ ac1a:"Thử bằng que thử thai",
+ ac1or:"hoặc",
+ ac1b:"Đi khám sản phụ khoa",
+ ac1note:"Hãy dùng que thử thai đúng theo hướng dẫn đi kèm.",
+ ac2t:"② Hành động theo kết quả",
+ acth1:"Kết quả và tình trạng sau đó",
+ acth2:"Bạn nên làm gì?",
+ ac3t:"Nếu chảy máu sau khi uống thì sao?",
+ ac3end:"Đừng nghĩ “đã chảy máu nên không sao”. Hãy kiểm tra lại sau 3 tuần.",
+ acrows:[
+  ["Kết quả dương tính","Hãy đi khám sản phụ khoa."],
+  ["Âm tính nhưng chưa có kinh","Hãy đi khám sản phụ khoa."],
+  ["Không rõ kết quả","Hãy xem lại hướng dẫn, thử lại hoặc hỏi bác sĩ sản phụ khoa."]
+ ],
+ acheck1:"Dù có chảy máu hay không, hãy kiểm tra bằng cách sau.",
+ acheck2:"Thuốc có thể gây chảy máu giống như kinh nguyệt. Chảy máu do thay đổi hormone được gọi là chảy máu do ngừng hormone.",
+ acheck3:"Tuy nhiên, không thể chỉ nhìn bề ngoài mà phân biệt kinh nguyệt, chảy máu do thuốc và chảy máu khi mới mang thai.",
  steps:[
   ["Đến khám tại phòng khám sản phụ khoa",[
    "Hãy tìm một phòng khám gần nhà, trường học hoặc nơi làm việc, và có thể khám cho bạn sớm nhất có thể.",
@@ -2999,7 +3075,6 @@ vi:{
 
 ne:{
  todo:"के गर्ने",
- more:"थप विवरण",
  whattitle:"आपत्कालीन गर्भनिरोधक औषधि कस्तो औषधि हो?",
  whatbody1:"गर्भ रहने चिन्ता भएको यौन सम्पर्कपछि ७२ घण्टाभित्र खाँदा आपत्कालीन रूपमा गर्भ रहनबाट रोक्ने असर हुन्छ। (१००% असरको ग्यारेन्टी भने हुँदैन)",
  howtitle:"यसले कसरी काम गर्छ?",
@@ -3021,10 +3096,26 @@ ne:{
   "साथीले गर्भनिरोधक प्रयोग गर्न मान्नुभएन"
  ],
  cdcap:"७२ घण्टा पुग्न बाँकी",
- acheckt:"खाएपछिको जाँच",
- acheck1:"गर्भनिरोध सफल भएको अवस्थामा, औषधि खाएको तीन हप्ताभित्र प्रायः विदड्रल ब्लिडिङ हुन्छ। विदड्रल ब्लिडिङ भनेको आपत्कालीन गर्भनिरोधक औषधिले बढाएको महिला हर्मोन घट्दा पाठेघरको भित्री तह खुस्किएर, महिनावारीजस्तै रक्तस्राव हुनु हो।",
- acheck2:"तर औषधि खाएपछि साइड इफेक्टका कारण अनियमित रक्तस्राव पनि हुन सक्छ। गर्भनिरोध पक्का भयो कि भएन भनी निश्चित गर्न, औषधि खाएको तीन हप्तापछि गर्भ परीक्षण किटले जाँच्नुहोस् वा क्लिनिकमा जानुहोस्।",
- acheck3:"गर्भ परीक्षण किटमा नेगेटिभ आए पनि त्यसपछि महिनावारी नआएमा, अनिवार्य रूपमा क्लिनिकमा जानुहोस्।",
+ acheckt:"खाएको ३ हप्तापछि गर्भ छ कि छैन जाँच्नुहोस्",
+ aclead:"रगत बगे पनि गर्भ रोकियो भन्ने पक्का हुँदैन।",
+ ac1t:"① खाएको ३ हप्तापछि जाँच्ने",
+ ac1a:"गर्भ परीक्षण किटले जाँच्ने",
+ ac1or:"वा",
+ ac1b:"स्त्रीरोग विशेषज्ञकहाँ जाने",
+ ac1note:"गर्भ परीक्षण किट निर्देशनअनुसार प्रयोग गर्नुहोस्।",
+ ac2t:"② नतिजाअनुसार काम गर्ने",
+ acth1:"नतिजा र त्यसपछिको अवस्था",
+ acth2:"के गर्ने?",
+ ac3t:"खाएपछि रगत बगेमा?",
+ ac3end:"“रगत बग्यो त्यसैले ठीक छ” नभनी, ३ हप्तापछि जाँच गर्नुहोस्।",
+ acrows:[
+  ["नतिजा पोजिटिभ आयो","डाक्टरकहाँ जानुहोस्।"],
+  ["नेगेटिभ छ तर महिनावारी भएको छैन","डाक्टरकहाँ जानुहोस्।"],
+  ["नतिजा बुझिएन","निर्देशन हेरेर फेरि जाँच्नुहोस् वा डाक्टरसँग सल्लाह गर्नुहोस्।"]
+ ],
+ acheck1:"रगत बगे पनि नबगे पनि, तलको तरिकाले जाँच गर्नुहोस्।",
+ acheck2:"औषधिको कारण महिनावारीजस्तै रगत बग्न सक्छ। हर्मोन परिवर्तनले हुने यस्तो रक्तस्रावलाई विदड्रअल ब्लिडिङ भनिन्छ।",
+ acheck3:"तर महिनावारी, औषधिले हुने रक्तस्राव र गर्भावस्थाको सुरुको रक्तस्राव हेरेर मात्र छुट्याउन सकिँदैन।",
  steps:[
   ["प्रसूति एवं स्त्री रोग क्लिनिकमा जाने",[
    "घर, विद्यालय वा कार्यस्थलबाट नजिक भएको, र सकेसम्म चाँडो जाँच गराउन मिल्ने क्लिनिक खोज्नुहोस्।",
@@ -3168,7 +3259,6 @@ ne:{
 
 ms:{
  todo:"Apa yang perlu dibuat",
- more:"Butiran lanjut",
  whattitle:"Apakah pil kontraseptif kecemasan?",
  whatbody1:"Menelannya dalam tempoh 72 jam selepas hubungan seks yang membimbangkan anda tentang kehamilan boleh membantu mencegah kehamilan secara kecemasan. (Keberkesanannya tidak dijamin 100%)",
  howtitle:"Bagaimana ia berfungsi?",
@@ -3190,10 +3280,26 @@ ms:{
   "Pasangan anda enggan menggunakan perancang"
  ],
  cdcap:"Baki daripada 72 jam",
- acheckt:"Semakan selepas menelannya",
- acheck1:"Apabila ubat berkesan, pendarahan tarik diri hampir selalu berlaku dalam tempoh tiga minggu selepas menelannya. Pendarahan tarik diri ialah apabila hormon wanita yang meningkat akibat kontraseptif kecemasan menurun semula, lapisan rahim terlerai, dan berlaku pendarahan seperti haid.",
- acheck2:"Namun, selepas menelannya juga boleh berlaku pendarahan luar jangka akibat kesan sampingan. Untuk memastikan kehamilan benar-benar dicegah, buat ujian kehamilan tiga minggu selepas menelannya, atau berjumpa doktor sakit puan.",
- acheck3:"Walaupun ujian kehamilan menunjukkan keputusan negatif, jika haid anda masih tidak datang selepas itu, sila pastikan anda berjumpa doktor sakit puan.",
+ acheckt:"Selepas menelannya, semak kehamilan 3 minggu kemudian",
+ aclead:"Pendarahan tidak bermakna anda pasti tidak hamil.",
+ ac1t:"① Semak 3 minggu selepas menelannya",
+ ac1a:"Guna ujian kehamilan",
+ ac1or:"atau",
+ ac1b:"Berjumpa doktor sakit puan",
+ ac1note:"Gunakan ujian kehamilan mengikut arahan yang disertakan.",
+ ac2t:"② Bertindak mengikut keputusan",
+ acth1:"Keputusan dan keadaan selepas itu",
+ acth2:"Apa yang perlu dibuat",
+ ac3t:"Bagaimana jika berdarah selepas menelannya?",
+ ac3end:"Jangan anggap “saya sudah berdarah, jadi tiada masalah”. Semak 3 minggu kemudian.",
+ acrows:[
+  ["Keputusan positif","Sila berjumpa doktor sakit puan."],
+  ["Negatif tetapi haid belum datang","Sila berjumpa doktor sakit puan."],
+  ["Keputusan tidak jelas","Semak arahan, uji semula atau tanya doktor sakit puan."]
+ ],
+ acheck1:"Sama ada anda berdarah atau tidak, semak dengan cara berikut.",
+ acheck2:"Ubat ini boleh menyebabkan pendarahan yang menyerupai haid. Pendarahan akibat perubahan hormon ini dipanggil pendarahan penarikan.",
+ acheck3:"Namun, haid, pendarahan akibat ubat, dan pendarahan pada awal kehamilan tidak dapat dibezakan hanya dengan melihatnya.",
  steps:[
   ["Ke klinik sakit puan",[
    "Cari klinik yang dekat dengan rumah, sekolah atau tempat kerja anda, dan yang boleh menerima anda secepat mungkin.",
@@ -3479,7 +3585,19 @@ function render(){
 
   /* 3枚のカードで同じ文言を使うところは、class でまとめて入れます */
   document.querySelectorAll(".js-todo").forEach(function(e){ e.textContent=g("todo"); });
-  document.querySelectorAll(".js-more").forEach(function(e){ e.textContent=g("more"); });
+
+  /* 飲んだ後の確認 */
+  ["aclead","ac1t","ac1a","ac1or","ac1b","ac1note","ac2t",
+   "acth1","acth2","ac3t","ac3end"].forEach(function(k){ txt("t-"+k, g(k)); });
+
+  var ar=document.getElementById("acrows");
+  ar.innerHTML="";
+  (g("acrows")||[]).forEach(function(row){
+    var tr=document.createElement("tr");
+    var th=document.createElement("th"); th.scope="row"; th.textContent=row[0];
+    var td=document.createElement("td"); td.textContent=row[1];
+    tr.appendChild(th); tr.appendChild(td); ar.appendChild(tr);
+  });
 
   /* 服用前チェック: 文字列の配列を2群ぶん */
   ["checkno","checknote","checkask"].forEach(function(id){
